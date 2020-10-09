@@ -10,8 +10,3 @@ Repository for the code developed for the course AIAD at FEUP.
  * **1st Project** : [Agent based Airport Traffic Control](#agent-based-airport-traffic-control)
 
 ## Agent based Airport Traffic Control
-> application scenarios, agents and their interactions, protocols, individual/global objectives, strategies...
-
-> independent variables: what variations can be introduced in different executions of the multi agent system?
-
-> dependent variables: what is evaluated with executions of the multi agent system?
