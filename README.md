@@ -41,16 +41,16 @@ After deciding that it is ready for takeoff, the airplane requests from air cont
 
 ### Variables
 #### Independent Variables
- * number of runways
- * number of planes
- * time spent by planes on the runway
- * airport capacity
+ * Number of runways
+ * Number of planes
+ * Time spent by planes on the runway
+ * Airport capacity
 #### Dependent Variables
- * number of arrivals
- * number of departures
- * number of redirected planes
- * wait time for landings
- * wait time for takeoffs
+ * Number of arrivals
+ * Number of departures
+ * Number of redirected planes
+ * Wait time for landings
+ * Wait time for takeoffs
 
 ### Objectives
  * Maximize the number of arrivals and departures
@@ -66,4 +66,8 @@ This strategy aims to achieve the mentioned objectives by making the best possib
 ### Protocols
 #### Control Tower - Runway Maintenance
 
+![fipa subscribe protocol](./images/fipa-subscribe-diagram.gif)
+
 #### Arriving/Departing Planes - Control Tower
+
+![fipa request protocol](./images/fipa-request-diagram.gif)
