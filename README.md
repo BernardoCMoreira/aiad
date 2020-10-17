@@ -27,7 +27,7 @@ A simple simulation of an airport's infrastructure, focused on the control tower
    * [Incremental Scheduling](#incremental-scheduling)
  * [Protocols](#protocols)
    * [Control Tower- Runway Maintenance](#control-tower---runway-maintenance)
-   * [Arriving/Departing Planes - Control Tower](#arriving%2Fdeparting-planes---control-tower)
+   * [Arriving and Departing Planes - Control Tower](#arriving-and-departing-planes---control-tower)
 
 ### Agents
 #### Control Tower
@@ -68,6 +68,6 @@ This strategy aims to achieve the mentioned objectives by making the best possib
 
 ![fipa subscribe protocol](./images/fipa-subscribe-diagram.gif)
 
-#### Arriving/Departing Planes - Control Tower
+#### Arriving and Departing Planes - Control Tower
 
 ![fipa request protocol](./images/fipa-request-diagram.gif)
