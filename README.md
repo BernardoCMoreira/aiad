@@ -10,3 +10,60 @@ Repository for the code developed for the course AIAD at FEUP.
  * **1st Project** : [Agent based Airport Traffic Control](#agent-based-airport-traffic-control)
 
 ## Agent based Airport Traffic Control
+
+A simple simulation of an airport's infrastructure, focused on the control tower's job. Takes into account the capacity of the airport and the condition of the runways.
+
+ * [Agents](#agents)
+   * [Control Tower](#control-tower)
+   * [Runway Maintenance](#runway-maintenance)
+   * [Arriving Plane](#arriving-plane)
+   * [Departing Plane](#departing-plane)
+ * [Variables](#variables)
+   * [Independent Variables](#independent-variables)
+   * [Dependent Variables](#dependent-variables)
+ * [Objectives](#objectives)
+ * [Strategies](#strategies)
+   * [Greedy](#greedy)
+   * [Incremental Scheduling](#incremental-scheduling)
+ * [Protocols](#protocols)
+   * [Control Tower- Runway Maintenance](#control-tower---runway-maintenance)
+   * [Arriving/Departing Planes - Control Tower](#arriving/departing-planes---control-tower)
+
+### Agents
+#### Control Tower
+This agent is responsible for scheduling take offs and landing of the planes, always trying to maximize one of the optimization criteria, while keeping the each runway’s restrictions and not going above the airport’s capacity. The control tower receives requests to land or depart and updates from the runway’s conditions in real time, and, because of that, the scheduling is done dynamically.
+#### Runway Maintenance
+During normal operation, especially if takeoffs and landings take place, there is a probability of debris appearing on a runway. At that time, that strip’s maintenance team will decide to close it for an interval of time, informing the air controller, who must reallocate the affected operations.
+#### Arriving Plane
+When getting near the airport, an airplane, which has a maximum waiting time, requests a landing authorization from air control. If it gets a positive response, it will wait around until that time slot and then perform the landing. If the waiting time is out, if it gets a negative response or if it decides to cancel the request, it will ‘disappear’ (looking for another airport).
+#### Departing Plane
+After deciding that it is ready for takeoff, the airplane requests from air control a slot for takeoff (time and runway). If the response is positive, it will prepare for it and execute it. If not, it will try again later.
+
+### Variables
+#### Independent Variables
+ * number of runways
+ * number of planes
+ * time spent by planes on the runway
+ * airport capacity
+#### Dependent Variables
+ * number of arrivals
+ * number of departures
+ * number of redirected planes
+ * wait time for landings
+ * wait time for takeoffs
+
+### Objectives
+ * Maximize the number of arrivals and departures
+ * Minimize the wait times, minimizing the cost of operation
+ * Minimize the number of redirected planes
+
+### Strategies
+#### Greedy
+This strategy aims to achieve the mentioned objectives by making the best possible choice at each moment without taking into consideration the later effects of that decision. For example, if the control tower receives a request from a departing plane and right after one from an arriving plane that is running low on fuel and only one runway is ready for use, it will authorize the first plane to takeoff and redirect the second one to another airport.
+#### Incremental Scheduling
+
+
+### Protocols
+#### Control Tower - Runway Maintenance
+
+#### Arriving/Departing Planes - Control Tower
