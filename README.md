@@ -27,7 +27,7 @@ A simple simulation of an airport's infrastructure, focused on the control tower
    * [Incremental Scheduling](#incremental-scheduling)
  * [Protocols](#protocols)
    * [Control Tower- Runway Maintenance](#control-tower---runway-maintenance)
-   * [Arriving/Departing Planes - Control Tower](#arriving/departing-planes---control-tower)
+   * [Arriving/Departing Planes - Control Tower](#arriving%2Fdeparting-planes---control-tower)
 
 ### Agents
 #### Control Tower
