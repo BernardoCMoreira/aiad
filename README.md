@@ -8,6 +8,7 @@ Repository for the code developed for the course AIAD at FEUP.
 
 ## Table of Contents
  * **1st Project** : [Agent based Airport Traffic Control](#agent-based-airport-traffic-control)
+ * [**Resources**](#resources)
 
 ## Agent based Airport Traffic Control
 
@@ -71,3 +72,10 @@ This strategy aims to achieve the mentioned objectives by making the best possib
 #### Arriving/Departing Planes - Control Tower
 
 ![fipa request protocol](./images/fipa-request-diagram.gif)
+
+
+## Resources
+ * [**JADE**](https://jade.tilab.com/)
+ * **FIPA Protocol Specifications**
+   * [FIPA Request Interaction](http://www.fipa.org/specs/fipa00026/SC00026H.html)
+   * [FIPA Subscribe Interaction](http://www.fipa.org/specs/fipa00035/SC00035H.html)
