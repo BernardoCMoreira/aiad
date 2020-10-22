@@ -72,6 +72,7 @@ This strategy aims to achieve the mentioned objectives by making the best possib
 #### Arriving/Departing Planes - Control Tower
 
 ![fipa request protocol](./images/fipa-request-diagram.gif)
+![fipa contract net protocol](./images/fipa-contract-net-diagram.gif)
 
 
 ## Resources
