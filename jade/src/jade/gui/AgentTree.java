@@ -70,7 +70,7 @@ public class AgentTree extends JPanel {
     public static final String TREE_ROOT_NAME = "AgentPlatforms";
     public static final String DAFAULT_LOCAL_PLATFORM_NAME = "ThisPlatform";
     public static final String REMOTE_PLATFORMS_FOLDER_NAME = "RemotePlatforms";
-    public static final String FROZEN_AGENTS_FOLDER_NAME = "Frozen Agents";
+    public static final String FROZEN_AGENTS_FOLDER_NAME = "Frozen com.aiad.Agents";
 	
 	public JTree tree;
 	private Map mapDescriptor;

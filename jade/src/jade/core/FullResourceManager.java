@@ -32,8 +32,8 @@ class FullResourceManager implements ResourceManager {
 	public static final String THREAD_GROUP_INTERRUPT_TIMEOUT = "jade_core_FullResourceManager_threadgroupinterrupttimeout";
 	private static final String DEFAULT_THREAD_GROUP_INTERRUPT_TIMEOUT = "5000";
 	
-	private static final String USER_AGENTS_GROUP_NAME = "JADE User Agents";
-	private static final String SYSTEM_AGENTS_GROUP_NAME = "JADE System Agents";
+	private static final String USER_AGENTS_GROUP_NAME = "JADE User com.aiad.Agents";
+	private static final String SYSTEM_AGENTS_GROUP_NAME = "JADE System com.aiad.Agents";
 	private static final String CRITICAL_THREADS_GROUP_NAME = "JADE Time-critical Threads";
 
 	private ThreadGroup parent;

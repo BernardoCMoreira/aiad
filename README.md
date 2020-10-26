@@ -3,7 +3,7 @@ Repository for the code developed for the course AIAD at FEUP.
 
 ## Info
  * **Date** : 4th year, 1st Semester, 2020/2021
- * **Course** : [Agentes e Inteligência Artificial Distribuída](https://sigarra.up.pt/feup/pt/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=459491) | [Agents and Distributed Artificial Intelligence](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=459491)
+ * **Course** : [Agentes e Inteligência Artificial Distribuída](https://sigarra.up.pt/feup/pt/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=459491) | [com.aiad.Agents and Distributed Artificial Intelligence](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=459491)
  * **Contributors** : [Bernardo Moreira](https://github.com/BernardoCMoreira), [Bernardo Santos](https://github.com/bernas670), [João Matos](https://github.com/joaonmatos)
 
 ## Table of Contents
@@ -14,7 +14,7 @@ Repository for the code developed for the course AIAD at FEUP.
 
 A simple simulation of an airport's infrastructure, focused on the control tower's job. Takes into account the capacity of the airport and the condition of the runways.
 
- * [Agents](#agents)
+ * [com.aiad.Agents](#agents)
    * [Control Tower](#control-tower)
    * [Runway Maintenance](#runway-maintenance)
    * [Arriving Plane](#arriving-plane)
@@ -30,7 +30,7 @@ A simple simulation of an airport's infrastructure, focused on the control tower
    * [Control Tower- Runway Maintenance](#control-tower---runway-maintenance)
    * [Arriving/Departing Planes - Control Tower](#arrivingdeparting-planes---control-tower)
 
-### Agents
+### com.aiad.Agents
 #### Control Tower
 This agent is responsible for scheduling take offs and landing of the planes, always trying to maximize one of the optimization criteria, while keeping the each runway’s restrictions and not going above the airport’s capacity. The control tower receives requests to land or depart and updates from the runway’s conditions in real time, and, because of that, the scheduling is done dynamically.
 #### Runway Maintenance

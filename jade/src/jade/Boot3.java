@@ -332,7 +332,7 @@ public class Boot3 {
             n++;    // go to the next argument
         }    // end of while
 
-        // all options, but the list of Agents, have been parsed
+        // all options, but the list of com.aiad.Agents, have been parsed
         if (endCommand) {    // parse the list of agents, now
             --n;    // go to the previous argument
 

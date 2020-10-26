@@ -63,7 +63,7 @@ class MicroAgentControllerImpl implements AgentController {
 	}
 
 	public void start() throws StaleProxyException {
-		// Agents are automatically started when calling MicroRuntime.startAgent()
+		// com.aiad.Agents are automatically started when calling MicroRuntime.startAgent()
 	}
 
 	public void kill() throws StaleProxyException {

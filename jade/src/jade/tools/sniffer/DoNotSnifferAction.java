@@ -69,7 +69,7 @@ public class DoNotSnifferAction extends AgentAction {
    noSniffedAgents.add(agent);
    mainPanel.panelcan.canvAgent.removeAgent(agent.agentName);
    mainPanel.panelcan.canvAgent.repaintNoSniffedAgent(agent);
-   mySniffer.sniffMsg(noSniffedAgents,Sniffer.SNIFF_OFF);   // Sniff the Agents
+   mySniffer.sniffMsg(noSniffedAgents,Sniffer.SNIFF_OFF);   // Sniff the com.aiad.Agents
    noSniffedAgents.clear();
  }
 

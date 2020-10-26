@@ -397,7 +397,7 @@ public abstract class Behaviour implements Serializable {
 	
 	/**
 	 Returns the root for this <code>Behaviour</code> object. That is,
-	 the top-level behaviour this one is a part of. Agents apply
+	 the top-level behaviour this one is a part of. com.aiad.Agents apply
 	 scheduling only to top-level behaviour objects, so they just call
 	 <code>restart()</code> on root behaviours.
 	 @return The top-level behaviour this behaviour is a part of. If

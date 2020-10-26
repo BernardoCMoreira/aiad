@@ -243,7 +243,7 @@ public class Boot {
 		System.out.println("    -mtps <semicolon separated list of mtp-specifiers>");
 		System.out.println("     where mtp-specifier = [in-address:]<mtp-class>[(comma-separated args)]");     
 		System.out.println("    -<property-name> <property-value>");
-		System.out.println("Agents: [-agents] <semicolon separated list of agent-specifiers>");
+		System.out.println("com.aiad.Agents: [-agents] <semicolon separated list of agent-specifiers>");
 		System.out.println("     where agent-specifier = <agent-name>:<agent-class>[(comma separated args)]"); 
 		System.out.println();
 		System.out.println("Look at the JADE Administrator's Guide for more details");

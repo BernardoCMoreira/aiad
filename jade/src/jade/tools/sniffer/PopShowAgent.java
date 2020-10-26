@@ -76,7 +76,7 @@ import System.Windows.Forms.MouseEventArgs;
  #DOTNET_INCLUDE_END*/
    noSniffAgent.add(popAg.agent);
    canvAgent.repaintNoSniffedAgent(popAg.agent);
-   mySniffer.sniffMsg(noSniffAgent,Sniffer.SNIFF_OFF);   // Sniff the Agents
+   mySniffer.sniffMsg(noSniffAgent,Sniffer.SNIFF_OFF);   // Sniff the com.aiad.Agents
    noSniffAgent.clear();
  }
 

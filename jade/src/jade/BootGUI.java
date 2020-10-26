@@ -625,7 +625,7 @@ public class BootGUI extends JDialog {
         pv.add(new PropertyType(BootProfileImpl.AGENTS,
                                 PropertyType.STRING_TYPE,
                                 theProperties.getProperty(BootProfileImpl.AGENTS),
-                                "Agents to launch",
+                                "com.aiad.Agents to launch",
                                 false));
         pv.add(new PropertyType(BootProfileImpl.NOMOBILITY_KEY,
                                 PropertyType.BOOLEAN_TYPE,

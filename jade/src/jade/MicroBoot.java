@@ -140,7 +140,7 @@ public class MicroBoot {
 		logger.log(Logger.ALL,"    -host <host-name>. The name/address of the host where the BackEnd has to be created");
 		logger.log(Logger.ALL,"    -port <port-number>. The port of the J2SE container active on \"host\"");
 		logger.log(Logger.ALL,"    -<key> <value>");
-		logger.log(Logger.ALL,"Agents: [-agents] <semicolon-separated agent-specifiers>");
+		logger.log(Logger.ALL,"com.aiad.Agents: [-agents] <semicolon-separated agent-specifiers>");
 		logger.log(Logger.ALL,"     where agent-specifier = <agent-name>:<agent-class>[(comma separated args)]\n"); 
 	}
 

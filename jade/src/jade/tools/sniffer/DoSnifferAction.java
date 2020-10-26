@@ -76,7 +76,7 @@ private List sniffedAgents=new ArrayList();
      mainPanel.panelcan.canvAgent.rAgfromNoSniffVector(agent);
 
      sniffedAgents.add(agent);
-     mySniffer.sniffMsg(sniffedAgents,Sniffer.SNIFF_ON);   // Sniff the Agents
+     mySniffer.sniffMsg(sniffedAgents,Sniffer.SNIFF_ON);   // Sniff the com.aiad.Agents
      sniffedAgents.clear();
   }
 

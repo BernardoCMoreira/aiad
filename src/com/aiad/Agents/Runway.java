@@ -1,4 +1,4 @@
-package Agents;
+package com.aiad.Agents;
 import jade.core.*;
 
 public class Runway extends Agent {

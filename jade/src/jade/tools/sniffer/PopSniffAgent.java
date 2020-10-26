@@ -78,7 +78,7 @@ private MMCanvas canvAgent;
      canvAgent.addAgent(popAg.agent);   // add Agent in the Canvas
      canvAgent.rAgfromNoSniffVector(popAg.agent);
      sniffedAgent.add(popAg.agent);
-     mySniffer.sniffMsg(sniffedAgent,Sniffer.SNIFF_ON);   // Sniff the Agents
+     mySniffer.sniffMsg(sniffedAgent,Sniffer.SNIFF_ON);   // Sniff the com.aiad.Agents
      sniffedAgent.clear();
    }
 

@@ -364,7 +364,7 @@ public class ProfileImpl extends Profile {
 	
 	/**
 	 * Retrieve a list of Specifiers from the configuration properties.
-	 * Agents, MTPs and other items are specified among the configuration
+	 * com.aiad.Agents, MTPs and other items are specified among the configuration
 	 * properties in this way.
 	 * If no list of Specifiers corresponding to the specified key is found,
 	 * an empty list is returned.
