@@ -1,7 +1,7 @@
 package Agents;
 import jade.core.*;
 
-public class Runway extends Agents{
+public class Runway extends Agent {
 
     int id;
     boolean isClear;
@@ -15,7 +15,7 @@ public class Runway extends Agents{
      */
     public Runway(String message){
         String[] splitMessage = message.split(" ");
-        this.id = splitMessage[0];
+        this.id = Integer.parseInt(splitMessage[0]);
         this.isClear = splitMessage[1].equals("true");
     }
 

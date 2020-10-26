@@ -16,11 +16,11 @@ public class Airplane extends Agent {
 
     public Airplane(String message) {
         String[] splitMessage = message.split(" ");
-        this.id = splitMessage[0];
-        this.waitTime = splitMessage[1];
-        this.timeToArrive = splitMessage[2];
-        this.fuelRemaining = splitMessage[3];
-        this.landed = splitMessage[4];
+        this.id = Integer.parseInt(splitMessage[0]);
+        this.waitTime = Integer.parseInt(splitMessage[1]);
+        this.timeToArrive = Integer.parseInt(splitMessage[2]);
+        this.fuelRemaining = Integer.parseInt(splitMessage[3]);
+        this.landed = splitMessage[4].equals("true");
     }
 
     public int getID(){
