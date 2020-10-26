@@ -1,5 +1,6 @@
 package com.aiad.agents;
-import jade.core.*;
+
+import jade.core.Agent;
 
 public class Airplane extends Agent {
     private int id,  waitTime = 0, timeToArrive;
