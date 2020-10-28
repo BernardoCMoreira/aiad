@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/jade-starter.iml" filepath="$PROJECT_DIR$/jade-starter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/airport-control.iml" filepath="$PROJECT_DIR$/airport-control.iml" />
     </modules>
   </component>
 </project>

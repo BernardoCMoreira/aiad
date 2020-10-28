@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="jade.Boot" />
-    <module name="jade-starter" />
+    <module name="airport-control" />
     <option name="PROGRAM_PARAMETERS" value="-gui -name example" />
     <selectedOptions>
       <option name="before.launch.openToolWindow" />
