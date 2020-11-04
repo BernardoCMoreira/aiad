@@ -34,6 +34,7 @@ public class Airplane extends Agent {
 
     @Override
     protected void setup() {
+        System.out.println("\n Created new airplane : " + getLocalName() + " with attributes : " + this.id + "\t" + this.waitTime +"\t"+  this.timeToArrive +"\t" + this.fuelRemaining + "\t" +  this.landed +  "\n");
         DFAgentDescription description = new DFAgentDescription();
         description.setName(getAID());
         ServiceDescription service = new ServiceDescription();
