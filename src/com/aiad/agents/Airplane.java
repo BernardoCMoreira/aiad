@@ -37,6 +37,7 @@ public class Airplane extends Agent {
         DFAgentDescription description = new DFAgentDescription();
         description.setName(getAID());
         ServiceDescription service = new ServiceDescription();
+        service.setName("airplane");
         service.setType("airplane");
         description.addServices(service);
 

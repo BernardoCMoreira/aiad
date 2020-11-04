@@ -2,13 +2,18 @@ package com.aiad.agents;
 
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.DFSubscriber;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.lang.acl.MessageTemplate;
+import jade.proto.SubscriptionInitiator;
+import jdk.jshell.JShell;
 
+import java.lang.module.FindException;
 import java.util.ArrayList;
 
 public class ControlTower extends Agent {
@@ -39,6 +44,7 @@ public class ControlTower extends Agent {
                 break;
             default:
                 System.err.println("NOT A REQUEST");
+                System.out.println(message);
                 break;
         }
 
@@ -49,6 +55,7 @@ public class ControlTower extends Agent {
         DFAgentDescription description = new DFAgentDescription();
         description.setName(getAID());
         ServiceDescription service = new ServiceDescription();
+        service.setName("control_tower");
         service.setType("control_tower");
         description.addServices(service);
 
@@ -61,13 +68,22 @@ public class ControlTower extends Agent {
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
+                MessageTemplate msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
                 //Receive message
-                ACLMessage msg = receive();
+                ACLMessage msg = receive(msgTemplate);
                 if (msg != null) {
                     handleMessage(msg);
                 } else block();
             }
         });
+
+
+        DFAgentDescription runwayTemplate = new DFAgentDescription();
+        ServiceDescription runwayService = new ServiceDescription();
+        runwayService.setType("runway");
+        runwayTemplate.addServices(runwayService);
+
+        addBehaviour(new RunwaySubscriber(this, runwayTemplate));
     }
 
     public int getTotalArrivals() {
@@ -86,4 +102,22 @@ public class ControlTower extends Agent {
         }
     }
 
+    class RunwaySubscriber extends SubscriptionInitiator {
+        public RunwaySubscriber(Agent agent, DFAgentDescription template) {
+            super(agent, DFService.createSubscriptionMessage(agent, getDefaultDF(), template, null));
+        }
+
+        protected void handleInform(ACLMessage message) {
+            try {
+                DFAgentDescription[] dfds = DFService.decodeNotification(message.getContent());
+                for (int i = 0; i < dfds.length; i++) {
+                    AID agent = dfds[i].getName();
+                    System.out.println("new agent : " + agent.getLocalName());
+                }
+            } catch (FIPAException fe) {
+                fe.printStackTrace();
+            }
+        }
+
+    }
 }

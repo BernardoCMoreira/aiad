@@ -56,7 +56,9 @@ public class Runway extends Agent {
         DFAgentDescription description = new DFAgentDescription();
         description.setName(getAID());
         ServiceDescription service = new ServiceDescription();
+        service.setName("runway");
         service.setType("runway");
+
         description.addServices(service);
 
         try {
