@@ -11,7 +11,6 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.MessageTemplate;
 import jade.proto.SubscriptionInitiator;
-import jdk.jshell.JShell;
 
 import java.lang.module.FindException;
 import java.util.ArrayList;
@@ -30,12 +29,13 @@ public class ControlTower extends Agent {
         switch (message.getPerformative()) {
             case ACLMessage.REQUEST:
                 // can send refuse or agree
+                // Send agree
                 ACLMessage reply = new ACLMessage(ACLMessage.AGREE);
                 reply.setContent("Esta mensagem é um Agree para o avião");
                 reply.addReceiver(message.getSender());
                 reply.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
                 send(reply);
-
+                //Send notification
                 ACLMessage notification = new ACLMessage(ACLMessage.INFORM);
                 notification.setContent("Esta mensagem é um INFORM para o avião");
                 notification.addReceiver(message.getSender());
@@ -47,7 +47,6 @@ public class ControlTower extends Agent {
                 System.out.println(message);
                 break;
         }
-
     }
 
     @Override
@@ -76,7 +75,6 @@ public class ControlTower extends Agent {
                 } else block();
             }
         });
-
 
         DFAgentDescription runwayTemplate = new DFAgentDescription();
         ServiceDescription runwayService = new ServiceDescription();
