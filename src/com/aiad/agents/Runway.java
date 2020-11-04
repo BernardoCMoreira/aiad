@@ -41,6 +41,7 @@ public class Runway extends Agent {
      *   " id isClear"
      *
      */
+
     public Runway(String message){
         String[] splitMessage = message.split(" ");
         this.id = Integer.parseInt(splitMessage[0]);

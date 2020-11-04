@@ -1,19 +1,25 @@
 package com.aiad.agents;
 
+import com.aiad.agents.protocols.FIPARequestInitiatorAgent;
 import jade.core.Agent;
+import jade.core.AID;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.FIPANames;
+import jade.lang.acl.ACLMessage;
 
 public class Airplane extends Agent {
-    private int id,  waitTime = 0, timeToArrive;
+    private int id, waitTime = 0, timeToArrive;
     private float fuelRemaining;
     private boolean landed = false;
 
-    public Airplane(){}
+    public Airplane() {
+    }
 
     /*
-    *   The message will be the following :
-    *   " id waitTime timeToArrive fuelRemaining landed"
-    *
-    */
+     *   The message will be the following :
+     *   " id waitTime timeToArrive fuelRemaining landed"
+     *
+     */
 
     public Airplane(String message) {
         String[] splitMessage = message.split(" ");
@@ -24,23 +30,85 @@ public class Airplane extends Agent {
         this.landed = splitMessage[4].equals("true");
     }
 
-    public int getID(){
+    @Override
+    protected void setup() {
+        addBehaviour(new CyclicBehaviour() {
+            int state = Globals.FIRST_STATE;
+
+            @Override
+            public void action() {
+                //Send  Message
+                if (state == Globals.FIRST_STATE) {
+                    sendRequestMessage();
+                    state = Globals.SECOND_STATE;
+                } else {
+                    handleMessagesReceived();
+                    block();
+                }
+
+            }
+
+        });
+
+    }
+
+    public void sendRequestMessage() {
+        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+        msg.setContent("Esta mensagem é para a torre de controlo");
+        msg.addReceiver(new AID("tower", AID.ISLOCALNAME));
+        msg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+        System.out.println("Message sent : " + msg);
+        send(msg);
+    }
+
+    public void handleMessagesReceived() {
+        ACLMessage msg = receive();
+        if (msg != null) {
+            switch (msg.getPerformative()) {
+                case ACLMessage.AGREE:
+                    handleAgree(msg);
+                    break;
+                case ACLMessage.INFORM:
+                    handleInform(msg);
+                    break;
+            }
+        }
+    }
+
+    public void handleAgree(ACLMessage agree) {
+        System.out.println("I received an agree!");
+    }
+
+    public void handleRefuse(ACLMessage refuse) {
+        System.out.println("I received a refuse!");
+    }
+
+    public void handleInform(ACLMessage inform) {
+        System.out.println("I received an inform!");
+    }
+
+    public void handleFailure(ACLMessage failure) {
+        System.out.println("I received a failure!");
+    }
+
+
+    public int getID() {
         return this.id;
     }
 
-    public int getWaitTime(){
+    public int getWaitTime() {
         return this.waitTime;
     }
 
-    public int getTimeToArrive(){
+    public int getTimeToArrive() {
         return this.timeToArrive;
     }
 
-    public float getFuelRemaining(){
+    public float getFuelRemaining() {
         return this.fuelRemaining;
     }
 
-    public boolean isLanded(){
+    public boolean isLanded() {
         return this.landed;
     }
 }

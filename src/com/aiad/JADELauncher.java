@@ -1,4 +1,7 @@
 package com.aiad;
+import com.aiad.agents.Airplane;
+import com.aiad.agents.ControlTower;
+import com.aiad.agents.Runway;
 import jade.core.Agent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -16,31 +19,32 @@ public class JADELauncher {
         //p1.setParameter(...);
         ContainerController mainContainer = rt.createMainContainer(p1);
 
-        Profile p2 = new ProfileImpl();
-        //p2.setParameter(...);
-        ContainerController container = rt.createAgentContainer(p2);
-
         AgentController ac1;
         try {
-            ac1 = mainContainer.acceptNewAgent("name1", new Agent());
+            ac1 = mainContainer.acceptNewAgent("airplane1", new Airplane());
             ac1.start();
-        } catch (StaleProxyException e) {
-            e.printStackTrace();
-        }
-
-        Object[] agentArgs = new Object[0];
-        AgentController ac2;
-        try {
-            ac2 = container.createNewAgent("name2", "jade.core.Agent", agentArgs);
-            ac2.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
 
         AgentController ac3;
         try {
-            ac3 = mainContainer.acceptNewAgent("myRMA", new jade.tools.rma.rma());
+            ac3 = mainContainer.acceptNewAgent("airplane2", new Airplane());
             ac3.start();
+        } catch (StaleProxyException e) {
+            e.printStackTrace();
+        }
+        AgentController ac4;
+        try {
+            ac4 = mainContainer.acceptNewAgent("tower", new ControlTower());
+            ac4.start();
+        } catch (StaleProxyException e) {
+            e.printStackTrace();
+        }
+        AgentController ac5;
+        try {
+            ac5 = mainContainer.acceptNewAgent("runway1", new Runway());
+            ac5.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
