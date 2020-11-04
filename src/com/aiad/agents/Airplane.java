@@ -1,11 +1,13 @@
 package com.aiad.agents;
-
-import com.aiad.agents.protocols.FIPARequestInitiatorAgent;
 import jade.core.Agent;
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 
 public class Airplane extends Agent {
     private int id, waitTime = 0, timeToArrive;
@@ -32,6 +34,18 @@ public class Airplane extends Agent {
 
     @Override
     protected void setup() {
+        DFAgentDescription description = new DFAgentDescription();
+        description.setName(getAID());
+        ServiceDescription service = new ServiceDescription();
+        service.setType("airplane");
+        description.addServices(service);
+
+        try {
+            DFService.register(this, description);
+        }
+        catch(FIPAException e) {
+            e.printStackTrace();
+        }
         addBehaviour(new CyclicBehaviour() {
             int state = Globals.FIRST_STATE;
 
@@ -92,7 +106,16 @@ public class Airplane extends Agent {
     }
 
 
-    public int getID() {
+    protected void takeDown(){
+        try {
+            DFService.deregister(this);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getID(){
         return this.id;
     }
 

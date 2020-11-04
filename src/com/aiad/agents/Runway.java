@@ -2,6 +2,10 @@ package com.aiad.agents;
 
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 
 import java.util.Random;
 
@@ -46,6 +50,30 @@ public class Runway extends Agent {
         String[] splitMessage = message.split(" ");
         this.id = Integer.parseInt(splitMessage[0]);
         this.isClear = splitMessage[1].equals("true");
+    }
+
+    protected void setup() {
+        DFAgentDescription description = new DFAgentDescription();
+        description.setName(getAID());
+        ServiceDescription service = new ServiceDescription();
+        service.setType("runway");
+        description.addServices(service);
+
+        try {
+            DFService.register(this, description);
+        }
+        catch(FIPAException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void takeDown() {
+        try {
+            DFService.deregister(this);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getId(){

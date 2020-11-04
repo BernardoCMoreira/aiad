@@ -4,6 +4,10 @@ import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 
 import java.util.ArrayList;
 
@@ -42,6 +46,18 @@ public class ControlTower extends Agent {
 
     @Override
     protected void setup() {
+        DFAgentDescription description = new DFAgentDescription();
+        description.setName(getAID());
+        ServiceDescription service = new ServiceDescription();
+        service.setType("control_tower");
+        description.addServices(service);
+
+        try {
+            DFService.register(this, description);
+        } catch (FIPAException e) {
+            e.printStackTrace();
+        }
+
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
@@ -60,6 +76,14 @@ public class ControlTower extends Agent {
 
     public int getTotalDepartures() {
         return this.departureCounter;
+    }
+
+    protected void takeDown() {
+        try {
+            DFService.deregister(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
