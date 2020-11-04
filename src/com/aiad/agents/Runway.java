@@ -3,9 +3,11 @@ package com.aiad.agents;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAAgentManagement.*;
 import jade.domain.FIPAException;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+import jade.proto.ContractNetResponder;
 
 import java.util.Random;
 
@@ -99,5 +101,39 @@ public class Runway extends Agent {
 
     public void setClear() {
         this._clearingBehaviour = null;
+    }
+
+    class ProposalBuilder extends ContractNetResponder {
+
+        public ProposalBuilder(Agent agent, MessageTemplate mt) {
+            super(agent, mt);
+        }
+
+        @Override
+        protected ACLMessage handleCfp(ACLMessage cfp) {
+
+            // evaluate possibilities and make the best proposal possible
+
+            ACLMessage reply = cfp.createReply();
+            reply.setPerformative(ACLMessage.PROPOSE);
+            // set the content of the message
+            reply.setContent("this is an example proposal");
+
+            return reply;
+        }
+
+        @Override
+        protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) {
+            System.out.println(myAgent.getLocalName() + " got an accept!");
+
+            // realize the activity that was proposed
+
+            // create a reply informing if the activity was completed successfully
+            ACLMessage result = accept.createReply();
+            result.setPerformative(ACLMessage.INFORM);
+            result.setContent("this is the result");
+
+            return result;
+        }
     }
 }

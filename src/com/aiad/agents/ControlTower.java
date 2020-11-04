@@ -10,19 +10,21 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.MessageTemplate;
+import jade.proto.ContractNetInitiator;
 import jade.proto.SubscriptionInitiator;
 import jdk.jshell.JShell;
 
 import java.lang.module.FindException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class ControlTower extends Agent {
 
     private int arrivalCounter = 0, departureCounter = 0;
-    private ArrayList<Boolean> runwayState;
+    protected ArrayList<AID> runways;
 
     public ControlTower() {
-        runwayState = new ArrayList<>();
+        runways = new ArrayList<>();
     }
 
     public void handleMessage(ACLMessage message) {
@@ -102,22 +104,73 @@ public class ControlTower extends Agent {
         }
     }
 
+
     class RunwaySubscriber extends SubscriptionInitiator {
-        public RunwaySubscriber(Agent agent, DFAgentDescription template) {
+        public RunwaySubscriber(ControlTower agent, DFAgentDescription template) {
             super(agent, DFService.createSubscriptionMessage(agent, getDefaultDF(), template, null));
         }
 
         protected void handleInform(ACLMessage message) {
+            ControlTower controlTower = (ControlTower) myAgent;
+
             try {
                 DFAgentDescription[] dfds = DFService.decodeNotification(message.getContent());
+
                 for (int i = 0; i < dfds.length; i++) {
                     AID agent = dfds[i].getName();
-                    System.out.println("new agent : " + agent.getLocalName());
+                    controlTower.runways.add(agent)
+                    System.out.println("new runway added : " + agent.getLocalName());
                 }
             } catch (FIPAException fe) {
                 fe.printStackTrace();
             }
         }
 
+    }
+
+    class RunwayAllocator extends ContractNetInitiator {
+        public RunwayAllocator(Agent a, ACLMessage cfp) {
+            super(a, cfp);
+        }
+
+        protected Vector prepareCfps(ACLMessage cfp) {
+            ArrayList<AID> runways = ((ControlTower) myAgent).runways;
+            Vector v = new Vector();
+
+            for (int i = 0; i < runways.size(); i++) {
+                cfp.addReceiver(runways.get(i));
+            }
+
+            v.add(cfp);
+            return v;
+        }
+
+        @Override
+        protected void handleAllResponses(Vector responses, Vector acceptances) {
+            int bestProposalIndex = 0;
+
+            for (int i = 1; i < responses.size(); i++) {
+                // compare best proposal with current proposal
+                boolean isBetter = true;
+                int rejectedProposalIndex = i;
+
+                if (isBetter) {
+                    rejectedProposalIndex = bestProposalIndex;      // previous best proposal index
+                    bestProposalIndex = i;                          // new best proposal index
+                }
+
+                // create reply for rejected proposal
+                ACLMessage msg = ((ACLMessage) responses.get(rejectedProposalIndex)).createReply();
+                msg.setPerformative(ACLMessage.REJECT_PROPOSAL);
+                acceptances.add(msg);
+            }
+
+            // create reply for accepted proposal
+            ACLMessage msg = ((ACLMessage) responses.get(bestProposalIndex)).createReply();
+            msg.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+            acceptances.add(msg);
+        }
+
+        // TODO: method to receive inform messages related to the activity
     }
 }
