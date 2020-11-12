@@ -1,9 +1,7 @@
 package com.aiad;
-import com.aiad.agents.Airplane;
 import com.aiad.agents.AirplaneGenerator;
 import com.aiad.agents.ControlTower;
 import com.aiad.agents.Runway;
-import jade.core.Agent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;

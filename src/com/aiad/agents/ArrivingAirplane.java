@@ -1,4 +1,5 @@
 package com.aiad.agents;
+import com.aiad.messages.ArrivingAirplaneRequest;
 import jade.core.Agent;
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
@@ -9,12 +10,14 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 
-public class Airplane extends Agent {
+import java.io.IOException;
+
+public class ArrivingAirplane extends Agent {
     private int id, waitTime = 0, timeToArrive;
-    private float fuelRemaining;
+    private int fuelRemaining;
     private boolean landed = false;
 
-    public Airplane() {
+    public ArrivingAirplane() {
     }
 
     /*
@@ -23,7 +26,7 @@ public class Airplane extends Agent {
      *
      */
 
-    public Airplane(String message) {
+    public ArrivingAirplane(String message) {
         String[] splitMessage = message.split(" ");
         this.id = Integer.parseInt(splitMessage[0]);
         this.waitTime = Integer.parseInt(splitMessage[1]);
@@ -70,10 +73,21 @@ public class Airplane extends Agent {
 
     public void sendRequestMessage() {
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-        msg.setContent("Esta mensagem é para a torre de controlo");
+
+        ArrivingAirplaneRequest content = new ArrivingAirplaneRequest();
+        content.setId(this.id);
+        content.setEta(this.timeToArrive);
+        content.setAutonomy(this.fuelRemaining);
+
+        try {
+            msg.setContentObject(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         msg.addReceiver(new AID("tower", AID.ISLOCALNAME));
         msg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
-        System.out.println("Message sent : " + msg);
+        System.out.println("Request sent!");
         send(msg);
     }
 

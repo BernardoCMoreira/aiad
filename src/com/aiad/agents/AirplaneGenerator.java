@@ -30,7 +30,7 @@ public class AirplaneGenerator extends Agent {
                 try {
                     plane.airplaneCounter++;
                     String message = airplaneMessageGenerator(plane.airplaneCounter);
-                    ac = plane.controller.acceptNewAgent("airplane" + plane.airplaneCounter, new Airplane(message));
+                    ac = plane.controller.acceptNewAgent("airplane" + plane.airplaneCounter, new ArrivingAirplane(message));
                     ac.start();
                 } catch (StaleProxyException e) {
                     e.printStackTrace();

@@ -30,6 +30,24 @@ public class ControlTower extends Agent {
 
         switch (message.getPerformative()) {
             case ACLMessage.REQUEST:
+
+                // get airplane information
+                // start contractnet
+                ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+                this.addBehaviour(new RunwayAllocator(this, cfp));
+                // check result of contractnet
+                // if can land
+                    // send agree (can land)
+                    // if ok
+                        // send inform (runway number)
+                    // else
+                        // send failure (try again/go to another airport)
+                // else
+                    // send refuse (try again later/go to another airport)
+
+
+
+
                 // can send refuse or agree
                 // Send agree
                 ACLMessage reply = new ACLMessage(ACLMessage.AGREE);
