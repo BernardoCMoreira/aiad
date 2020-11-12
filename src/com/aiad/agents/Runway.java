@@ -75,7 +75,6 @@ public class Runway extends Agent {
     }
 
 
-
     protected void setup() {
         DFAgentDescription description = new DFAgentDescription();
         description.setName(getAID());
