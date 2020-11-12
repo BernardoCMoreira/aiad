@@ -1,5 +1,8 @@
 package com.aiad.agents;
 
+import com.aiad.messages.ArrivingAirplaneRequest;
+import com.aiad.messages.RunwayOperationCfp;
+import com.aiad.messages.RunwayOperationProposal;
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFSubscriber;
@@ -10,9 +13,11 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.MessageTemplate;
+import jade.lang.acl.UnreadableException;
 import jade.proto.ContractNetInitiator;
 import jade.proto.SubscriptionInitiator;
 
+import java.io.IOException;
 import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -26,16 +31,35 @@ public class ControlTower extends Agent {
         runways = new ArrayList<>();
     }
 
-    public void handleMessage(ACLMessage message) {
+    public void handleMessage(ACLMessage message) throws UnreadableException {
 
         switch (message.getPerformative()) {
             case ACLMessage.REQUEST:
 
+                System.out.println("Request received");
+
+                int airplaneId, minTime;
+
                 // get airplane information
+                ArrivingAirplaneRequest airplaneRequest = (ArrivingAirplaneRequest) message.getContentObject();
+                airplaneId = airplaneRequest.getId();
+                minTime = airplaneRequest.getEta();
+
                 // start contractnet
                 ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+
+                RunwayOperationCfp cfpContent = new RunwayOperationCfp();
+                cfpContent.setAirplaneId(airplaneId);
+                cfpContent.setMinTime(minTime);
+
+                try {
+                    cfp.setContentObject(cfpContent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 this.addBehaviour(new RunwayAllocator(this, cfp));
                 // check result of contractnet
+
                 // if can land
                     // send agree (can land)
                     // if ok
@@ -91,7 +115,11 @@ public class ControlTower extends Agent {
                 //Receive message
                 ACLMessage msg = receive(msgTemplate);
                 if (msg != null) {
-                    handleMessage(msg);
+                    try {
+                        handleMessage(msg);
+                    } catch (UnreadableException e) {
+                        e.printStackTrace();
+                    }
                 } else block();
             }
         });
@@ -157,6 +185,8 @@ public class ControlTower extends Agent {
                 cfp.addReceiver(runways.get(i));
             }
 
+            System.out.println("CFPs prepared");
+
             v.add(cfp);
             return v;
         }
@@ -164,10 +194,34 @@ public class ControlTower extends Agent {
         @Override
         protected void handleAllResponses(Vector responses, Vector acceptances) {
             int bestProposalIndex = 0;
+            int minOperationTime = Integer.MAX_VALUE;
+
+            System.out.println("Received all " + responses.size() + " proposals");
+
+            try {
+                minOperationTime = ((RunwayOperationProposal) ((ACLMessage) responses.get(0)).getContentObject()).getOperationTime();
+            } catch (UnreadableException e) {
+                e.printStackTrace();
+            }
 
             for (int i = 1; i < responses.size(); i++) {
+
+                ACLMessage message = (ACLMessage) responses.get(i);
+                int runwayId = -1;
+                int operationTime = Integer.MAX_VALUE;
+                try {
+                    RunwayOperationProposal proposal = (RunwayOperationProposal) message.getContentObject();
+                    runwayId = proposal.getRunwayId();
+                    operationTime = proposal.getOperationTime();
+                } catch (UnreadableException e) {
+                    e.printStackTrace();
+                }
+
+
                 // compare best proposal with current proposal
-                boolean isBetter = true;
+                boolean isBetter = minOperationTime > operationTime;
+                System.out.println(minOperationTime + " > " + operationTime);
+
                 int rejectedProposalIndex = i;
 
                 if (isBetter) {
@@ -176,15 +230,20 @@ public class ControlTower extends Agent {
                 }
 
                 // create reply for rejected proposal
-                ACLMessage msg = ((ACLMessage) responses.get(rejectedProposalIndex)).createReply();
-                msg.setPerformative(ACLMessage.REJECT_PROPOSAL);
-                acceptances.add(msg);
+                ACLMessage reply = ((ACLMessage) responses.get(rejectedProposalIndex)).createReply();
+                reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
+                reply.setContent("proposal rejected");
+                acceptances.add(reply);
             }
 
+            System.out.println("All proposals considered");
+            System.out.println("Best proposal: " + minOperationTime);
+
             // create reply for accepted proposal
-            ACLMessage msg = ((ACLMessage) responses.get(bestProposalIndex)).createReply();
-            msg.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-            acceptances.add(msg);
+            ACLMessage reply = ((ACLMessage) responses.get(bestProposalIndex)).createReply();
+            reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+            reply.setContent("proposal accepted");
+            acceptances.add(reply);
         }
 
         // TODO: method to receive inform messages related to the activity

@@ -217,6 +217,9 @@ public class Runway extends Agent {
         @Override
         protected ACLMessage handleCfp(ACLMessage cfp) throws NotUnderstoodException {
             var runway = (Runway) getAgent();
+
+            System.out.println("Received CFP");
+
             // evaluate possibilities and make the best proposal possible
             try {
                 var call = (RunwayOperationCfp) cfp.getContentObject();
@@ -226,6 +229,8 @@ public class Runway extends Agent {
                 var reply = cfp.createReply();
                 reply.setPerformative(ACLMessage.PROPOSE);
                 reply.setContentObject(proposal);
+
+                System.out.println("Sent proposal");
 
                 return reply;
             } catch (Exception e) {
