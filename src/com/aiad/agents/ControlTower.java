@@ -116,7 +116,7 @@ public class ControlTower extends Agent {
 
                 for (int i = 0; i < dfds.length; i++) {
                     AID agent = dfds[i].getName();
-                    controlTower.runways.add(agent)
+                    controlTower.runways.add(agent);
                     System.out.println("new runway added : " + agent.getLocalName());
                 }
             } catch (FIPAException fe) {
