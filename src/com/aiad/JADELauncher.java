@@ -35,7 +35,7 @@ public class JADELauncher {
         }
         AgentController ac5;
         try {
-            ac5 = mainContainer.acceptNewAgent("runway1", new Runway());
+            ac5 = mainContainer.acceptNewAgent("runway1", new Runway(1));
             ac5.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class JADELauncher {
 
         AgentController ac6;
         try {
-            ac6 = mainContainer.acceptNewAgent("runway2", new Runway());
+            ac6 = mainContainer.acceptNewAgent("runway2", new Runway(2));
             ac6.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class JADELauncher {
 
         AgentController ac7;
         try {
-            ac7 = mainContainer.acceptNewAgent("runway3", new Runway());
+            ac7 = mainContainer.acceptNewAgent("runway3", new Runway(3));
             ac7.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();

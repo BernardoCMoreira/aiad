@@ -3,15 +3,15 @@ package com.aiad.agents;
 import com.aiad.Config;
 import com.aiad.messages.RunwayOperationCfp;
 import com.aiad.messages.RunwayOperationProposal;
-import com.sun.source.tree.Tree;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.*;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.NotUnderstoodException;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.lang.acl.UnreadableException;
 import jade.proto.ContractNetResponder;
 
 import java.util.ArrayList;
@@ -22,6 +22,142 @@ import static com.aiad.Config.MAX_RUNWAY_CLEARANCE_TIME;
 import static com.aiad.Config.TICKRATE;
 
 public class Runway extends Agent {
+    final public static double DEBRIS_APPEARANCE_PROBABILITY = 0.1d;
+    final private Random rand = new Random();
+    final private TreeMap<Integer, Operation> operations = new TreeMap<>();
+    int id;
+    boolean isClear = true;
+    private RunwayClearingBehaviour _clearingBehaviour;
+    private RunwayUpdatingBehaviour _updatingBehaviour;
+
+    public Runway(int id) {
+        this.id = id;
+    }
+
+    public Runway(String message) {
+        String[] splitMessage = message.split(" ");
+        this.id = Integer.parseInt(splitMessage[0]);
+        this.isClear = splitMessage[1].equals("true");
+    }
+
+    int getEarliestSlot(int minTime) {
+        var followingOperations = operations.tailMap(minTime);
+        var time = isClear ? minTime : Math.max(minTime, _clearingBehaviour.clearanceTime);
+        for (var operation : followingOperations.entrySet()) {
+            if (minTime + Config.OPERATION_LENGTH <= operation.getKey())
+                break;
+            else
+                time = operation.getKey() + Config.OPERATION_LENGTH;
+        }
+        return time;
+    }
+
+    void updateOperations() {
+        // deal with 0 value
+        var willBeObstructed = false;
+        if (operations.containsKey(0)) {
+            operations.get(0).tick();
+            if (operations.get(0).getDuration() == 0) {
+                operations.remove(0);
+                willBeObstructed = willBecomeObstructed();
+            }
+        }
+        // decrement time to next operations
+        var keys = new ArrayList<>(operations.tailMap(0, false).keySet());
+        for (var key : keys) {
+            var operation = operations.get(key);
+            operations.remove(key);
+            operations.put(key - 1, operation);
+        }
+
+        if (willBeObstructed)
+            setObstructed();
+    }
+
+
+
+    protected void setup() {
+        DFAgentDescription description = new DFAgentDescription();
+        description.setName(getAID());
+        ServiceDescription service = new ServiceDescription();
+        service.setName("runway");
+        service.setType("runway");
+
+        setupUpdatingBehaviour();
+
+        addBehaviour(new ProposalBuilder(this, new MessageTemplate(
+                (MessageTemplate.MatchExpression) msg -> msg.getPerformative() == ACLMessage.CFP)
+        ));
+
+        description.addServices(service);
+
+        try {
+            DFService.register(this, description);
+        } catch (FIPAException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     *   The message will be the following :
+     *   " id isClear"
+     *
+     */
+
+    protected void takeDown() {
+        try {
+            DFService.deregister(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public boolean isClear() {
+        return this.isClear;
+    }
+
+    public boolean willBecomeObstructed() {
+        return rand.nextDouble() < DEBRIS_APPEARANCE_PROBABILITY;
+    }
+
+    public void setObstructed() {
+        var clearanceTime = rand.nextInt(MAX_RUNWAY_CLEARANCE_TIME);
+        teardownUpdatingBehaviour();
+        setupClearingBehaviour(clearanceTime);
+        isClear = false;
+        // TODO reschedule affected operations
+    }
+
+    private void setupClearingBehaviour(int clearanceTime) {
+        _clearingBehaviour = new RunwayClearingBehaviour(this, TICKRATE, clearanceTime);
+        addBehaviour(_clearingBehaviour);
+    }
+
+    private void teardownClearingBehaviour() {
+        removeBehaviour(_clearingBehaviour);
+        _clearingBehaviour = null;
+    }
+
+    private void setupUpdatingBehaviour() {
+        _updatingBehaviour = new RunwayUpdatingBehaviour(this, TICKRATE);
+        addBehaviour(_updatingBehaviour);
+    }
+
+    private void teardownUpdatingBehaviour() {
+        removeBehaviour(_updatingBehaviour);
+        _updatingBehaviour = null;
+    }
+
+    public void setClear() {
+        isClear = true;
+        teardownClearingBehaviour();
+        setupUpdatingBehaviour();
+    }
+
     public static class Operation {
         private final int airplaneId;
         private int duration;
@@ -61,88 +197,16 @@ public class Runway extends Agent {
         }
     }
 
-    final public static double DEBRIS_APPEARANCE_PROBABILITY = 0.1d;
-
-    final private Random rand = new Random();
-    final private TreeMap<Integer, Operation> operations = new TreeMap<>();
-
-    private RunwayClearingBehaviour _clearingBehaviour;
-
-    int id;
-    boolean isClear;
-
-    public Runway(){}
-
-    int getEarliestSlot(int minTime) {
-        var followingOperations = operations.tailMap(minTime);
-        var time = minTime;
-        for (var operation : followingOperations.entrySet()) {
-            if (minTime + Config.OPERATION_LENGTH <= operation.getKey())
-                break;
-            else
-                time = operation.getKey() + Config.OPERATION_LENGTH;
+    public static class RunwayUpdatingBehaviour extends TickerBehaviour {
+        public RunwayUpdatingBehaviour(Runway runway, int tickRate) {
+            super(runway, 1000 / tickRate);
         }
-        return time;
-    }
 
-    /*
-     *   The message will be the following :
-     *   " id isClear"
-     *
-     */
-
-    public Runway(String message){
-        String[] splitMessage = message.split(" ");
-        this.id = Integer.parseInt(splitMessage[0]);
-        this.isClear = splitMessage[1].equals("true");
-    }
-
-    protected void setup() {
-        DFAgentDescription description = new DFAgentDescription();
-        description.setName(getAID());
-        ServiceDescription service = new ServiceDescription();
-        service.setName("runway");
-        service.setType("runway");
-
-        description.addServices(service);
-
-        try {
-            DFService.register(this, description);
+        @Override
+        protected void onTick() {
+            var runway = (Runway) this.getAgent();
+            runway.updateOperations();
         }
-        catch(FIPAException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void takeDown() {
-        try {
-            DFService.deregister(this);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public int getId(){
-        return this.id;
-    }
-
-    public boolean isClear(){
-        return this.isClear;
-    }
-
-    public boolean willBecomeObstructed() {
-        return rand.nextDouble() < DEBRIS_APPEARANCE_PROBABILITY;
-    }
-
-    public void setObstructed() {
-        var clearanceTime = rand.nextInt(MAX_RUNWAY_CLEARANCE_TIME);
-        _clearingBehaviour = new RunwayClearingBehaviour(this, TICKRATE, clearanceTime);
-        // TODO reschedule affected operations
-    }
-
-    public void setClear() {
-        this._clearingBehaviour = null;
     }
 
     class ProposalBuilder extends ContractNetResponder {
