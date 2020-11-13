@@ -6,7 +6,6 @@ public class ArrivingAirplaneRequest implements Serializable {
 
     private int id;
     private int eta;
-    private int autonomy;
 
     public ArrivingAirplaneRequest() {
 
@@ -28,11 +27,4 @@ public class ArrivingAirplaneRequest implements Serializable {
         this.eta = eta;
     }
 
-    public int getAutonomy() {
-        return autonomy;
-    }
-
-    public void setAutonomy(int autonomy) {
-        this.autonomy = autonomy;
-    }
 }

@@ -18,9 +18,11 @@ import java.util.Vector;
 
 public class Airplane extends Agent {
 
-    private int id, waitTime = 0, timeToArrive;
-    private int fuelRemaining;
-    private boolean landed = false;
+    // private int id;
+    // private int waitTime;
+
+    private final int id;
+    private int waitTime, timeToArrive;
 
 
     /*
@@ -29,23 +31,16 @@ public class Airplane extends Agent {
      *
      */
 
-    public Airplane(String message) {
-        String[] splitMessage = message.split(" ");
-        this.id = Integer.parseInt(splitMessage[0]);
-        this.waitTime = Integer.parseInt(splitMessage[1]);
-        this.timeToArrive = Integer.parseInt(splitMessage[2]);
-        this.fuelRemaining = Integer.parseInt(splitMessage[3]);
-        this.landed = splitMessage[4].equals("true");
+    public Airplane(int id, int timeToArrive) {
+        this.id = id;
+        this.timeToArrive = timeToArrive;
+        this.waitTime = 0;
     }
 
     // Getters
 
     public int getId() {
         return id;
-    }
-
-    public int getFuelRemaining() {
-        return fuelRemaining;
     }
 
 
@@ -55,10 +50,6 @@ public class Airplane extends Agent {
 
     public int getTimeToArrive() {
         return timeToArrive;
-    }
-
-    public boolean isLanded(){
-        return landed;
     }
 
     @Override
@@ -83,7 +74,6 @@ public class Airplane extends Agent {
         ArrivingAirplaneRequest content = new ArrivingAirplaneRequest();
         content.setId(id);
         content.setEta(timeToArrive);
-        content.setAutonomy(fuelRemaining);
         try {
             request.setContentObject(content);
         } catch (IOException e) {
@@ -112,7 +102,7 @@ public class Airplane extends Agent {
 
         @Override
         protected Vector prepareRequests(ACLMessage request) {
-            Vector<ACLMessage> v = new Vector<ACLMessage>();
+            Vector<ACLMessage> v = new Vector<>();
             v.add(request);
             return v;
         }

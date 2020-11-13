@@ -12,10 +12,11 @@ import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
 
-public class DepartingAirplane extends Airplane{
+public class DepartingAirplane extends Airplane {
 
-    public DepartingAirplane(String message) {
-        super(message);
+
+    public DepartingAirplane(int id, int timeToArrive) {
+        super(id, timeToArrive);
     }
 
 }

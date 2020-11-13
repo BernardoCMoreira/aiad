@@ -13,8 +13,11 @@ import java.io.IOException;
 
 public class ArrivingAirplane extends Airplane {
 
-    public ArrivingAirplane(String message) {
-       super(message);
+    private int autonomy;
+
+    public ArrivingAirplane(int id, int timeToArrive, int autonomy) {
+        super(id, timeToArrive);
+        this.autonomy = autonomy;
     }
 
 }
