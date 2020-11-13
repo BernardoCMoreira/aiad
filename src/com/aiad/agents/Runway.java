@@ -7,6 +7,7 @@ import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.FailureException;
 import jade.domain.FIPAAgentManagement.NotUnderstoodException;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
@@ -14,6 +15,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.proto.ContractNetResponder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.TreeMap;
@@ -125,7 +127,6 @@ public class Runway extends Agent {
 
     public void setObstructed() {
         var clearanceTime = rand.nextInt(MAX_RUNWAY_CLEARANCE_TIME);
-        teardownUpdatingBehaviour();
         setupClearingBehaviour(clearanceTime);
         isClear = false;
         // TODO reschedule affected operations
@@ -136,28 +137,18 @@ public class Runway extends Agent {
         addBehaviour(_clearingBehaviour);
     }
 
-    private void teardownClearingBehaviour() {
-        removeBehaviour(_clearingBehaviour);
-        _clearingBehaviour = null;
-    }
-
     private void setupUpdatingBehaviour() {
         _updatingBehaviour = new RunwayUpdatingBehaviour(this, TICKRATE);
+        _updatingBehaviour.setFixedPeriod(true);
         addBehaviour(_updatingBehaviour);
-    }
-
-    private void teardownUpdatingBehaviour() {
-        removeBehaviour(_updatingBehaviour);
-        _updatingBehaviour = null;
     }
 
     public void setClear() {
         isClear = true;
-        teardownClearingBehaviour();
-        setupUpdatingBehaviour();
+        _clearingBehaviour = null;
     }
 
-    public static class Operation {
+    public static class Operation implements Serializable {
         private final int airplaneId;
         private int duration;
 
@@ -208,7 +199,7 @@ public class Runway extends Agent {
         }
     }
 
-    class ProposalBuilder extends ContractNetResponder {
+    private static class ProposalBuilder extends ContractNetResponder {
 
         public ProposalBuilder(Agent agent, MessageTemplate mt) {
             super(agent, mt);
@@ -225,13 +216,14 @@ public class Runway extends Agent {
                 var call = (RunwayOperationCfp) cfp.getContentObject();
                 var slot = runway.getEarliestSlot(call.getMinTime());
 
+                runway._updatingBehaviour.reset();
+
                 var proposal = RunwayOperationProposal.build(runway.getId(), slot);
                 var reply = cfp.createReply();
                 reply.setPerformative(ACLMessage.PROPOSE);
                 reply.setContentObject(proposal);
 
-                System.out.println("Sent proposal");
-
+                System.out.println("Sending proposal " + proposal);
                 return reply;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -240,17 +232,27 @@ public class Runway extends Agent {
         }
 
         @Override
-        protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) {
-            System.out.println(myAgent.getLocalName() + " got an accept!");
+        protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) throws FailureException {
+            var runway = (Runway) getAgent();
+            try {
+                // schedule the operation
+                var airplaneId = ((RunwayOperationCfp) cfp.getContentObject()).getAirplaneId();
+                var agreedOperationTime = ((RunwayOperationProposal) propose.getContentObject()).getOperationTime();
+                var actualOperationTime = agreedOperationTime - runway._updatingBehaviour.getTickCount();
 
-            // realize the activity that was proposed
+                var operation = new Operation(airplaneId, Config.OPERATION_LENGTH);
 
-            // create a reply informing if the activity was completed successfully
-            ACLMessage result = accept.createReply();
-            result.setPerformative(ACLMessage.INFORM);
-            result.setContent("this is the result");
+                runway.operations.put(actualOperationTime, operation);
 
-            return result;
+                // send scheduled operation
+                ACLMessage result = accept.createReply();
+                result.setPerformative(ACLMessage.INFORM);
+                result.setContentObject(operation);
+
+                return result;
+            } catch (Exception e) {
+                throw new FailureException(e.toString());
+            }
         }
     }
 }
