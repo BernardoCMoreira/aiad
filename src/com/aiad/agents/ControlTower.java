@@ -7,14 +7,14 @@ import com.aiad.messages.RunwayOperationProposal;
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFSubscriber;
+import jade.domain.FIPAAgentManagement.*;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
+import jade.proto.AchieveREResponder;
 import jade.proto.ContractNetInitiator;
 import jade.proto.SubscriptionInitiator;
 
@@ -32,42 +32,6 @@ public class ControlTower extends Agent {
         runways = new ArrayList<>();
     }
 
-    public void handleMessage(ACLMessage message) throws UnreadableException {
-
-        switch (message.getPerformative()) {
-            case ACLMessage.REQUEST:
-
-                System.out.println("Request received");
-
-                int airplaneId, minTime;
-
-                // get airplane information
-                ArrivingAirplaneRequest airplaneRequest = (ArrivingAirplaneRequest) message.getContentObject();
-                airplaneId = airplaneRequest.getId();
-                minTime = airplaneRequest.getEta();
-
-                // start contractnet
-                ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-
-                RunwayOperationCfp cfpContent = new RunwayOperationCfp();
-                cfpContent.setAirplaneId(airplaneId);
-                cfpContent.setMinTime(minTime);
-
-                try {
-                    cfp.setContentObject(cfpContent);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                this.addBehaviour(new RunwayAllocator(this, cfp, message.createReply()));
-
-                break;
-            default:
-                System.err.println("NOT A REQUEST");
-                System.out.println(message);
-                break;
-        }
-    }
-
     @Override
     protected void setup() {
         DFAgentDescription description = new DFAgentDescription();
@@ -83,28 +47,13 @@ public class ControlTower extends Agent {
             e.printStackTrace();
         }
 
-        addBehaviour(new CyclicBehaviour() {
-            @Override
-            public void action() {
-                MessageTemplate msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
-                //Receive message
-                ACLMessage msg = receive(msgTemplate);
-                if (msg != null) {
-                    try {
-                        handleMessage(msg);
-                    } catch (UnreadableException e) {
-                        e.printStackTrace();
-                    }
-                } else block();
-            }
-        });
-
         DFAgentDescription runwayTemplate = new DFAgentDescription();
         ServiceDescription runwayService = new ServiceDescription();
         runwayService.setType("runway");
         runwayTemplate.addServices(runwayService);
-
         addBehaviour(new RunwaySubscriber(this, runwayTemplate));
+
+        addBehaviour(new AirplaneRequestResponder(this));
     }
 
     public int getTotalArrivals() {
@@ -122,6 +71,7 @@ public class ControlTower extends Agent {
             e.printStackTrace();
         }
     }
+
 
 
     class RunwaySubscriber extends SubscriptionInitiator {
@@ -143,6 +93,61 @@ public class ControlTower extends Agent {
             } catch (FIPAException fe) {
                 fe.printStackTrace();
             }
+        }
+
+    }
+
+    class AirplaneRequestResponder extends CyclicBehaviour {
+
+        public AirplaneRequestResponder(Agent a) {
+            super(a);
+        }
+
+        @Override
+        public void action() {
+            MessageTemplate msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
+
+            ACLMessage msg = receive(msgTemplate);
+            if (msg != null) {
+                switch (msg.getPerformative()) {
+                    case ACLMessage.REQUEST:
+                        handleRequest(msg);
+                        break;
+                    default:
+                        break;
+                }
+            } else block();
+        }
+
+        private void handleRequest(ACLMessage request) {
+            System.out.println("Request received");
+
+            int airplaneId, minTime;
+
+            // get airplane information
+            ArrivingAirplaneRequest airplaneRequest = null;
+            try {
+                airplaneRequest = (ArrivingAirplaneRequest) request.getContentObject();
+            } catch (UnreadableException e) {
+                e.printStackTrace();
+            }
+            airplaneId = airplaneRequest.getId();
+            minTime = airplaneRequest.getEta();
+
+            // start contractnet
+            ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+
+            RunwayOperationCfp cfpContent = new RunwayOperationCfp();
+            cfpContent.setAirplaneId(airplaneId);
+            cfpContent.setMinTime(minTime);
+
+            try {
+                cfp.setContentObject(cfpContent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            myAgent.addBehaviour(new RunwayAllocator(myAgent, cfp, request.createReply()));
         }
 
     }
@@ -260,6 +265,9 @@ public class ControlTower extends Agent {
             }
         }
 
+
         // TODO: method to receive inform messages related to the activity
     }
+
+
 }
