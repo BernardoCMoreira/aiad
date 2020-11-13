@@ -18,6 +18,7 @@ public class JADELauncher {
         //p1.setParameter(...);
         ContainerController mainContainer = rt.createMainContainer(p1);
 
+        // create an AirplaneGenerator agent
         AgentController ac1;
         try {
             ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(10000, mainContainer));
@@ -26,6 +27,7 @@ public class JADELauncher {
             e.printStackTrace();
         }
 
+        // create the ControlTower agent
         AgentController ac4;
         try {
             ac4 = mainContainer.acceptNewAgent("tower", new ControlTower());
@@ -33,6 +35,8 @@ public class JADELauncher {
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
+
+
         AgentController ac5;
         try {
             ac5 = mainContainer.acceptNewAgent("runway1", new Runway(1));
