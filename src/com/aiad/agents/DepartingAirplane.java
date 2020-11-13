@@ -1,25 +1,26 @@
 package com.aiad.agents;
-import com.aiad.messages.AirplaneInform;
+
 import com.aiad.messages.ArrivingAirplaneRequest;
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.FIPANames;
-import jade.lang.acl.ACLMessage;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.domain.FIPANames;
+import jade.lang.acl.ACLMessage;
+
 import java.io.IOException;
 
-public class ArrivingAirplane extends Airplane {
+public class DepartingAirplane extends Airplane{
 
-    public ArrivingAirplane(String message) {
-       super(message);
+    public DepartingAirplane(String message) {
+        super(message);
     }
 
     @Override
     protected void setup() {
-        System.out.println("\n Created new arriving airplane : " + getLocalName() + " with attributes : " + getId() + "\t" + getWaitTime() +"\t"+  getTimeToArrive() +"\t" + getFuelRemaining() + "\t" +  isLanded() +  "\n");
+        System.out.println("\n Created new departing airplane : " + getLocalName() + " with attributes : " + getId()+ "\t" + getWaitTime() +"\t"+  getTimeToArrive() +"\t" + getFuelRemaining() + "\t" +  isLanded() +  "\n");
         DFAgentDescription description = new DFAgentDescription();
         description.setName(getAID());
         ServiceDescription service = new ServiceDescription();
@@ -80,5 +81,4 @@ public class ArrivingAirplane extends Airplane {
             e.printStackTrace();
         }
     }
-
 }
