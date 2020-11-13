@@ -88,7 +88,7 @@ public class ControlTower extends Agent {
                 for (int i = 0; i < dfds.length; i++) {
                     AID agent = dfds[i].getName();
                     controlTower.runways.add(agent);
-                    System.out.println("new runway added : " + agent.getLocalName());
+                    System.out.println("CONTROL_TOWER :: Runway added : " + agent.getLocalName());
                 }
             } catch (FIPAException fe) {
                 fe.printStackTrace();
@@ -120,7 +120,7 @@ public class ControlTower extends Agent {
         }
 
         private void handleRequest(ACLMessage request) {
-            System.out.println("Request received");
+            System.out.println("CONTROL_TOWER :: Request received from : " + request.getSender().getLocalName());
 
             int airplaneId, minTime;
 
@@ -173,7 +173,7 @@ public class ControlTower extends Agent {
                 cfp.addReceiver(runways.get(i));
             }
 
-            System.out.println("CFPs prepared");
+            System.out.println("CONTROL_TOWER :: CFPs prepared");
 
             v.add(cfp);
             return v;
@@ -185,7 +185,7 @@ public class ControlTower extends Agent {
             int bestRunwayId = 0;
             int minOperationTime = Integer.MAX_VALUE;
 
-            System.out.println("Received all " + responses.size() + " proposals");
+            System.out.println("CONTROL_TOWER :: Received " + responses.size() + " proposals");
 
             try {
                 minOperationTime = ((RunwayOperationProposal) ((ACLMessage) responses.get(0)).getContentObject()).getOperationTime();
@@ -227,8 +227,8 @@ public class ControlTower extends Agent {
                 acceptances.add(reply);
             }
 
-            System.out.println("All proposals considered");
-            System.out.println("Best proposal: " + minOperationTime);
+            System.out.println("CONTROL_TOWER :: All proposals considered");
+            System.out.println("CONTROL_TOWER :: Best proposal : " + minOperationTime);
 
             // create reply for accepted proposal
             ACLMessage reply = ((ACLMessage) responses.get(bestProposalIndex)).createReply();
@@ -265,9 +265,11 @@ public class ControlTower extends Agent {
             }
         }
 
+        @Override
+        protected void handleInform(ACLMessage inform) {
+            System.out.println("CONTROL_TOWER :: Received an inform message");
+        }
 
-        // TODO: method to receive inform messages related to the activity
     }
-
 
 }
