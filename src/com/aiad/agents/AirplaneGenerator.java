@@ -48,8 +48,10 @@ public class AirplaneGenerator extends Agent {
             if (new Random().nextBoolean()) {   // arriving
                 int fuelRemaining = timeToArrive + new Random().nextInt(5);
                 airplane = new ArrivingAirplane(airplaneId, timeToArrive, fuelRemaining);
+                System.out.println("GENERATOR :: ARRIVING : airplane" + airplaneId + " ETA : " + timeToArrive + " FUEL : " + fuelRemaining);
             } else {    // departing
                 airplane = new DepartingAirplane(airplaneId, timeToArrive);
+                System.out.println("GENERATOR :: DEPARTING : airplane" + airplaneId + " ETA : " + timeToArrive);
             }
 
             try {
