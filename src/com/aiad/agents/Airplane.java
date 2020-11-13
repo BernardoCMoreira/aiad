@@ -1,7 +1,7 @@
 package com.aiad.agents;
 
 import com.aiad.messages.AirplaneInform;
-import com.aiad.messages.ArrivingAirplaneRequest;
+import com.aiad.messages.AirplaneRequest;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
@@ -18,18 +18,8 @@ import java.util.Vector;
 
 public class Airplane extends Agent {
 
-    // private int id;
-    // private int waitTime;
-
-    private final int id;
-    private int waitTime, timeToArrive;
-
-
-    /*
-     *   The message will be the following :
-     *   " id waitTime timeToArrive fuelRemaining landed"
-     *
-     */
+    protected final int id;
+    protected int waitTime, timeToArrive;
 
     public Airplane(int id, int timeToArrive) {
         this.id = id;
@@ -37,12 +27,9 @@ public class Airplane extends Agent {
         this.waitTime = 0;
     }
 
-    // Getters
-
     public int getId() {
         return id;
     }
-
 
     public int getWaitTime() {
         return waitTime;
@@ -51,6 +38,24 @@ public class Airplane extends Agent {
     public int getTimeToArrive() {
         return timeToArrive;
     }
+
+
+    protected ACLMessage createRequestMessage() {
+        ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
+        AirplaneRequest content = new AirplaneRequest();
+        content.setId(id);
+        content.setTimeToArrive(timeToArrive);
+        try {
+            request.setContentObject(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        request.addReceiver(new AID("tower", AID.ISLOCALNAME));
+        request.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+
+        return request;
+    }
+
 
     @Override
     protected void setup() {
@@ -69,21 +74,10 @@ public class Airplane extends Agent {
         }
 
         // setup the request message
-        ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
-        // TODO: change this content
-        ArrivingAirplaneRequest content = new ArrivingAirplaneRequest();
-        content.setId(id);
-        content.setEta(timeToArrive);
-        try {
-            request.setContentObject(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        request.addReceiver(new AID("tower", AID.ISLOCALNAME));
-        request.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
-
+        ACLMessage request = createRequestMessage();
         addBehaviour(new AirplaneRequestInitiator(this, request));
     }
+
 
     protected void takeDown() {
         try {

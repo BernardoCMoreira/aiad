@@ -2,29 +2,19 @@ package com.aiad.messages;
 
 import java.io.Serializable;
 
-public class ArrivingAirplaneRequest implements Serializable {
+public class ArrivingAirplaneRequest extends AirplaneRequest {
 
-    private int id;
-    private int eta;
+    private int fuelRemaining;
 
     public ArrivingAirplaneRequest() {
-
+        super();
     }
 
-    public int getId() {
-        return id;
+    public int getFuelRemaining() {
+        return fuelRemaining;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFuelRemaining(int fuelRemaining) {
+        this.fuelRemaining = fuelRemaining;
     }
-
-    public int getEta() {
-        return eta;
-    }
-
-    public void setEta(int eta) {
-        this.eta = eta;
-    }
-
 }

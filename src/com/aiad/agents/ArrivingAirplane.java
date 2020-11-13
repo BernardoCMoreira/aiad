@@ -1,23 +1,36 @@
 package com.aiad.agents;
-import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.ArrivingAirplaneRequest;
 import jade.core.AID;
-import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
+
 import java.io.IOException;
 
 public class ArrivingAirplane extends Airplane {
 
-    private int autonomy;
+    private int fuelRemaining;
 
-    public ArrivingAirplane(int id, int timeToArrive, int autonomy) {
+    public ArrivingAirplane(int id, int timeToArrive, int fuelRemaining) {
         super(id, timeToArrive);
-        this.autonomy = autonomy;
+        this.fuelRemaining = fuelRemaining;
     }
 
+
+    @Override
+    protected ACLMessage createRequestMessage() {
+        ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
+        ArrivingAirplaneRequest content = new ArrivingAirplaneRequest();
+        content.setId(id);
+        content.setTimeToArrive(timeToArrive);
+        content.setFuelRemaining(fuelRemaining);
+        try {
+            request.setContentObject(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        request.addReceiver(new AID("tower", AID.ISLOCALNAME));
+        request.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+
+        return request;
+    }
 }

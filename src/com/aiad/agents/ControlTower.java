@@ -1,25 +1,18 @@
 package com.aiad.agents;
 
-import com.aiad.messages.AirplaneInform;
-import com.aiad.messages.ArrivingAirplaneRequest;
-import com.aiad.messages.RunwayOperationCfp;
-import com.aiad.messages.RunwayOperationProposal;
+import com.aiad.messages.*;
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.DFSubscriber;
 import jade.domain.FIPAAgentManagement.*;
-import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
-import jade.proto.AchieveREResponder;
 import jade.proto.ContractNetInitiator;
 import jade.proto.SubscriptionInitiator;
 
 import java.io.IOException;
-import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -73,7 +66,6 @@ public class ControlTower extends Agent {
     }
 
 
-
     class RunwaySubscriber extends SubscriptionInitiator {
         public RunwaySubscriber(ControlTower agent, DFAgentDescription template) {
             super(agent, DFService.createSubscriptionMessage(agent, getDefaultDF(), template, null));
@@ -124,17 +116,16 @@ public class ControlTower extends Agent {
 
             int airplaneId, minTime;
 
-            // get airplane information
-            ArrivingAirplaneRequest airplaneRequest = null;
+
+            AirplaneRequest airplaneRequest = null;
             try {
-                airplaneRequest = (ArrivingAirplaneRequest) request.getContentObject();
+                airplaneRequest = (AirplaneRequest) request.getContentObject();
             } catch (UnreadableException e) {
                 e.printStackTrace();
             }
             airplaneId = airplaneRequest.getId();
-            minTime = airplaneRequest.getEta();
+            minTime = airplaneRequest.getTimeToArrive();
 
-            // start contractnet
             ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 
             RunwayOperationCfp cfpContent = new RunwayOperationCfp();
@@ -147,23 +138,21 @@ public class ControlTower extends Agent {
                 e.printStackTrace();
             }
 
-            myAgent.addBehaviour(new RunwayAllocator(myAgent, cfp, request.createReply()));
+            myAgent.addBehaviour(new RunwayAllocator(myAgent, cfp, request));
         }
 
     }
 
     class RunwayAllocator extends ContractNetInitiator {
 
-        private ACLMessage replyTemplate;
+        // the request message that started the protocol
+        private ACLMessage request;
 
-        public RunwayAllocator(Agent a, ACLMessage cfp, ACLMessage replyTemplate) {
+        public RunwayAllocator(Agent a, ACLMessage cfp, ACLMessage request) {
             super(a, cfp);
-            this.replyTemplate = replyTemplate;
+            this.request = request;
         }
 
-        private ACLMessage getReplyTemplate() {
-            return (ACLMessage) replyTemplate.clone();
-        }
 
         protected Vector prepareCfps(ACLMessage cfp) {
             ArrayList<AID> runways = ((ControlTower) myAgent).runways;
@@ -238,14 +227,25 @@ public class ControlTower extends Agent {
 
 
             if (!responses.isEmpty()) { // if plane can land
+
+                // check what type of request this was
+                // if request.getContentObject instanceof ArrivingAirplaneRequest
+                    // if best proposal <= fuelRemaining
+                        // send agree
+                        // send inform
+                    // else
+                        // send refuse
+                // else
+                    // send agree
+
                 // send agree (can land)
-                ACLMessage agree = getReplyTemplate();
+                ACLMessage agree = request.createReply();
                 agree.setPerformative(ACLMessage.AGREE);
                 agree.setContent("Agree to airplane request");
                 send(agree);
 
                 // send inform (runway id, min time)
-                ACLMessage inform = getReplyTemplate();
+                ACLMessage inform = request.createReply();
                 inform.setPerformative(ACLMessage.INFORM);
                 AirplaneInform content = new AirplaneInform();
                 content.setRunwayId(bestRunwayId);
@@ -258,7 +258,7 @@ public class ControlTower extends Agent {
                 send(inform);
             } else {    // if plane cannot land
                 // send refuse
-                ACLMessage refuse = getReplyTemplate();
+                ACLMessage refuse = request.createReply();
                 refuse.setPerformative(ACLMessage.REFUSE);
                 refuse.setContent("Refuse to airplane request");
                 send(refuse);
