@@ -4,6 +4,7 @@ import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.AirplaneRequest;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -39,6 +40,8 @@ public class Airplane extends Agent {
         return timeToArrive;
     }
 
+    //setter
+    public void setTimeToArrive(int timeUpdated){timeToArrive = timeUpdated;}
 
     protected ACLMessage createRequestMessage() {
         ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
@@ -76,6 +79,15 @@ public class Airplane extends Agent {
         // setup the request message
         ACLMessage request = createRequestMessage();
         addBehaviour(new AirplaneRequestInitiator(this, request));
+        addBehaviour(new TickerBehaviour(this, 1000){
+            @Override
+            protected void onTick() {
+                if(getTimeToArrive() > 0 ){
+                setTimeToArrive(getTimeToArrive() - 1);
+                System.out.println("Airplane : " + getId()  + " \tTime to Arrive : " + getTimeToArrive());
+                }
+            }
+        });
     }
 
 

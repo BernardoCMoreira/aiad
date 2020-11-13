@@ -1,9 +1,9 @@
 package com.aiad.agents;
 import com.aiad.messages.ArrivingAirplaneRequest;
 import jade.core.AID;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
-
 import java.io.IOException;
 
 public class ArrivingAirplane extends Airplane {
@@ -33,4 +33,21 @@ public class ArrivingAirplane extends Airplane {
 
         return request;
     }
+
+    @Override
+    protected void setup() {
+        super.setup();
+        addBehaviour(new TickerBehaviour(this, 1000){
+            @Override
+            protected void onTick() {
+                if(fuelRemaining > 0 ){
+                    fuelRemaining -- ;
+                    System.out.println("Airplane : " + getId() + " \tFuel Remaining : " + fuelRemaining );
+                }
+            }
+        });
+
+
+    }
+
 }
