@@ -1,4 +1,5 @@
 package com.aiad.agents;
+import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.ArrivingAirplaneRequest;
 import jade.core.Agent;
 import jade.core.AID;
@@ -9,6 +10,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.lang.acl.UnreadableException;
 
 import java.io.IOException;
 
@@ -115,6 +117,12 @@ public class ArrivingAirplane extends Agent {
 
     public void handleInform(ACLMessage inform) {
         System.out.println("I received an inform!");
+        try {
+            AirplaneInform content = (AirplaneInform) inform.getContentObject();
+            System.out.println(content.toString());
+        } catch (UnreadableException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleFailure(ACLMessage failure) {

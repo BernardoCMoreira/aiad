@@ -1,5 +1,6 @@
 package com.aiad.agents;
 
+import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.ArrivingAirplaneRequest;
 import com.aiad.messages.RunwayOperationCfp;
 import com.aiad.messages.RunwayOperationProposal;
@@ -57,34 +58,8 @@ public class ControlTower extends Agent {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                this.addBehaviour(new RunwayAllocator(this, cfp));
-                // check result of contractnet
+                this.addBehaviour(new RunwayAllocator(this, cfp, message.createReply()));
 
-                // if can land
-                    // send agree (can land)
-                    // if ok
-                        // send inform (runway number)
-                    // else
-                        // send failure (try again/go to another airport)
-                // else
-                    // send refuse (try again later/go to another airport)
-
-
-
-
-                // can send refuse or agree
-                // Send agree
-                ACLMessage reply = new ACLMessage(ACLMessage.AGREE);
-                reply.setContent("Esta mensagem é um Agree para o avião");
-                reply.addReceiver(message.getSender());
-                reply.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
-                send(reply);
-                //Send notification
-                ACLMessage notification = new ACLMessage(ACLMessage.INFORM);
-                notification.setContent("Esta mensagem é um INFORM para o avião");
-                notification.addReceiver(message.getSender());
-                notification.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
-                send(notification);
                 break;
             default:
                 System.err.println("NOT A REQUEST");
@@ -173,8 +148,16 @@ public class ControlTower extends Agent {
     }
 
     class RunwayAllocator extends ContractNetInitiator {
-        public RunwayAllocator(Agent a, ACLMessage cfp) {
+
+        private ACLMessage replyTemplate;
+
+        public RunwayAllocator(Agent a, ACLMessage cfp, ACLMessage replyTemplate) {
             super(a, cfp);
+            this.replyTemplate = replyTemplate;
+        }
+
+        private ACLMessage getReplyTemplate() {
+            return (ACLMessage) replyTemplate.clone();
         }
 
         protected Vector prepareCfps(ACLMessage cfp) {
@@ -194,12 +177,14 @@ public class ControlTower extends Agent {
         @Override
         protected void handleAllResponses(Vector responses, Vector acceptances) {
             int bestProposalIndex = 0;
+            int bestRunwayId = 0;
             int minOperationTime = Integer.MAX_VALUE;
 
             System.out.println("Received all " + responses.size() + " proposals");
 
             try {
                 minOperationTime = ((RunwayOperationProposal) ((ACLMessage) responses.get(0)).getContentObject()).getOperationTime();
+                bestRunwayId = ((RunwayOperationProposal) ((ACLMessage) responses.get(0)).getContentObject()).getRunwayId();
             } catch (UnreadableException e) {
                 e.printStackTrace();
             }
@@ -227,6 +212,7 @@ public class ControlTower extends Agent {
                 if (isBetter) {
                     rejectedProposalIndex = bestProposalIndex;      // previous best proposal index
                     bestProposalIndex = i;                          // new best proposal index
+                    bestRunwayId = runwayId;
                 }
 
                 // create reply for rejected proposal
@@ -244,6 +230,34 @@ public class ControlTower extends Agent {
             reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
             reply.setContent("proposal accepted");
             acceptances.add(reply);
+
+
+            if (!responses.isEmpty()) { // if plane can land
+                // send agree (can land)
+                ACLMessage agree = getReplyTemplate();
+                agree.setPerformative(ACLMessage.AGREE);
+                agree.setContent("Agree to airplane request");
+                send(agree);
+
+                // send inform (runway id, min time)
+                ACLMessage inform = getReplyTemplate();
+                inform.setPerformative(ACLMessage.INFORM);
+                AirplaneInform content = new AirplaneInform();
+                content.setRunwayId(bestRunwayId);
+                content.setWaitTime(minOperationTime);
+                try {
+                    inform.setContentObject(content);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                send(inform);
+            } else {    // if plane cannot land
+                // send refuse
+                ACLMessage refuse = getReplyTemplate();
+                refuse.setPerformative(ACLMessage.REFUSE);
+                refuse.setContent("Refuse to airplane request");
+                send(refuse);
+            }
         }
 
         // TODO: method to receive inform messages related to the activity
