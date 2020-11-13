@@ -219,55 +219,67 @@ public class ControlTower extends Agent {
             System.out.println("CONTROL_TOWER :: All proposals considered");
             System.out.println("CONTROL_TOWER :: Best proposal : " + minOperationTime);
 
-            // create reply for accepted proposal
-            ACLMessage reply = ((ACLMessage) responses.get(bestProposalIndex)).createReply();
-            reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-            reply.setContent("proposal accepted");
-            acceptances.add(reply);
 
+            Object content = null;
+            try {
+                content = request.getContentObject();
+            } catch (UnreadableException e) {
+                e.printStackTrace();
+            }
 
-            if (!responses.isEmpty()) { // if plane can land
+            // refuse if there are no proposals or the request came from an arriving plane and the best proposal is greater than the plane's autonomy
+            boolean refuse = responses.isEmpty() || (content instanceof ArrivingAirplaneRequest && minOperationTime > ((ArrivingAirplaneRequest) content).getFuelRemaining());
 
-                // check what type of request this was
-                // if request.getContentObject instanceof ArrivingAirplaneRequest
-                    // if best proposal <= fuelRemaining
-                        // send agree
-                        // send inform
-                    // else
-                        // send refuse
-                // else
-                    // send agree
+            if (refuse) {
+                // send refuse to airplane
+                sendRefuse(request.createReply());
 
-                // send agree (can land)
-                ACLMessage agree = request.createReply();
-                agree.setPerformative(ACLMessage.AGREE);
-                agree.setContent("Agree to airplane request");
-                send(agree);
+                // reject the best proposal
+                ACLMessage reply = ((ACLMessage) responses.get(bestProposalIndex)).createReply();
+                reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
+                reply.setContent("proposal rejected");
+                acceptances.add(reply);
+            } else {
+                // send agree and inform to airplane
+                sendAgree(request.createReply());
+                sendInform(request.createReply(), bestRunwayId, minOperationTime);
 
-                // send inform (runway id, min time)
-                ACLMessage inform = request.createReply();
-                inform.setPerformative(ACLMessage.INFORM);
-                AirplaneInform content = new AirplaneInform();
-                content.setRunwayId(bestRunwayId);
-                content.setWaitTime(minOperationTime);
-                try {
-                    inform.setContentObject(content);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                send(inform);
-            } else {    // if plane cannot land
-                // send refuse
-                ACLMessage refuse = request.createReply();
-                refuse.setPerformative(ACLMessage.REFUSE);
-                refuse.setContent("Refuse to airplane request");
-                send(refuse);
+                // accept the best proposal
+                ACLMessage reply = ((ACLMessage) responses.get(bestProposalIndex)).createReply();
+                reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+                reply.setContent("proposal accepted");
+                acceptances.add(reply);
             }
         }
 
         @Override
         protected void handleInform(ACLMessage inform) {
             System.out.println("CONTROL_TOWER :: Received an inform message");
+        }
+
+        private void sendRefuse(ACLMessage refuse) {
+            refuse.setPerformative(ACLMessage.REFUSE);
+            refuse.setContent("Refuse to airplane request");
+            send(refuse);
+        }
+
+        private void sendAgree(ACLMessage agree) {
+            agree.setPerformative(ACLMessage.AGREE);
+            agree.setContent("Agree to airplane request");
+            send(agree);
+        }
+
+        private void sendInform(ACLMessage inform, int runwayId, int operationTime) {
+            inform.setPerformative(ACLMessage.INFORM);
+            AirplaneInform content = new AirplaneInform();
+            content.setRunwayId(runwayId);
+            content.setWaitTime(operationTime);
+            try {
+                inform.setContentObject(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            send(inform);
         }
 
     }

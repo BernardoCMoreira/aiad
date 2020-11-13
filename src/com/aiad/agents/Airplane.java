@@ -40,6 +40,10 @@ public class Airplane extends Agent {
         return timeToArrive;
     }
 
+    protected void log(String message) {
+        System.out.println("AIRPLANE :: airplane" + id + " :: " + message);
+    }
+
     //setter
     public void setTimeToArrive(int timeUpdated){timeToArrive = timeUpdated;}
 
@@ -115,20 +119,20 @@ public class Airplane extends Agent {
 
         @Override
         protected void handleAgree(ACLMessage agree) {
-            System.out.println("Received an agree message.");
+            log("Received an agree.");
         }
 
         @Override
         protected void handleRefuse(ACLMessage refuse) {
-            System.out.println("Received a refuse message.");
+            log("Received a refuse.");
         }
 
         @Override
         protected void handleInform(ACLMessage inform) {
-            System.out.println("Received an inform message.");
+            log("Received an inform.");
             try {
                 AirplaneInform content = (AirplaneInform) inform.getContentObject();
-                System.out.println(content.toString());
+                log(content.toString());
             } catch (UnreadableException e) {
                 e.printStackTrace();
             }
@@ -136,7 +140,7 @@ public class Airplane extends Agent {
 
         @Override
         protected void handleFailure(ACLMessage failure) {
-            System.out.println("Received a failure message.");
+            log("Received a failure.");
         }
     }
 }

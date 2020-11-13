@@ -230,7 +230,7 @@ public class Runway extends Agent {
                 reply.setPerformative(ACLMessage.PROPOSE);
                 reply.setContentObject(proposal);
 
-                System.out.println("Sent proposal");
+                System.out.println("RUNWAY :: " + myAgent.getLocalName() + " :: Sent proposal.");
 
                 return reply;
             } catch (Exception e) {
@@ -241,7 +241,7 @@ public class Runway extends Agent {
 
         @Override
         protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) {
-            System.out.println(myAgent.getLocalName() + " got an accept!");
+            System.out.println("RUNWAY :: " + myAgent.getLocalName() + " :: Received an accept.");
 
             // realize the activity that was proposed
 
