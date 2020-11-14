@@ -28,6 +28,7 @@ public class ArrivingAirplane extends Airplane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         request.addReceiver(new AID("tower", AID.ISLOCALNAME));
         request.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
 
@@ -43,6 +44,10 @@ public class ArrivingAirplane extends Airplane {
                 if(fuelRemaining > 0 ){
                     fuelRemaining -- ;
                     System.out.println("Airplane : " + getId() + " \tFuel Remaining : " + fuelRemaining );
+                    if(getTimeToArrive() == 0){
+                        System.out.println("Airplane: " + getId() + " LANDED !");
+                        doDelete();
+                    }
                 }
             }
         });
