@@ -1,5 +1,6 @@
 package com.aiad.agents;
 
+import com.aiad.Config;
 import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.AirplaneRequest;
 import jade.core.AID;
@@ -14,6 +15,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import jade.proto.AchieveREInitiator;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
 

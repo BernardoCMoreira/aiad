@@ -1,11 +1,15 @@
 package com.aiad.agents;
 
+import com.aiad.Config;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class AirplaneGenerator extends Agent {
@@ -13,15 +17,49 @@ public class AirplaneGenerator extends Agent {
     public int airplaneCounter;
     public ContainerController controller;
 
+    protected FileWriter creationLog;
+
     public AirplaneGenerator(int creationRate, ContainerController controller) {
         this.creationRate = creationRate;
         this.airplaneCounter = 0;
         this.controller = controller;
+
+        File file = new File(Config.AIRPLANE_CREATION_LOG);
+        try {
+            this.creationLog = new FileWriter(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void setup() {
         addBehaviour(new AirplaneCreator(this, this.creationRate));
+    }
+
+    protected void logAirplaneCreation(Airplane airplane) {
+        try {
+            if (airplane instanceof ArrivingAirplane) {
+                ArrivingAirplane arrivingAirplane = (ArrivingAirplane) airplane;
+                this.creationLog.append(arrivingAirplane.id + ", arriving, " + arrivingAirplane.timeToArrive + ", " + arrivingAirplane.fuelRemaining + "\n");
+            } else {
+                DepartingAirplane departingAirplane = (DepartingAirplane) airplane;
+                this.creationLog.append(departingAirplane.id + ", departing, " + departingAirplane.timeToArrive + ", " + "NA\n");
+            }
+            this.creationLog.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void takeDown() {
+        super.takeDown();
+        try {
+            this.creationLog.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     class AirplaneCreator extends TickerBehaviour {
@@ -61,6 +99,8 @@ public class AirplaneGenerator extends Agent {
                 e.printStackTrace();
             }
 
+            logAirplaneCreation((Airplane) airplane);
         }
+
     }
 }

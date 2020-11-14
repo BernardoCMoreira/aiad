@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class ArrivingAirplane extends Airplane {
 
-    private int fuelRemaining;
+    protected int fuelRemaining;
 
     public ArrivingAirplane(int id, int timeToArrive, int fuelRemaining) {
         super(id, timeToArrive);
