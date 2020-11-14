@@ -25,6 +25,14 @@ public class ControlTower extends Agent {
         runways = new ArrayList<>();
     }
 
+    protected void incrementArrivals() {
+        this.arrivalCounter++;
+    }
+
+    protected void incrementDepartures() {
+        this.departureCounter++;
+    }
+
     @Override
     protected void setup() {
         DFAgentDescription description = new DFAgentDescription();
@@ -239,6 +247,13 @@ public class ControlTower extends Agent {
                 reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
                 reply.setContent("proposal rejected");
                 acceptances.add(reply);
+
+                ControlTower controlTower = (ControlTower) myAgent;
+                if (content instanceof ArrivingAirplaneRequest) {
+                    controlTower.incrementArrivals();
+                } else {
+                    controlTower.incrementDepartures();
+                }
             } else {
                 // send agree and inform to airplane
                 sendAgree(request.createReply());
