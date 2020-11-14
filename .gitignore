@@ -75,3 +75,5 @@ fabric.properties
 
 APDescription.txt
 MTPs-Main-Container.txt
+creation_log.csv
+allocation_log.csv
