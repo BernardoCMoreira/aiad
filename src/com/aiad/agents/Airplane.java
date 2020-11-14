@@ -5,6 +5,7 @@ import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.AirplaneRequest;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -137,6 +138,28 @@ public class Airplane extends Agent {
                 log(content.toString());
                 //Wait time already ensures the runway time and the time to arrive
                 setTimeToArrive(content.getWaitTime());
+                getAgent().addBehaviour(new Behaviour(getAgent()) {
+                    private boolean cancelled = false;
+                    @Override
+                    public void action() {
+                        var message = receive();
+                        if (message == null) return;
+
+                        if (message.getContent().equals("Cancelled")) {
+                            var airplane = (Airplane) getAgent();
+                            airplane.addBehaviour(new AirplaneRequestInitiator(airplane, airplane.createRequestMessage()));
+                            cancelled = true;
+                        } else {
+                            putBack(message);
+                        }
+                    }
+
+                    @Override
+                    public boolean done() {
+                        return cancelled;
+                    }
+                });
+                getAgent().removeBehaviour(this);
             } catch (UnreadableException e) {
                 e.printStackTrace();
             }
