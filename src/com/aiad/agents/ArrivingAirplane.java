@@ -1,4 +1,5 @@
 package com.aiad.agents;
+import com.aiad.Config;
 import com.aiad.messages.ArrivingAirplaneRequest;
 import jade.core.AID;
 import jade.core.behaviours.TickerBehaviour;
@@ -38,14 +39,15 @@ public class ArrivingAirplane extends Airplane {
     @Override
     protected void setup() {
         super.setup();
-        addBehaviour(new TickerBehaviour(this, 1000){
+        addBehaviour(new TickerBehaviour(this, Config.PERIOD){
             @Override
             protected void onTick() {
                 if(fuelRemaining > 0 ){
                     fuelRemaining -- ;
                     System.out.println("Airplane : " + getId() + " \tFuel Remaining : " + fuelRemaining );
-                    if(getTimeToArrive() == 0){
+                    if(getTotalTime() == 0){
                         System.out.println("Airplane: " + getId() + " LANDED !");
+                        // TODO: change this, since the landing may be rescheduled
                         doDelete();
                     }
                 }

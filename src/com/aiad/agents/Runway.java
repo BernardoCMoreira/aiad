@@ -32,7 +32,7 @@ import static com.aiad.Config.MAX_RUNWAY_CLEARANCE_TIME;
 import static com.aiad.Config.TICKRATE;
 
 public class Runway extends Agent {
-    final public static double DEBRIS_APPEARANCE_PROBABILITY = 0.3d;
+    final public static double DEBRIS_APPEARANCE_PROBABILITY = 0.0d;
     final private Random rand = new Random();
     final private TreeMap<Integer, Operation> operations = new TreeMap<>();
     int id;
@@ -70,15 +70,19 @@ public class Runway extends Agent {
 
     }
 
-    public Runway(String message) {
-        String[] splitMessage = message.split(" ");
-        this.id = Integer.parseInt(splitMessage[0]);
-        this.isClear = splitMessage[1].equals("true");
-    }
-
     int getEarliestSlot(int minTime) {
         var followingOperations = operations.tailMap(minTime);
         var time = isClear ? minTime : Math.max(minTime, _clearingBehaviour.clearanceTime);
+
+        // FIXME: added this edge case
+        // if the min time intersects with an already running operation
+        var key = operations.floorKey(time);
+        if (key != null) {
+            Operation op = operations.get(key);
+            if (time < key + op.duration)
+                time = key + op.duration;
+        }
+
         for (var operation : followingOperations.entrySet()) {
             if (minTime + Config.OPERATION_LENGTH <= operation.getKey())
                 break;
@@ -198,6 +202,8 @@ public class Runway extends Agent {
         public Operation(int airplaneId, int duration) {
             this.airplaneId = airplaneId;
             this.duration = duration;
+
+            System.out.println("\t\t\t\t\t\t\t\tNEW OPERATION :: OPERATION LENGTH = " + duration);
         }
 
         public int getAirplaneId() {
@@ -243,24 +249,32 @@ public class Runway extends Agent {
         protected void onTick() {
             var runway = (Runway) this.getAgent();
             runway.updateOperations();
+
+
             TreeMap<Integer, Operation> treeMap = runway.getOperations();
             DefaultTableModel model = (DefaultTableModel) runway.table.getModel();
+            boolean firstOperation = false;
 
-            for(int i=0; i<runway.table.getColumnCount();i++){
-                if (runway._clearingBehaviour != null) {
-                    model.setValueAt("!!", 0, i);
+            for(int i = 0; i < runway.table.getColumnCount(); i++) {
+                if (treeMap.containsKey(i)) {
+                    firstOperation = true;
+
+                    int airplaneId = treeMap.get(i).airplaneId;
+                    int duration = treeMap.get(i).duration;
+
+                    for (int j = i; j < i + duration && j < runway.table.getColumnCount(); j++) {
+                        model.setValueAt(airplaneId, 0, j);
+                    }
+
+                    i += duration - 1;
                 } else {
-                    model.setValueAt(" ",0 , i);
+                    if (runway._clearingBehaviour != null && !firstOperation) {
+                        model.setValueAt("!!!", 0, i);
+                    } else {
+                        model.setValueAt("   ", 0, i);
+                    }
                 }
             }
-            for(var entry:treeMap.entrySet()){
-
-                for(int i=entry.getKey(); i<runway.table.getColumnCount() && i<entry.getValue().duration + entry.getKey();i++){
-                   model.setValueAt(entry.getValue().getAirplaneId(),0 , i);
-                }
-
-            }
-
         }
     }
 

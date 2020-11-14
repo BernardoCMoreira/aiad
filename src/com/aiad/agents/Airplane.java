@@ -23,12 +23,13 @@ import java.util.Vector;
 public class Airplane extends Agent {
 
     protected final int id;
-    protected int waitTime, timeToArrive;
+    protected int waitTime, timeToArrive, totalTime;
 
     public Airplane(int id, int timeToArrive) {
         this.id = id;
         this.timeToArrive = timeToArrive;
         this.waitTime = 0;
+        this.totalTime = 0;
     }
 
     public int getId() {
@@ -49,6 +50,14 @@ public class Airplane extends Agent {
 
     //setter
     public void setTimeToArrive(int timeUpdated){timeToArrive = timeUpdated;}
+
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
+    }
 
     protected ACLMessage createRequestMessage() {
         ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
@@ -85,12 +94,12 @@ public class Airplane extends Agent {
         // setup the request message
         ACLMessage request = createRequestMessage();
         addBehaviour(new AirplaneRequestInitiator(this, request));
-        addBehaviour(new TickerBehaviour(this, 1000){
+        addBehaviour(new TickerBehaviour(this, Config.PERIOD){
             @Override
             protected void onTick() {
-                if(getTimeToArrive() > 0 ){
-                setTimeToArrive(getTimeToArrive() - 1);
-                System.out.println("Airplane : " + getId()  + " \tTime to Arrive : " + getTimeToArrive());
+                if(getTotalTime() > 0 ){
+                setTotalTime(getTotalTime() - 1);
+                System.out.println("Airplane : " + getId()  + " \tTotal Operation Time: " + getTotalTime());
                 }
             }
         });
@@ -137,6 +146,9 @@ public class Airplane extends Agent {
                 log(content.toString());
                 //Wait time already ensures the runway time and the time to arrive
                 setTimeToArrive(content.getWaitTime());
+                setTotalTime(content.getWaitTime() + Config.OPERATION_LENGTH);
+
+
                 getAgent().addBehaviour(new Behaviour(getAgent()) {
                     private boolean cancelled = false;
                     @Override

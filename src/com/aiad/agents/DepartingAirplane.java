@@ -1,5 +1,6 @@
 package com.aiad.agents;
 
+import com.aiad.Config;
 import com.aiad.messages.ArrivingAirplaneRequest;
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
@@ -23,11 +24,12 @@ public class DepartingAirplane extends Airplane {
     @Override
     protected void setup() {
         super.setup();
-        addBehaviour(new TickerBehaviour(this, 1000){
+        addBehaviour(new TickerBehaviour(this, Config.PERIOD){
             @Override
             protected void onTick() {
-                    if(getTimeToArrive() == 0){
+                    if(getTotalTime() == 0){
                         System.out.println("Airplane: " + getId() + " DEPARTED !");
+                        // TODO: change this, since the take off may be rescheduled
                         doDelete();
                     }
                 }
