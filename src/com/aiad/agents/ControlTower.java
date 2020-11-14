@@ -204,16 +204,13 @@ public class ControlTower extends Agent {
                     e.printStackTrace();
                 }
 
-
-                // compare best proposal with current proposal
-                boolean isBetter = minOperationTime > operationTime;
-                System.out.println(minOperationTime + " > " + operationTime);
-
                 int rejectedProposalIndex = i;
 
-                if (isBetter) {
-                    rejectedProposalIndex = bestProposalIndex;      // previous best proposal index
-                    bestProposalIndex = i;                          // new best proposal index
+                System.out.println("CONTROL_TOWER :: Comparing proposals : " + minOperationTime + " and " + operationTime);
+                if (minOperationTime > operationTime) {
+                    minOperationTime = operationTime;
+                    rejectedProposalIndex = bestProposalIndex;
+                    bestProposalIndex = i;
                     bestRunwayId = runwayId;
                 }
 
