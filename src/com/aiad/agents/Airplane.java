@@ -133,6 +133,8 @@ public class Airplane extends Agent {
             try {
                 AirplaneInform content = (AirplaneInform) inform.getContentObject();
                 log(content.toString());
+                //Wait time already ensures the runway time and the time to arrive
+                setTimeToArrive(content.getWaitTime());
             } catch (UnreadableException e) {
                 e.printStackTrace();
             }
