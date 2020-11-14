@@ -3,6 +3,7 @@ package com.aiad.agents;
 import com.aiad.Config;
 import com.aiad.messages.RunwayOperationCfp;
 import com.aiad.messages.RunwayOperationProposal;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
@@ -31,7 +32,7 @@ import static com.aiad.Config.MAX_RUNWAY_CLEARANCE_TIME;
 import static com.aiad.Config.TICKRATE;
 
 public class Runway extends Agent {
-    final public static double DEBRIS_APPEARANCE_PROBABILITY = 0.0d;
+    final public static double DEBRIS_APPEARANCE_PROBABILITY = 0.3d;
     final private Random rand = new Random();
     final private TreeMap<Integer, Operation> operations = new TreeMap<>();
     int id;
@@ -162,7 +163,16 @@ public class Runway extends Agent {
         var clearanceTime = rand.nextInt(MAX_RUNWAY_CLEARANCE_TIME);
         setupClearingBehaviour(clearanceTime);
         isClear = false;
-        // TODO reschedule affected operations
+        var affectedKeys = new ArrayList<>(operations.headMap(clearanceTime).keySet());
+        for (var key : affectedKeys) {
+            operations.computeIfPresent(key, (k, operation) -> {
+                var msg = new ACLMessage(ACLMessage.INFORM);
+                msg.setContent("Cancelled");
+                msg.addReceiver(new AID("airplane" + operation.getAirplaneId(), AID.ISLOCALNAME));
+                send(msg);
+                return null;
+            });
+        }
     }
 
     private void setupClearingBehaviour(int clearanceTime) {
@@ -205,6 +215,10 @@ public class Runway extends Agent {
 
     public static class RunwayClearingBehaviour extends TickerBehaviour {
         final private int clearanceTime;
+
+        public int getClearanceTime() {
+            return clearanceTime;
+        }
 
         public RunwayClearingBehaviour(Runway runway, int tickRate, int clearanceTime) {
             super(runway, 1000 / tickRate);
