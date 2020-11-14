@@ -56,7 +56,7 @@ public class Runway extends Agent {
 
         TableColumnModel columnModel = table.getColumnModel();
         for (int i = 0; i < table.getColumnCount(); i++) {
-            columnModel.getColumn(i).setPreferredWidth(20);
+            columnModel.getColumn(i).setPreferredWidth(30);
         }
 
         JLabel label = new JLabel("runway" + id);
@@ -247,7 +247,11 @@ public class Runway extends Agent {
             DefaultTableModel model = (DefaultTableModel) runway.table.getModel();
 
             for(int i=0; i<runway.table.getColumnCount();i++){
-                model.setValueAt(" ",0 , i);
+                if (runway._clearingBehaviour != null) {
+                    model.setValueAt("!!", 0, i);
+                } else {
+                    model.setValueAt(" ",0 , i);
+                }
             }
             for(var entry:treeMap.entrySet()){
 
