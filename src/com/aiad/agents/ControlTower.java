@@ -1,5 +1,6 @@
 package com.aiad.agents;
 
+import com.aiad.Config;
 import com.aiad.messages.*;
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
@@ -12,6 +13,8 @@ import jade.lang.acl.UnreadableException;
 import jade.proto.ContractNetInitiator;
 import jade.proto.SubscriptionInitiator;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -20,9 +23,19 @@ public class ControlTower extends Agent {
 
     private int arrivalCounter = 0, departureCounter = 0;
     protected ArrayList<AID> runways;
+    protected FileWriter allocationLog;
 
     public ControlTower() {
         runways = new ArrayList<>();
+
+        File file = new File(Config.AIRPLANE_ALLOCATION_LOG);
+        try {
+            allocationLog = new FileWriter(file);
+            allocationLog.write("airplane_id, type, accepted, runway_id, wait_time\n");
+            allocationLog.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void incrementArrivals() {
@@ -71,8 +84,31 @@ public class ControlTower extends Agent {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        try {
+            allocationLog.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    protected void logAllocation(Object content, boolean refuse, int runway, int waitTime) {
+        String log = "" + ((AirplaneRequest) content).getId() + ", ";
+        if (content instanceof ArrivingAirplaneRequest) {
+            log += "arriving, ";
+        }
+        else {
+            log += "departing, ";
+        }
+        log += (refuse ? "declined, NA, NA" : "accepted, " + runway + ", " + waitTime) + "\n";
+
+        try {
+            allocationLog.write(log);
+            allocationLog.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     class RunwaySubscriber extends SubscriptionInitiator {
         public RunwaySubscriber(ControlTower agent, DFAgentDescription template) {
@@ -244,13 +280,6 @@ public class ControlTower extends Agent {
                 reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
                 reply.setContent("proposal rejected");
                 acceptances.add(reply);
-
-                ControlTower controlTower = (ControlTower) myAgent;
-                if (content instanceof ArrivingAirplaneRequest) {
-                    controlTower.incrementArrivals();
-                } else {
-                    controlTower.incrementDepartures();
-                }
             } else {
                 // send agree and inform to airplane
                 sendAgree(request.createReply());
@@ -261,7 +290,16 @@ public class ControlTower extends Agent {
                 reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
                 reply.setContent("proposal accepted");
                 acceptances.add(reply);
+
+                ControlTower controlTower = (ControlTower) myAgent;
+                if (content instanceof ArrivingAirplaneRequest) {
+                    controlTower.incrementArrivals();
+                } else {
+                    controlTower.incrementDepartures();
+                }
             }
+
+            logAllocation(content, refuse, bestRunwayId, minOperationTime);
         }
 
         @Override

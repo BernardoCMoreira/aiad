@@ -27,6 +27,7 @@ public class AirplaneGenerator extends Agent {
         File file = new File(Config.AIRPLANE_CREATION_LOG);
         try {
             this.creationLog = new FileWriter(file);
+            creationLog.write("id, type, time_to_arrive, fuel_remaining\n");
         } catch (IOException e) {
             e.printStackTrace();
         }

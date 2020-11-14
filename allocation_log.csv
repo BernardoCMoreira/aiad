@@ -1,0 +1,14 @@
+airplane_id, type, accepted, runway_id, wait_time
+1, arriving, accepted, 3, 7
+2, arriving, accepted, 2, 16
+3, departing, accepted, 1, 7
+4, departing, accepted, 1, 12
+5, arriving, declined, NA, NA
+6, arriving, accepted, 2, 3
+7, departing, accepted, 3, 2
+8, departing, accepted, 3, 13
+9, arriving, accepted, 2, 4
+10, arriving, accepted, 3, 13
+11, arriving, declined, NA, NA
+12, arriving, accepted, 3, 17
+13, departing, accepted, 1, 19
