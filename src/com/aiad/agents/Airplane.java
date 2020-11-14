@@ -65,7 +65,6 @@ public class Airplane extends Agent {
         return request;
     }
 
-
     @Override
     protected void setup() {
         DFAgentDescription description = new DFAgentDescription();
