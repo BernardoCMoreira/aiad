@@ -15,6 +15,13 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.proto.ContractNetResponder;
 
+import javax.print.event.PrintJobEvent;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,9 +38,35 @@ public class Runway extends Agent {
     boolean isClear = true;
     private RunwayClearingBehaviour _clearingBehaviour;
     private RunwayUpdatingBehaviour _updatingBehaviour;
+    protected JFrame frame;
+    protected JTable table;
 
-    public Runway(int id) {
+    public Runway(int id, JFrame frame ) {
         this.id = id;
+        this.frame = frame;
+
+              JPanel panel = new JPanel();
+        panel.setBackground(Color.GRAY);
+        panel.setLayout(new FlowLayout());
+
+        table = new JTable(1,200);
+        table.setBounds(10,170, 600, 50);
+        table.setRowHeight(20);
+
+        TableColumnModel columnModel = table.getColumnModel();
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            columnModel.getColumn(i).setPreferredWidth(20);
+        }
+
+        JLabel label = new JLabel("runway" + id);
+        label.setBounds(10,10 + (300*(id-1)),800,40);
+
+        panel.add(label);
+        panel.add(table);
+        frame.add(panel);
+        frame.getContentPane().add( new JScrollPane( panel ), BorderLayout.CENTER );
+        frame.setVisible(true);
+
     }
 
     public Runway(String message) {
@@ -196,7 +229,25 @@ public class Runway extends Agent {
         protected void onTick() {
             var runway = (Runway) this.getAgent();
             runway.updateOperations();
+            TreeMap<Integer, Operation> treeMap = runway.getOperations();
+            DefaultTableModel model = (DefaultTableModel) runway.table.getModel();
+
+            for(int i=0; i<runway.table.getColumnCount();i++){
+                model.setValueAt(" ",0 , i);
+            }
+            for(var entry:treeMap.entrySet()){
+
+                for(int i=entry.getKey(); i<runway.table.getColumnCount() && i<entry.getValue().duration + entry.getKey();i++){
+                   model.setValueAt(entry.getValue().getAirplaneId(),0 , i);
+                }
+
+            }
+
         }
+    }
+
+    public TreeMap<Integer, Operation> getOperations() {
+        return operations;
     }
 
     private static class ProposalBuilder extends ContractNetResponder {
