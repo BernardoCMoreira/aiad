@@ -30,7 +30,7 @@ import static com.aiad.Config.MAX_RUNWAY_CLEARANCE_TIME;
 import static com.aiad.Config.TICKRATE;
 
 public class Runway extends Agent {
-    final public static double DEBRIS_APPEARANCE_PROBABILITY = 0.0d;
+    final public static double DEBRIS_APPEARANCE_PROBABILITY = 0.3d;
     final private Random rand = new Random();
     final private TreeMap<Integer, Operation> operations = new TreeMap<>();
     int id;

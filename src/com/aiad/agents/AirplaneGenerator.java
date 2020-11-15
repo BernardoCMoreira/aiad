@@ -81,11 +81,11 @@ public class AirplaneGenerator extends Agent {
             Agent airplane;
 
             int airplaneId = ++generator.airplaneCounter;
-            int timeToArrive = new Random().nextInt(20);
+            int timeToArrive = new Random().nextInt(Config.MAX_TIME_TO_ARRIVE);
 
             // randomly decides if the generated plane is arriving or departing
             if (new Random().nextBoolean()) {   // arriving
-                int fuelRemaining = timeToArrive + new Random().nextInt(5);
+                int fuelRemaining = timeToArrive + new Random().nextInt(Config.MAX_FUEL_REMAINING);
                 airplane = new ArrivingAirplane(airplaneId, timeToArrive, fuelRemaining);
                 System.out.println("GENERATOR :: ARRIVING : airplane" + airplaneId + " ETA : " + timeToArrive + " FUEL : " + fuelRemaining);
             } else {    // departing

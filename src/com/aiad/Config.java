@@ -8,4 +8,7 @@ public class Config {
 
     public static final String AIRPLANE_CREATION_LOG = "creation_log.csv";
     public static final String AIRPLANE_ALLOCATION_LOG = "allocation_log.csv";
+
+    public static final int MAX_TIME_TO_ARRIVE = 45;
+    public static final int MAX_FUEL_REMAINING = 15;
 }
