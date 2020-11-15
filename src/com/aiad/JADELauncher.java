@@ -28,7 +28,7 @@ public class JADELauncher {
         // create an AirplaneGenerator agent
         AgentController ac1;
         try {
-            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(3000, mainContainer));
+            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(Config.CREATION_RATE, mainContainer));
             ac1.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
