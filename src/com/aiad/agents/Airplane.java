@@ -15,8 +15,6 @@ import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import jade.proto.AchieveREInitiator;
-
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
 

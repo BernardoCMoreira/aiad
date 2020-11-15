@@ -29,7 +29,6 @@ public class DepartingAirplane extends Airplane {
             protected void onTick() {
                     if(getTotalTime() == 0){
                         System.out.println("Airplane: " + getId() + " DEPARTED !");
-                        // TODO: change this, since the take off may be rescheduled
                         doDelete();
                     }
                 }

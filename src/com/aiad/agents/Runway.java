@@ -72,7 +72,6 @@ public class Runway extends Agent {
         var followingOperations = operations.tailMap(minTime);
         var time = isClear ? minTime : Math.max(minTime, _clearingBehaviour.clearanceTime);
 
-        // FIXME: added this edge case
         // if the min time intersects with an already running operation
         var key = operations.floorKey(time);
         if (key != null) {
@@ -135,12 +134,6 @@ public class Runway extends Agent {
         }
     }
 
-    /*
-     *   The message will be the following :
-     *   " id isClear"
-     *
-     */
-
     protected void takeDown() {
         try {
             DFService.deregister(this);
@@ -200,8 +193,6 @@ public class Runway extends Agent {
         public Operation(int airplaneId, int duration) {
             this.airplaneId = airplaneId;
             this.duration = duration;
-
-            System.out.println("\t\t\t\t\t\t\t\tNEW OPERATION :: OPERATION LENGTH = " + duration);
         }
 
         public int getAirplaneId() {
