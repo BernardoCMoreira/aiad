@@ -62,11 +62,6 @@ public class Runway extends Agent {
             columnModel.getColumn(i).setPreferredWidth(40);
         }
 
-   /*     JLabel label = new JLabel("runway" + id + ": ");
-        label.setBounds(10,10 + (300*(id-1)),800,40);
-        label.setFont(new Font("Serif", Font.BOLD, 24));
-
-        panel.add(label);*/
         panel.add(table);
         frame.add(panel);
         frame.getContentPane().add( new JScrollPane( panel ), BorderLayout.CENTER );

@@ -21,7 +21,8 @@ import java.util.Vector;
 
 public class ControlTower extends Agent {
 
-    private int arrivalCounter = 0, departureCounter = 0;
+    private int arrivalCounter = 0, departureCounter = 0, redirectCounter = 0;
+    private int sumWaitTimeArriv = 0, sumWaitTimeDepart = 0;
     protected ArrayList<AID> runways;
     protected FileWriter allocationLog;
 
@@ -31,7 +32,7 @@ public class ControlTower extends Agent {
         File file = new File(Config.AIRPLANE_ALLOCATION_LOG);
         try {
             allocationLog = new FileWriter(file);
-            allocationLog.write("airplane_id, type, accepted, runway_id, wait_time\n");
+            allocationLog.write("airplane_id, type, accepted, runway_id, wait_time, total_arrivals, total_departures, total_redirect, avg_waitTimeArrive, avg_waitTimeDepart\n");
             allocationLog.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,6 +46,10 @@ public class ControlTower extends Agent {
     protected void incrementDepartures() {
         this.departureCounter++;
     }
+
+    protected void updateSumWaitTimeArriv(int update){this.sumWaitTimeArriv += update;}
+
+    protected void updateSumWaitTimeDepart(int update){this.sumWaitTimeDepart += update;}
 
     @Override
     protected void setup() {
@@ -78,6 +83,10 @@ public class ControlTower extends Agent {
         return this.departureCounter;
     }
 
+    public int getTotalRedirect(){
+        return this.redirectCounter;
+    }
+
     protected void takeDown() {
         try {
             DFService.deregister(this);
@@ -100,7 +109,8 @@ public class ControlTower extends Agent {
         else {
             log += "departing, ";
         }
-        log += (refuse ? "declined, NA, NA" : "accepted, " + runway + ", " + waitTime) + "\n";
+        log += (refuse ? "declined, NA, NA" : "accepted, " + runway + ", " + waitTime) + ", " + getTotalArrivals() + ", " + getTotalDepartures()+ ", " + getTotalRedirect()
+                + ", " + (getTotalArrivals()==0? "NA":(sumWaitTimeArriv/getTotalArrivals())) + ", " + (getTotalDepartures()==0? "NA":(sumWaitTimeDepart/getTotalDepartures())) + "\n";
 
         try {
             allocationLog.write(log);
@@ -274,6 +284,7 @@ public class ControlTower extends Agent {
             if (refuse) {
                 // send refuse to airplane
                 sendRefuse(request.createReply());
+                redirectCounter++;
 
                 // reject the best proposal
                 ACLMessage reply = ((ACLMessage) responses.get(bestProposalIndex)).createReply();
@@ -294,12 +305,14 @@ public class ControlTower extends Agent {
                 ControlTower controlTower = (ControlTower) myAgent;
                 if (content instanceof ArrivingAirplaneRequest) {
                     controlTower.incrementArrivals();
+                    controlTower.updateSumWaitTimeArriv(minOperationTime  - ((AirplaneRequest)content).getTimeToArrive());
                 } else {
                     controlTower.incrementDepartures();
+                    controlTower.updateSumWaitTimeDepart(minOperationTime - ((AirplaneRequest)content).getTimeToArrive());
                 }
             }
 
-            logAllocation(content, refuse, bestRunwayId, minOperationTime);
+            logAllocation(content, refuse, bestRunwayId, (minOperationTime - ((AirplaneRequest)content).getTimeToArrive()));
         }
 
         @Override
