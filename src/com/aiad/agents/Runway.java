@@ -18,10 +18,8 @@ import jade.proto.ContractNetResponder;
 
 import javax.print.event.PrintJobEvent;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.*;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,23 +44,29 @@ public class Runway extends Agent {
         this.id = id;
         this.frame = frame;
 
-              JPanel panel = new JPanel();
-        panel.setBackground(Color.GRAY);
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.decode("#B7E9F7"));
         panel.setLayout(new FlowLayout());
+        panel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Runway" + id + ": ", TitledBorder.LEFT,
+                TitledBorder.TOP,new Font("Arial",Font.BOLD,16)));
 
         table = new JTable(1,200);
         table.setBounds(10,170, 600, 50);
-        table.setRowHeight(20);
+        table.setRowHeight(40);
+        table.setBackground(Color.decode("#F7F3E3"));
+
 
         TableColumnModel columnModel = table.getColumnModel();
         for (int i = 0; i < table.getColumnCount(); i++) {
-            columnModel.getColumn(i).setPreferredWidth(30);
+            columnModel.getColumn(i).setPreferredWidth(40);
         }
 
-        JLabel label = new JLabel("runway" + id);
+   /*     JLabel label = new JLabel("runway" + id + ": ");
         label.setBounds(10,10 + (300*(id-1)),800,40);
+        label.setFont(new Font("Serif", Font.BOLD, 24));
 
-        panel.add(label);
+        panel.add(label);*/
         panel.add(table);
         frame.add(panel);
         frame.getContentPane().add( new JScrollPane( panel ), BorderLayout.CENTER );
@@ -264,6 +268,7 @@ public class Runway extends Agent {
 
                     for (int j = i; j < i + duration && j < runway.table.getColumnCount(); j++) {
                         model.setValueAt(airplaneId, 0, j);
+
                     }
 
                     i += duration - 1;
