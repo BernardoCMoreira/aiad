@@ -1,10 +1,10 @@
 package com.aiad.agents;
 
 import com.aiad.Config;
-import jade.core.Agent;
-import jade.core.behaviours.TickerBehaviour;
-import jade.wrapper.AgentController;
-import jade.wrapper.ContainerController;
+import sajas.core.Agent;
+import sajas.core.behaviours.TickerBehaviour;
+import sajas.wrapper.AgentController;
+import sajas.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
 import java.io.File;
@@ -78,7 +78,7 @@ public class AirplaneGenerator extends Agent {
         @Override
         protected void onTick() {
             AgentController agentController;
-            Agent airplane;
+            Airplane airplane;
 
             int airplaneId = ++generator.airplaneCounter;
             int timeToArrive = new Random().nextInt(Config.MAX_TIME_TO_ARRIVE);
@@ -100,7 +100,7 @@ public class AirplaneGenerator extends Agent {
                 e.printStackTrace();
             }
 
-            logAirplaneCreation((Airplane) airplane);
+            logAirplaneCreation(airplane);
         }
 
     }

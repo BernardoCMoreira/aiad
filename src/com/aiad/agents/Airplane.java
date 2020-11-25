@@ -4,17 +4,19 @@ import com.aiad.Config;
 import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.AirplaneRequest;
 import jade.core.AID;
-import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
-import jade.core.behaviours.TickerBehaviour;
-import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
-import jade.proto.AchieveREInitiator;
+import sajas.core.Agent;
+import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.TickerBehaviour;
+import sajas.domain.DFService;
+import sajas.proto.AchieveREInitiator;
+
 import java.io.IOException;
 import java.util.Vector;
 
@@ -42,19 +44,21 @@ public class Airplane extends Agent {
         return timeToArrive;
     }
 
+    //setter
+    public void setTimeToArrive(int timeUpdated) {
+        timeToArrive = timeUpdated;
+    }
+
     protected void log(String message) {
         System.out.println("AIRPLANE :: airplane" + id + " :: " + message);
     }
 
-    //setter
-    public void setTimeToArrive(int timeUpdated){timeToArrive = timeUpdated;}
+    public int getTotalTime() {
+        return totalTime;
+    }
 
     public void setTotalTime(int totalTime) {
         this.totalTime = totalTime;
-    }
-
-    public int getTotalTime() {
-        return totalTime;
     }
 
     protected ACLMessage createRequestMessage() {
@@ -84,20 +88,19 @@ public class Airplane extends Agent {
 
         try {
             DFService.register(this, description);
-        }
-        catch(FIPAException e) {
+        } catch (FIPAException e) {
             e.printStackTrace();
         }
 
         // setup the request message
         ACLMessage request = createRequestMessage();
         addBehaviour(new AirplaneRequestInitiator(this, request));
-        addBehaviour(new TickerBehaviour(this, Config.PERIOD){
+        addBehaviour(new TickerBehaviour(this, Config.PERIOD) {
             @Override
             protected void onTick() {
-                if(getTotalTime() > 0 ){
-                setTotalTime(getTotalTime() - 1);
-                System.out.println("Airplane : " + getId()  + " \tTotal Operation Time: " + getTotalTime());
+                if (getTotalTime() > 0) {
+                    setTotalTime(getTotalTime() - 1);
+                    System.out.println("Airplane : " + getId() + " \tTotal Operation Time: " + getTotalTime());
                 }
             }
         });
@@ -107,8 +110,7 @@ public class Airplane extends Agent {
     protected void takeDown() {
         try {
             DFService.deregister(this);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -149,18 +151,19 @@ public class Airplane extends Agent {
 
                 getAgent().addBehaviour(new Behaviour(getAgent()) {
                     private boolean cancelled = false;
+
                     @Override
                     public void action() {
-                        var message = receive();
+                        var template = new MessageTemplate(
+                                (MessageTemplate.MatchExpression) msg -> msg.getContent().equals("Cancelled")
+                        );
+
+                        var message = receive(template);
                         if (message == null) return;
 
-                        if (message.getContent().equals("Cancelled")) {
-                            var airplane = (Airplane) getAgent();
-                            airplane.addBehaviour(new AirplaneRequestInitiator(airplane, airplane.createRequestMessage()));
-                            cancelled = true;
-                        } else {
-                            putBack(message);
-                        }
+                        var airplane = (Airplane) getAgent();
+                        airplane.addBehaviour(new AirplaneRequestInitiator(airplane, airplane.createRequestMessage()));
+                        cancelled = true;
                     }
 
                     @Override

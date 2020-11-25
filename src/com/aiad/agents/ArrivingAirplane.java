@@ -2,7 +2,7 @@ package com.aiad.agents;
 import com.aiad.Config;
 import com.aiad.messages.ArrivingAirplaneRequest;
 import jade.core.AID;
-import jade.core.behaviours.TickerBehaviour;
+import sajas.core.behaviours.TickerBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import java.io.IOException;
