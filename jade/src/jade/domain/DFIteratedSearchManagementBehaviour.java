@@ -25,7 +25,7 @@ package jade.domain;
 
 //#MIDP_EXCLUDE_FILE
 
-import jade.core.behaviours.CyclicBehaviour;
+import sajas.core.behaviours.CyclicBehaviour;
 import jade.content.Concept;
 import jade.content.Predicate;
 import jade.content.onto.basic.Action;
@@ -35,10 +35,10 @@ import jade.content.onto.OntologyException;
 import jade.content.lang.Codec.CodecException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.lang.acl.ConversationList;
+import sajas.lang.acl.ConversationList;
 import jade.domain.FIPAAgentManagement.*;
 import jade.domain.KBManagement.KBIterator;
-import jade.proto.SSIteratedAchieveREResponder;
+import sajas.proto.SSIteratedAchieveREResponder;
 import jade.util.leap.List;
 import jade.util.leap.ArrayList;
 import jade.util.Logger;

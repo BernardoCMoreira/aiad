@@ -28,7 +28,7 @@ package jade.core.behaviours;
 
 import jade.util.leap.*;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 
 /**
    Composite behaviour with sequential children scheduling. It is a
@@ -63,7 +63,7 @@ public class SequentialBehaviour extends SerialBehaviour {
 
 	/**
      Prepare the first child for execution
-     @see jade.core.behaviours.CompositeBehaviour#scheduleFirst
+     @see sajas.core.behaviours.CompositeBehaviour#scheduleFirst
 	 */
 	protected void scheduleFirst() {
 		// Schedule the first child
@@ -73,7 +73,7 @@ public class SequentialBehaviour extends SerialBehaviour {
 	/**
      Sequential policy for children scheduling. This method schedules
      children behaviours one at a time, in a FIFO fashion.
-     @see jade.core.behaviours.CompositeBehaviour#scheduleNext(boolean, int)
+     @see sajas.core.behaviours.CompositeBehaviour#scheduleNext(boolean, int)
 	 */
 	protected void scheduleNext(boolean currentDone, int currentResult) {
 		if (currentDone) {
@@ -85,7 +85,7 @@ public class SequentialBehaviour extends SerialBehaviour {
 	/**
      Check whether this <code>SequentialBehaviour</code> must terminate.
      @return true when the last child has terminated. false otherwise
-     @see jade.core.behaviours.CompositeBehaviour#checkTermination
+     @see sajas.core.behaviours.CompositeBehaviour#checkTermination
 	 */
 	protected boolean checkTermination(boolean currentDone, int currentResult) {
 		return (currentDone && current >= (subBehaviours.size()-1));
@@ -93,7 +93,7 @@ public class SequentialBehaviour extends SerialBehaviour {
 
 	/** 
      Get the current child
-     @see jade.core.behaviours.CompositeBehaviour#getCurrent
+     @see sajas.core.behaviours.CompositeBehaviour#getCurrent
 	 */
 	protected Behaviour getCurrent() {
 		Behaviour b = null;
@@ -106,7 +106,7 @@ public class SequentialBehaviour extends SerialBehaviour {
 	/**
      Return a Collection view of the children of 
      this <code>SequentialBehaviour</code> 
-     @see jade.core.behaviours.CompositeBehaviour#getChildren
+     @see sajas.core.behaviours.CompositeBehaviour#getChildren
 	 */
 	public Collection getChildren() {
 		return subBehaviours;

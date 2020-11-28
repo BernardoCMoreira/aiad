@@ -109,7 +109,7 @@ class GADT {
 	public AID[] keys() {
 		synchronized(agents) {
 			Object[] objs = agents.keySet().toArray();
-			AID[] result = new AID[objs.length];
+			AID[] result = new sajas.core.AID[objs.length];
 			System.arraycopy(objs, 0, result, 0, result.length);
 			return result;
 		}

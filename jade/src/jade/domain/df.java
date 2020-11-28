@@ -61,8 +61,8 @@ import jade.lang.acl.ISO8601;
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
 
-import jade.proto.SubscriptionResponder;
-import jade.proto.AchieveREInitiator;
+import sajas.proto.SubscriptionResponder;
+import sajas.proto.AchieveREInitiator;
 
 import jade.content.*;
 import jade.content.lang.*;

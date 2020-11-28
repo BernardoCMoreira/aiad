@@ -26,7 +26,7 @@ package jade.core;
 //#APIDOC_EXCLUDE_FILE
 //#MIDP_EXCLUDE_FILE
 
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 
 import jade.security.JADESecurityException;
 import jade.mtp.TransportAddress;

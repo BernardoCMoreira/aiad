@@ -41,7 +41,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.*;
 import javax.swing.tree.*;
 import javax.swing.tree.*;
-import jade.core.Agent;
+import sajas.core.Agent;
 
 import jade.lang.acl.ACLMessage;
 import jade.tools.sl.SLFormatter;

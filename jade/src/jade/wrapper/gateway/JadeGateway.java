@@ -88,7 +88,7 @@ public class JadeGateway {
 	 * has been executed (i.e. the method <code>releaseCommand</code> 
 	 * is called by the executor agent)
 	 * @throws StaleProxyException if the method was not able to execute the Command
-	 * @see jade.wrapper.AgentController#putO2AObject(Object, boolean)
+	 * @see sajas.wrapper.AgentController#putO2AObject(Object, boolean)
 	 **/
 	public final static void execute(Object command) throws StaleProxyException,ControllerException,InterruptedException {
 		getGateway().execute(command);
@@ -104,7 +104,7 @@ public class JadeGateway {
 	 * @throws InterruptedException if the timeout expires or the Thread
 	 * executing this method is interrupted.
 	 * @throws StaleProxyException if the method was not able to execute the Command
-	 * @see jade.wrapper.AgentController#putO2AObject(Object, boolean)
+	 * @see sajas.wrapper.AgentController#putO2AObject(Object, boolean)
 	 **/
 	public final static void execute(Object command, long timeout) throws StaleProxyException,ControllerException,InterruptedException {
 		getGateway().execute(command, timeout);

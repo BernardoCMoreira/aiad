@@ -54,15 +54,15 @@ import jade.core.Node;
 import jade.core.LifeCycle;
 
 import jade.core.Profile;
-import jade.core.Agent;
-import jade.core.Agent.Interrupted;
+import sajas.core.Agent;
+import sajas.core.Agent.Interrupted;
 import jade.core.AID;
 import jade.core.CaseInsensitiveString;
 import jade.core.ContainerID;
 import jade.core.Location;
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.MainContainer;
-import jade.core.AgentDescriptor;
+import sajas.core.AgentDescriptor;
 
 import jade.core.ProfileException;
 import jade.core.IMTPException;
@@ -491,17 +491,17 @@ public class AgentMobilityService extends BaseService {
 							myLogger.log(Logger.FINE," adding clone " + newName  + " to code locator.");
 						}
 						
-						codeLocator.cloneAgent(agentID, new AID(AID.createGUID(newName, myContainer.getPlatformID()), AID.ISGUID));
+						codeLocator.cloneAgent(agentID, new sajas.core.AID(AID.createGUID(newName, myContainer.getPlatformID()), AID.ISGUID));
 					}	
 				} else {
 					//Send a CLONE_CODE_LOCATOR_ENTRY command to the container with the agent code.
 					AgentMobilitySlice codeSlice = (AgentMobilitySlice) getSlice(codeContainerName);
 					try {
-						codeSlice.cloneCodeLocatorEntry(agentID, new AID(newName,AID.ISLOCALNAME));
+						codeSlice.cloneCodeLocatorEntry(agentID, new sajas.core.AID(newName,AID.ISLOCALNAME));
 					} catch (IMTPException imtpe) {
 						// Try to get a newer slice and repeat...
 						codeSlice = (AgentMobilitySlice) getSlice(codeContainerName);
-						codeSlice.cloneCodeLocatorEntry(agentID, new AID(newName,AID.ISLOCALNAME));
+						codeSlice.cloneCodeLocatorEntry(agentID, new sajas.core.AID(newName,AID.ISLOCALNAME));
 					}
 				}
 				//#J2ME_EXCLUDE_END	
@@ -544,8 +544,8 @@ public class AgentMobilityService extends BaseService {
 					classSiteName = getLocalNode().getName();
 				}
 				
-				// Create the agent on the destination container with the new AID
-				AID newID = new AID(newName, AID.ISLOCALNAME);
+				// Create the agent on the destination container with the new sajas.core.AID
+				AID newID = new sajas.core.AID(newName, AID.ISLOCALNAME);
 				try {
 					dest.createAgent(newID, bytes, classSiteName, CLONING, CREATE_AND_START);
 				}
@@ -1024,7 +1024,7 @@ public class AgentMobilityService extends BaseService {
 				// Maybe the class belongs to a separate Jar file --> Try with the CodeLocator
 				try {
 					AgentManagementService amSrv = (AgentManagementService) myFinder.findService(AgentManagementService.NAME);
-					ClassLoader cLoader = amSrv.getCodeLocator().getAgentClassLoader(new AID(agentName, AID.ISGUID));
+					ClassLoader cLoader = amSrv.getCodeLocator().getAgentClassLoader(new sajas.core.AID(agentName, AID.ISGUID));
 					classStream = cLoader.getResourceAsStream(fileName);
 				}
 				catch (NullPointerException npe) {

@@ -106,6 +106,6 @@ public class SplitJadeGateway extends DynamicJadeGateway {
 
 	@Override
 	public AID createAID(String localName) {
-		return new AID(localName, AID.ISLOCALNAME);
+		return new sajas.core.AID(localName, AID.ISLOCALNAME);
 	}
 }

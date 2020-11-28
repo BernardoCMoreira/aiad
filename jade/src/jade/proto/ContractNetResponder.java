@@ -36,7 +36,7 @@ import jade.domain.FIPAAgentManagement.NotUnderstoodException;
 import jade.domain.FIPAAgentManagement.RefuseException;
 import jade.domain.FIPAAgentManagement.FailureException;
 
-import jade.proto.states.*;
+import sajas.proto.states.*;
 
 import jade.domain.FIPANames;
 
@@ -90,8 +90,8 @@ import java.util.Date;
  * <a href="..\..\..\programmersguide.pdf"> JADE programmer's guide </a>
  * that describes
  * the usage of this class.
- * @see jade.proto.ContractNetInitiator
- * @see jade.proto.AchieveREResponder
+ * @see sajas.proto.ContractNetInitiator
+ * @see sajas.proto.AchieveREResponder
  * 
  * @author Fabio Bellifemine - TILAB
  * @author Giovanni Caire - TILAB

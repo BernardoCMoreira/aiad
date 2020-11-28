@@ -33,7 +33,7 @@ import javax.swing.*;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAException;
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.domain.DFGUIAdapter;
 import jade.gui.GuiEvent;
 

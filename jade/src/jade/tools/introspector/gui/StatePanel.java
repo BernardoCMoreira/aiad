@@ -35,8 +35,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 
-import jade.core.Agent;
-import jade.core.AgentState;
+import sajas.core.Agent;
+import sajas.core.AgentState;
 import jade.core.mobility.AgentMobilityService;
 
 /**

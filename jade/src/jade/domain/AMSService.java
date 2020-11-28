@@ -26,7 +26,7 @@ package jade.domain;
 import jade.util.leap.*;
 
 import jade.domain.FIPAAgentManagement.*;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 

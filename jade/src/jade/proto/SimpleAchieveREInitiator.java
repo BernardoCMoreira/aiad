@@ -28,12 +28,12 @@ package jade.proto;
 import java.util.Vector;
 import java.util.Date;
 
-import jade.core.behaviours.SimpleBehaviour;
-import jade.core.behaviours.DataStore;
+import sajas.core.behaviours.SimpleBehaviour;
+import sajas.core.behaviours.DataStore;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.util.leap.Iterator;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
 import jade.util.Logger;
 

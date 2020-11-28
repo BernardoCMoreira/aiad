@@ -25,7 +25,7 @@
 package jade.util;
 
 import java.util.Vector;
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 
 /**
  * This class implements a FIFO queue of objects that can be put and got

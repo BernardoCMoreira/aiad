@@ -48,7 +48,7 @@ class AddRemotePlatformAction extends FixedAction
 
    public void doAction() {
     
-   	 AIDGui gui = new AIDGui(main);
+   	 AIDGui gui = new sajas.core.AIDGui(main);
    	 gui.setTitle("Insert the remote AMS AID");
    	 AID remoteAMS = gui.ShowAIDGui(null,true,true);
    	 try{

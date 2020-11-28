@@ -26,7 +26,7 @@ package jade.core.behaviours;
 //#J2ME_EXCLUDE_FILE
 
 import java.io.Serializable;
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.util.Logger;
 
 /**

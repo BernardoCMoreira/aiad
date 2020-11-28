@@ -2,7 +2,7 @@ package jade.wrapper.gateway;
 
 //#J2ME_EXCLUDE_FILE
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.behaviours.*;
 import jade.util.Logger;
 
@@ -76,7 +76,7 @@ public class GatewayAgent extends Agent {
 	 * Those classes that extends this setup method of the GatewayAgent
 	 * MUST absolutely call <code>super.setup()</code> otherwise this
 	 * method is not executed and the system would not work. 
-	 * @see jade.core.Agent#setup()
+	 * @see sajas.core.Agent#setup()
 	 */
 	protected void setup() {
 		myLogger.log(Logger.INFO, "Started GatewayAgent "+getLocalName());			

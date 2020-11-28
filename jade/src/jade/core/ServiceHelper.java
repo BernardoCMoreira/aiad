@@ -29,7 +29,7 @@ package jade.core;
    service helper classes, i.e. SecurityHelper, etc...
    Agents get their service helper by the method: Agent.getHelper(String)
 
-   @see jade.core.Agent#getHelper
+   @see sajas.core.Agent#getHelper
 
 */
 public interface ServiceHelper {

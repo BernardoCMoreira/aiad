@@ -263,7 +263,7 @@ public class SLFrameCodec implements jade.util.leap.Serializable {
 
 	private final AID frameToAid(QualifiedFrame f) {
 		// Name
-		AID id = new AID((String) f.get(SL0Vocabulary.AID_NAME), AID.ISGUID);
+		AID id = new sajas.core.AID((String) f.get(SL0Vocabulary.AID_NAME), AID.ISGUID);
 
 		// Addresses
 		OrderedFrame addresses = (OrderedFrame) f.get(SL0Vocabulary.AID_ADDRESSES);

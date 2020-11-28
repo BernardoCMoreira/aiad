@@ -31,7 +31,7 @@ import jade.util.leap.ArrayList;
 import jade.util.leap.Properties;
 import jade.util.Logger;
 import jade.lang.acl.ACLMessage;
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.core.messaging.GenericMessage;
 import jade.core.management.AgentManagementSlice;
 
@@ -362,8 +362,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		AID.setPlatformID(myServiceManager.getPlatformName());
 
 		// Build the Agent IDs for the AMS and for the Default DF.
-		theAMS = new AID(AID.createGUID(FIPANames.AMS, getPlatformID()), AID.ISGUID);
-		theDefaultDF = new AID(AID.createGUID(FIPANames.DEFAULT_DF, getPlatformID()), AID.ISGUID);
+		theAMS = new sajas.core.AID(AID.createGUID(FIPANames.AMS, getPlatformID()), AID.ISGUID);
+		theDefaultDF = new sajas.core.AID(AID.createGUID(FIPANames.DEFAULT_DF, getPlatformID()), AID.ISGUID);
 
 		// Create the ResourceManager
 		myResourceManager = myProfile.getResourceManager();
@@ -566,7 +566,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			while(agentSpecifiers.hasNext()) {
 				Specifier s = (Specifier) agentSpecifiers.next();
 				if (s.getName() != null) {
-					AID agentID = new AID(AID.createGUID(s.getName(), getPlatformID()), AID.ISGUID);
+					AID agentID = new sajas.core.AID(AID.createGUID(s.getName(), getPlatformID()), AID.ISGUID);
 
 					try {
 						//#MIDP_EXCLUDE_BEGING
@@ -610,7 +610,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			//#J2ME_EXCLUDE_BEGIN
 			// If the Misc add-on is in the classpath and the -jade_core_AgentContainerImpl_enablemonitor option is not explicitly set to false, activate a ContainerMonitorAgent
 			if (myProfile.getBooleanProperty(ENABLE_MONITOR, true)) {
-				AID monitorId = new AID(MONITOR_AGENT_NAME, AID.ISLOCALNAME);
+				AID monitorId = new sajas.core.AID(MONITOR_AGENT_NAME, AID.ISLOCALNAME);
 				try {
 					getContainerProxy(myNodeDescriptor.getOwnerPrincipal(), myNodeDescriptor.getOwnerCredentials()).createAgent(monitorId, MONITOR_AGENT_CLASS, new Object[]{this, localAgents});
 					powerUpLocalAgent(monitorId);

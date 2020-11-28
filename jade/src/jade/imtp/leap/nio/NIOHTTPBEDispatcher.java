@@ -9,7 +9,7 @@ import jade.core.FrontEnd;
 import jade.core.IMTPException;
 import jade.core.Profile;
 import jade.core.ProfileException;
-import jade.core.Runtime;
+import sajas.core.Runtime;
 import jade.core.Timer;
 import jade.core.TimerListener;
 import jade.imtp.leap.BackEndSkel;

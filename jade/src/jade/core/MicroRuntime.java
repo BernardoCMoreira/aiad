@@ -29,7 +29,7 @@ import jade.util.Logger;
 import jade.util.leap.Iterator;
 import jade.util.leap.Properties;
 //#MIDP_EXCLUDE_BEGIN
-import jade.wrapper.AgentController;
+import sajas.wrapper.AgentController;
 import jade.wrapper.ControllerException;
 //#MIDP_EXCLUDE_END
 
@@ -280,7 +280,7 @@ public class MicroRuntime {
 			throw new ControllerException("FrontEndContainer  not found");
 		}
 		// Check that the agent exists
-		jade.core.Agent instance = myFrontEnd.getLocalAgent(localName);
+		sajas.core.Agent instance = myFrontEnd.getLocalAgent(localName);
 		if (instance == null) {
 			throw new ControllerException("Agent " + localName + " not found.");
 		} 

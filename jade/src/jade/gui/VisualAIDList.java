@@ -68,7 +68,7 @@ public class VisualAIDList extends VisualStringList
 	protected Object editElement(Object el, boolean isEditable)
 	{
 		
-		AIDGui gui = new AIDGui(owner);
+		AIDGui gui = new sajas.core.AIDGui(owner);
  		return gui.ShowAIDGui((AID)el,isEditable,checkSlots);
  		
 	}

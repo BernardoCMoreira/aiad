@@ -32,7 +32,7 @@ import jade.domain.FIPAAgentManagement.NotUnderstoodException;
 import jade.domain.FIPAAgentManagement.RefuseException;
 import jade.domain.FIPAAgentManagement.FailureException;
 import jade.domain.FIPANames;
-import jade.proto.states.*;
+import sajas.proto.states.*;
 import jade.util.leap.Iterator;
 
 /**
@@ -69,8 +69,8 @@ import jade.util.leap.Iterator;
 * <a href="..\..\..\programmersguide.pdf"> JADE programmer's guide </a>
 * that describes
 * the usage of this class.
-* @see jade.proto.ProposeInitiator
-* @see jade.proto.AchieveREResponder
+* @see sajas.proto.ProposeInitiator
+* @see sajas.proto.AchieveREResponder
 * 
 * @author Jerome Picault - Motorola Labs
 * @version $Date: 2005-09-16 15:54:46 +0200 (ven, 16 set 2005) $ $Revision: 5780 $

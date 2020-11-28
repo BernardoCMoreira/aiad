@@ -57,7 +57,7 @@ import jade.core.AID;
 	  else{
     	AgentTree.Node node=(AgentTree.Node) nod;
     	// msg2.addDest(node.getName());
-    	rec = new AID();
+    	rec = new sajas.core.AID();
     	rec.setName(node.getName());}
     	
 	  msg2.addReceiver(rec);

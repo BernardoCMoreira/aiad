@@ -448,7 +448,7 @@ class DeliverableDataInputStream extends DataInputStream {
 	} 
 
 	public AID[] deserializeAIDArray() throws IOException, LEAPSerializationException {
-		AID[] aida = new AID[readInt()];
+		AID[] aida = new sajas.core.AID[readInt()];
 
 		for (int i = 0; i < aida.length; i++) {
 			aida[i] = readAID();

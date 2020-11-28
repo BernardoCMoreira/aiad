@@ -32,7 +32,7 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.tools.gui.ACLPanel;
 import jade.tools.gui.ACLTracePanel;
 import jade.lang.acl.ACLMessage;

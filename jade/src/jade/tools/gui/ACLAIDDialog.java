@@ -31,7 +31,7 @@ import java.lang.reflect.*;
 import javax.swing.*;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.Iterator;
 
@@ -56,7 +56,7 @@ public class ACLAIDDialog extends JDialog {
       this.resolverList = new ACLAIDList(agent);
       jbInit();
       this.setSize(350, 250);
-      setItsAID(new AID("", true));
+      setItsAID(new sajas.core.AID("", true));
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -274,7 +274,7 @@ public class ACLAIDDialog extends JDialog {
 
   private String OK = "ok";
   private String CANCELLED = "cancelled";
-  private AIDAddressList addressesList = new AIDAddressList();
+  private AIDAddressList addressesList = new sajas.core.AIDAddressList();
   private boolean editable = true;
   private String userAction = CANCELLED;
   private ACLAIDList resolverList;

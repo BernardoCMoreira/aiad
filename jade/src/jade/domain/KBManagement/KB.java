@@ -28,7 +28,7 @@ package jade.domain.KBManagement;
 //#MIDP_EXCLUDE_FILE
 
 import jade.domain.FIPAAgentManagement.NotUnderstoodException;
-import jade.proto.SubscriptionResponder;
+import sajas.proto.SubscriptionResponder;
 import jade.util.leap.List;
 import jade.util.Logger;
 

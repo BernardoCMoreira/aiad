@@ -45,7 +45,7 @@ import jade.core.behaviours.*;
 import jade.content.AgentAction;
 
 import jade.domain.FIPANames;
-import jade.domain.FIPAService;
+import sajas.domain.FIPAService;
 import jade.domain.introspection.*;
 
 import jade.domain.JADEAgentManagement.JADEManagementOntology;
@@ -60,9 +60,9 @@ import jade.lang.acl.MessageTemplate;
 import jade.content.onto.basic.Action;
 import jade.content.onto.basic.Done;
 
-import jade.proto.SimpleAchieveREResponder;
-import jade.proto.SimpleAchieveREInitiator;
-import jade.proto.AchieveREInitiator;
+import sajas.proto.SimpleAchieveREResponder;
+import sajas.proto.SimpleAchieveREInitiator;
+import sajas.proto.AchieveREInitiator;
 
 import jade.tools.ToolAgent;
 import jade.tools.introspector.gui.IntrospectorGUI;

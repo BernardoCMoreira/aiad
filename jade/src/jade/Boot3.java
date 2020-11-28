@@ -41,7 +41,7 @@ import java.io.PrintStream;
 import java.util.Enumeration;    // J2ME CLDC OK
 import java.util.Vector;         // J2ME CLDC OK
 
-import jade.core.Runtime;
+import sajas.core.Runtime;
 import jade.core.Profile;
 //import jade.core.BootProfileImpl;
 import jade.util.ExtendedProperties;

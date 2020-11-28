@@ -49,7 +49,7 @@ import jade.lang.acl.ACLMessage;
 import jade.content.onto.basic.Result;
 import jade.content.onto.basic.Action;
 
-import jade.proto.SimpleAchieveREInitiator;
+import sajas.proto.SimpleAchieveREInitiator;
 
 import jade.tools.ToolAgent;
 import jade.security.JADEPrincipal;
@@ -1038,7 +1038,7 @@ public class rma extends ToolAgent {
 					else
 					{
 						// create the proper AID for AMS by adding all available addresses
-						AID ams = new AID(amsName, AID.ISGUID);
+						AID ams = new sajas.core.AID(amsName, AID.ISGUID);
 						for (Iterator is = APDesc.getAllAPServices(); is.hasNext(); ) {
 							APService s = (APService)is.next();
 							for (Iterator js = s.getAllAddresses(); js.hasNext(); ) 

@@ -1,8 +1,8 @@
 package jade.core.behaviours;
 
-import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
-import jade.core.behaviours.CompositeBehaviour;
+import sajas.core.Agent;
+import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.CompositeBehaviour;
 import jade.util.leap.Collection;
 
 /**

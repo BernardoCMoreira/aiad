@@ -39,7 +39,7 @@ public class PlatformID implements Location {
 	private static final String NO_NAME = "__NO_NAME__";
 	
 	public PlatformID() {	
-		_amsAID = new AID(FIPANames.AMS+'@'+NO_NAME, AID.ISGUID);
+		_amsAID = new sajas.core.AID(FIPANames.AMS+'@'+NO_NAME, AID.ISGUID);
 	}
 	
 	public PlatformID(AID amsAID){

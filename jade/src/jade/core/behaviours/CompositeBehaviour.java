@@ -26,7 +26,7 @@ package jade.core.behaviours;
 
 import jade.util.leap.*;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 
 /**
    An abstract superclass for behaviours composed by many parts. This
@@ -35,9 +35,9 @@ import jade.core.Agent;
    from the agent scheduler, it executes one of its children according
    to some policy. This class must be extended to provide the actual
    scheduling policy to apply when running children behaviours.
-   @see jade.core.behaviours.SequentialBehaviour
-   @see jade.core.behaviours.ParallelBehaviour
-   @see jade.core.behaviours.FSMBehaviour
+   @see sajas.core.behaviours.SequentialBehaviour
+   @see sajas.core.behaviours.ParallelBehaviour
+   @see sajas.core.behaviours.FSMBehaviour
 
 
    @author Giovanni Rimassa - Universita' di Parma
@@ -237,7 +237,7 @@ public abstract class CompositeBehaviour extends Behaviour {
      Overrides the method in the base class to propagate the
      setting to all children.
      @param a The agent this behaviour belongs to.
-     @see jade.core.behaviours.Behaviour#setAgent(Agent a)
+     @see sajas.core.behaviours.Behaviour#setAgent(Agent a)
 	 */
 	public void setAgent(Agent a) {
 		Collection c = getChildren();

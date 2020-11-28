@@ -25,7 +25,7 @@ package jade.core;
 
 import jade.lang.acl.ACLMessage;
 //#MIDP_EXCLUDE_BEGIN
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.security.JADEPrincipal;
 import jade.security.Credentials;
 //#MIDP_EXCLUDE_END

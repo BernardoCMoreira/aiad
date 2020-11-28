@@ -7,7 +7,7 @@ package jade.domain;
 import java.util.Date;
 
 import jade.core.AID;
-import jade.core.AgentManager;
+import sajas.core.AgentManager;
 import jade.core.Channel;
 import jade.core.Location;
 import jade.core.ContainerID;

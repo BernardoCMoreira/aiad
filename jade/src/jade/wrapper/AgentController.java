@@ -127,17 +127,17 @@ public interface AgentController {
 	     Passes an application-specific object to a local agent, created
 	     using JADE In-Process Interface. The object will be put into an
 	     internal agent queue, from where it can be picked using the
-	     <code>jade.core.Agent.getO2AObject()</code> method. The agent
+	     <code>sajas.core.Agent.getO2AObject()</code> method. The agent
 	     must first declare its will to accept passed objects, using the
-	     <code>jade.core.Agent.setEnabledO2ACommunication()</code> method.
+	     <code>sajas.core.Agent.setEnabledO2ACommunication()</code> method.
 	     @param o The object to put in the private agent queue.
 	     @param blocking A flag, stating the desired rendez-vous policy;
 	     it can be <code>ASYNC</code>, for a non-blocking call, returning
 	     right after putting the object in the quque, or
 	     <code>SYNC</code>, for a blocking call that does not return until
 	     the agent picks the object from the private queue.
-	     @see jade.core.Agent#getO2AObject()
-	     @see jade.core.Agent#setEnabledO2ACommunication(boolean enabled, int queueSize)
+	     @see sajas.core.Agent#getO2AObject()
+	     @see sajas.core.Agent#setEnabledO2ACommunication(boolean enabled, int queueSize)
 	 */
 	public void putO2AObject(Object o, boolean blocking) throws StaleProxyException;
 
@@ -148,7 +148,7 @@ public interface AgentController {
 	 * @param theInterface The O2A interface that must be retrieved 
 	 * @return An implementation of the indicated O2A interface
 	 * @exception StaleProxyException If the underlying agent is dead or gone.
-	 * @see jade.core.Agent#registerO2AInterface(Class<T> theClass, T theInterface)
+	 * @see sajas.core.Agent#registerO2AInterface(Class<T> theClass, T theInterface)
 	 */
 	public <T> T getO2AInterface(Class<T> theInterface) throws StaleProxyException;
 	//#J2ME_EXCLUDE_END

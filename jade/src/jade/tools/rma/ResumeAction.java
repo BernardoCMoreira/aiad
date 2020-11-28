@@ -51,7 +51,7 @@ import jade.gui.AgentTreeModel;
     //node.setState("Running");
     //node.changeIcon(false);
     String toResume = node.getName();
-    AID agentID = new AID();
+    AID agentID = new sajas.core.AID();
     agentID.setName(toResume);
 
     myRMA.resumeAgent(agentID);

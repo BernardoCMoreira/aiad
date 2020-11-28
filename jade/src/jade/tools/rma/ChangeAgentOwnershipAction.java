@@ -57,7 +57,7 @@ class ChangeAgentOwnershipAction extends AgentAction {
   	
     if (owner !=  null) {
       String toChange = node.getName();
-      AID agentID = new AID();
+      AID agentID = new sajas.core.AID();
       agentID.setName(toChange);
       myRMA.changeAgentOwnership(agentID, owner);
     }

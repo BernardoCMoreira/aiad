@@ -24,7 +24,7 @@
 
 package jade.domain.introspection;
 
-import jade.core.AgentState;
+import sajas.core.AgentState;
 import jade.core.BehaviourID;
 import jade.core.ContainerID;
 import jade.core.Channel;

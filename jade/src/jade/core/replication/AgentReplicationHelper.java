@@ -34,7 +34,7 @@ import jade.core.ServiceHelper;
 
 /**
  * Helper class that allows agents to exploit the features of the AGentReplicationService
- * @see jade.core.Agent#getHelper(String)
+ * @see sajas.core.Agent#getHelper(String)
  */
 public interface AgentReplicationHelper extends ServiceHelper {
 	/**

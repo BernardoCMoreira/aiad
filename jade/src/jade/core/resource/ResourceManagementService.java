@@ -32,8 +32,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import jade.core.Agent;
-import jade.core.AgentContainer;
+import sajas.core.Agent;
+import sajas.core.AgentContainer;
 import jade.core.BaseService;
 import jade.core.HorizontalCommand;
 import jade.core.IMTPException;

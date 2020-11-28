@@ -28,7 +28,7 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.util.Logger;
 
 /**

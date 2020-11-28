@@ -25,7 +25,7 @@ Boston, MA  02111-1307, USA.
 package jade.tools.introspector.gui;
 
 import jade.core.BehaviourID;
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.domain.introspection.AddedBehaviour;
 import jade.domain.introspection.RemovedBehaviour;
 import jade.domain.introspection.ChangedBehaviourState;

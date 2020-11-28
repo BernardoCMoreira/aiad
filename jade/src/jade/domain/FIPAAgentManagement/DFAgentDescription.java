@@ -34,7 +34,7 @@ import java.util.Date;
    This class implements the concept of the fipa-agent-management ontology
    representing the description of an agent in the DF catalogue. 
    @see jade.domain.FIPAAgentManagement.FIPAManagementOntology
-   @see jade.domain.AMSService
+   @see sajas.domain.AMSService
    @author Fabio Bellifemine - CSELT S.p.A.
    @version $Date: 2006-12-14 17:26:48 +0100 (gio, 14 dic 2006) $ $Revision: 5916 $
  */

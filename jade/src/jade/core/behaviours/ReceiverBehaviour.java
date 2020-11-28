@@ -28,7 +28,7 @@ package jade.core.behaviours;
 import jade.util.leap.Iterator;
 import jade.util.leap.Serializable;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 
 import jade.core.AID;
 
@@ -40,8 +40,8 @@ import jade.lang.acl.MessageTemplate;
    <code>receive()</code> as an atomic operation. This behaviour
    terminates when an ACL message is received. 
    The method <code>getMessage()</code> allows to get the received message.
-   @see jade.core.behaviours.SenderBehaviour
-   @see jade.core.Agent#receive()
+   @see sajas.core.behaviours.SenderBehaviour
+   @see sajas.core.Agent#receive()
    @see jade.lang.acl.ACLMessage
  
    
@@ -56,7 +56,7 @@ public final class ReceiverBehaviour extends Behaviour {
    to obtain an <code>ACLMessage</code> object from an
    <code>Handle</code>, but no message was received within a specified
    timeout.
-   @see jade.core.behaviours.ReceiverBehaviour.Handle#getMessage()
+   @see sajas.core.behaviours.ReceiverBehaviour.Handle#getMessage()
   */
   public static class TimedOut extends Exception {
     TimedOut() {
@@ -69,7 +69,7 @@ public final class ReceiverBehaviour extends Behaviour {
    to obtain an <code>ACLMessage</code> from an <code>Handle</code>
    and no message was received so far, but the time limit is not yet
    reached.
-   @see jade.core.behaviours.ReceiverBehaviour.Handle#getMessage()
+   @see sajas.core.behaviours.ReceiverBehaviour.Handle#getMessage()
   */
   public static class NotYetReady extends Exception {
     NotYetReady() {
@@ -84,8 +84,8 @@ public final class ReceiverBehaviour extends Behaviour {
    within a user specified time limit. When the user tries to read the
    message represented by the handle, either gets it or gets an
    exception.
-   @see jade.core.behaviours.ReceiverBehaviour#newHandle()
-   @see jade.core.behaviours.ReceiverBehaviour#ReceiverBehaviour(Agent
+   @see sajas.core.behaviours.ReceiverBehaviour#newHandle()
+   @see sajas.core.behaviours.ReceiverBehaviour#ReceiverBehaviour(Agent
    a, ReceiverBehaviour.Handle h, long millis)
    */
   public static interface Handle {
@@ -101,7 +101,7 @@ public final class ReceiverBehaviour extends Behaviour {
      @exception NotYetReady If the associated
      <code>ReceiverBehaviour</code> is still waiting for a suitable
      ACL message to arrive.
-     @see jade.core.behaviours.ReceiverBehaviour#ReceiverBehaviour(Agent
+     @see sajas.core.behaviours.ReceiverBehaviour#ReceiverBehaviour(Agent
      a, ReceiverBehaviour.Handle h, long millis)
     */
     ACLMessage getMessage() throws TimedOut, NotYetReady;
@@ -147,7 +147,7 @@ public final class ReceiverBehaviour extends Behaviour {
    <code>Handle</code> object, which can be used to retrieve an ACL
    message out of a <code>ReceiverBehaviour</code> object.
    @return A new <code>Handle</code> object.
-   @see jade.core.behaviours.ReceiverBehaviour.Handle
+   @see sajas.core.behaviours.ReceiverBehaviour.Handle
   */
   public static Handle newHandle() {
     return new MessageFuture();
@@ -241,8 +241,8 @@ public final class ReceiverBehaviour extends Behaviour {
      @param h An <em>Handle</em> representing the message to receive.
      @param millis The maximum amount of time to wait for the message,
      in milliseconds.
-     @see jade.core.behaviours.ReceiverBehaviour.Handle
-     @see jade.core.behaviours.ReceiverBehaviour#newHandle()
+     @see sajas.core.behaviours.ReceiverBehaviour.Handle
+     @see sajas.core.behaviours.ReceiverBehaviour#newHandle()
    */
   public ReceiverBehaviour(Agent a, Handle h, long millis) {
     this(a, h, millis, null);
@@ -259,7 +259,7 @@ public final class ReceiverBehaviour extends Behaviour {
      in milliseconds.
      @param mt A Message template to match incoming messages against, null to
      indicate no template and receive any message that arrives.
-     @see jade.core.behaviours.ReceiverBehaviour#ReceiverBehaviour(Agent a, Handle h, long millis)
+     @see sajas.core.behaviours.ReceiverBehaviour#ReceiverBehaviour(Agent a, Handle h, long millis)
   */
   public ReceiverBehaviour(Agent a, Handle h, long millis, MessageTemplate mt) {
     super(a);

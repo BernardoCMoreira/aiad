@@ -23,7 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.tools.rma;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.gui.ClassSelectionDialog;
 import jade.util.ClassFinderFilter;
 
@@ -100,7 +100,7 @@ public class StartDialog extends JDialog implements ActionListener {
 
 		// Exclude all classes that are
 		// - Not concrete (abstract or interfaces)
-		// - Contained in the jade.core package (a part from the jade.core.Agent class itself)
+		// - Contained in the jade.core package (a part from the sajas.core.Agent class itself)
 		// - Explicitly mentioned in the "exclude" array
 		public boolean include(Class superClazz, Class clazz) {
 			String clazzName = clazz.getName();
@@ -163,7 +163,7 @@ public class StartDialog extends JDialog implements ActionListener {
 		extTextFieldAgentName.setToolTipText(ttAgentName);
 		jLabelAgentName.setToolTipText(ttAgentName);
 
-		// className = new JTextField ("jade.core.Agent");
+		// className = new JTextField ("sajas.core.Agent");
 		//
 		// className.setEditable(true);
 		//
@@ -298,7 +298,7 @@ public class StartDialog extends JDialog implements ActionListener {
 				csd = new ClassSelectionDialog(this, "Select Agent class", Agent.class.getName(), new AgentClassFilter());
 			}
 			List l = new ArrayList(1);
-			l.add(0, "jade.core.Agent");
+			l.add(0, "sajas.core.Agent");
 			if (csd.doShow(l) == ClassSelectionDialog.DLG_OK) {
 				setClassName(csd.getSelectedClassname());
 			}

@@ -41,7 +41,7 @@ import jade.util.Logger;
 import jade.imtp.leap.JICP.*;
 import jade.core.Timer;
 import jade.core.TimerListener;
-import jade.core.Runtime;
+import sajas.core.Runtime;
 
 import java.net.*;
 

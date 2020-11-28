@@ -2,7 +2,7 @@ package jade.core.behaviours;
 
 //#J2ME_EXCLUDE_FILE
 
-import jade.core.behaviours.CyclicBehaviour;
+import sajas.core.behaviours.CyclicBehaviour;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,10 +21,10 @@ import jade.content.onto.Ontology;
 import jade.content.onto.basic.Action;
 import jade.content.onto.basic.Done;
 import jade.content.onto.basic.Result;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.domain.FIPAAgentManagement.ExceptionVocabulary;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.ConversationList;
+import sajas.lang.acl.ConversationList;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.MessageTemplate.MatchExpression;
 import jade.util.Logger;

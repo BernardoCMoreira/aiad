@@ -27,7 +27,7 @@ package jade.core.nodeMonitoring;
 //#J2ME_EXCLUDE_FILE
 //#APIDOC_EXCLUDE_FILE
 
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.ContainerID;
 import jade.core.GenericCommand;
 import jade.core.HorizontalCommand;

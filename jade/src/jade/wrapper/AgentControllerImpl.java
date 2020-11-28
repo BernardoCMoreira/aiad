@@ -44,14 +44,14 @@ class AgentControllerImpl implements AgentController {
 
 	private AID agentID;
 	private ContainerProxy myProxy;
-	private jade.core.AgentContainer myContainer;
+	private sajas.core.AgentContainer myContainer;
 
 	/**
      This constructor should not be called by applications.
      The method <code>AgentContainer.createAgent()</code> should
      be used instead.
 	 */
-	public AgentControllerImpl(AID id, ContainerProxy cp, jade.core.AgentContainer ac) {
+	public AgentControllerImpl(AID id, ContainerProxy cp, sajas.core.AgentContainer ac) {
 		agentID = id;
 		myProxy = cp;
 		myContainer = ac;
@@ -59,11 +59,11 @@ class AgentControllerImpl implements AgentController {
 
 
 	/**
-	 * @see jade.wrapper.AgentController#getName()
+	 * @see sajas.wrapper.AgentController#getName()
 	 */
 	public String getName() throws StaleProxyException {
 		// Just to check that the agent is still there
-		jade.core.Agent a = myContainer.acquireLocalAgent(agentID);
+		sajas.core.Agent a = myContainer.acquireLocalAgent(agentID);
 		if (a == null) {
 			throw new StaleProxyException("Controlled agent not found");
 		}
@@ -72,7 +72,7 @@ class AgentControllerImpl implements AgentController {
 	}       
 
 	/**
-	 * @see jade.wrapper.AgentController#start()
+	 * @see sajas.wrapper.AgentController#start()
 	 */
 	public void start() throws StaleProxyException {
 		try {
@@ -84,7 +84,7 @@ class AgentControllerImpl implements AgentController {
 	}
 
 	/**
-	 * @see jade.wrapper.AgentController#suspend()
+	 * @see sajas.wrapper.AgentController#suspend()
 	 */
 	public void suspend() throws StaleProxyException {
 		try {
@@ -96,7 +96,7 @@ class AgentControllerImpl implements AgentController {
 	}
 
 	/**
-	 * @see jade.wrapper.AgentController#activate()
+	 * @see sajas.wrapper.AgentController#activate()
 	 */
 	public void activate() throws StaleProxyException {
 		try {
@@ -108,7 +108,7 @@ class AgentControllerImpl implements AgentController {
 	}
 
 	/**
-	 * @see jade.wrapper.AgentController#kill()
+	 * @see sajas.wrapper.AgentController#kill()
 	 */
 	public void kill() throws StaleProxyException {
 		try {
@@ -120,7 +120,7 @@ class AgentControllerImpl implements AgentController {
 	}
 
 	/**
-	 * @see jade.wrapper.AgentController#move(jade.core.Location)
+	 * @see sajas.wrapper.AgentController#move(jade.core.Location)
 	 */
 	public void move(Location where) throws StaleProxyException {
 		try {
@@ -133,7 +133,7 @@ class AgentControllerImpl implements AgentController {
 
 
 	/**
-	 * @see jade.wrapper.AgentController#clone(jade.core.Location, java.lang.String)
+	 * @see sajas.wrapper.AgentController#clone(jade.core.Location, java.lang.String)
 	 */
 	public void clone(Location where, String newName) throws StaleProxyException {
 		try {
@@ -145,10 +145,10 @@ class AgentControllerImpl implements AgentController {
 	}
 
 	/**
-	 * @see jade.wrapper.AgentController#putO2AObject(java.lang.Object, boolean)
+	 * @see sajas.wrapper.AgentController#putO2AObject(java.lang.Object, boolean)
 	 */
 	public void putO2AObject(Object o, boolean blocking) throws StaleProxyException {
-		jade.core.Agent adaptee = myContainer.acquireLocalAgent(agentID);
+		sajas.core.Agent adaptee = myContainer.acquireLocalAgent(agentID);
 		if (adaptee == null) {
 			throw new StaleProxyException("Controlled agent does not exist");
 		}
@@ -165,7 +165,7 @@ class AgentControllerImpl implements AgentController {
 	//#J2ME_EXCLUDE_BEGIN
 	@SuppressWarnings("unchecked")
 	public <T> T getO2AInterface(Class<T> theInterface) throws StaleProxyException {
-		jade.core.Agent adaptee = myContainer.acquireLocalAgent(agentID);
+		sajas.core.Agent adaptee = myContainer.acquireLocalAgent(agentID);
 		if (adaptee == null) {
 			throw new StaleProxyException("Controlled agent does not exist");
 		}
@@ -192,36 +192,36 @@ class AgentControllerImpl implements AgentController {
 	//#J2ME_EXCLUDE_END
 	
 	/**
-	 * @see jade.wrapper.AgentController#getState()
+	 * @see sajas.wrapper.AgentController#getState()
 	 */
 	public State getState() throws StaleProxyException {
-		jade.core.Agent adaptee = myContainer.acquireLocalAgent(agentID);
+		sajas.core.Agent adaptee = myContainer.acquireLocalAgent(agentID);
 		if (adaptee == null) {
 			throw new StaleProxyException("Controlled agent does not exist");
 		}
 		int jadeState = adaptee.getState();
 		State ret = null;
 		switch (jadeState) {
-		case jade.core.Agent.AP_INITIATED:
+		case sajas.core.Agent.AP_INITIATED:
 			ret =  AgentState.AGENT_STATE_INITIATED;
 			break;
-		case jade.core.Agent.AP_ACTIVE:
+		case sajas.core.Agent.AP_ACTIVE:
 			ret =  AgentState.AGENT_STATE_ACTIVE;
 			break;
-		case jade.core.Agent.AP_IDLE:
+		case sajas.core.Agent.AP_IDLE:
 			ret =  AgentState.AGENT_STATE_IDLE;
 			break;
-		case jade.core.Agent.AP_SUSPENDED:
+		case sajas.core.Agent.AP_SUSPENDED:
 			ret =  AgentState.AGENT_STATE_SUSPENDED;
 			break;
-		case jade.core.Agent.AP_WAITING:
+		case sajas.core.Agent.AP_WAITING:
 			ret =  AgentState.AGENT_STATE_WAITING;
 			break;
-		case jade.core.Agent.AP_DELETED:
+		case sajas.core.Agent.AP_DELETED:
 			ret =  AgentState.AGENT_STATE_DELETED;
 			break;
 			// FIXME: Correctly handle states defined outside the Agent class
-			/*case jade.core.Agent.AP_TRANSIT:
+			/*case sajas.core.Agent.AP_TRANSIT:
         ret =  AgentState.AGENT_STATE_INTRANSIT;
         break;*/
 		default:

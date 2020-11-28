@@ -1,10 +1,10 @@
 package jade.domain;
 
-import jade.core.Agent;
-import jade.domain.DFService;
+import sajas.core.Agent;
+import sajas.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.lang.acl.ACLMessage;
-import jade.proto.SubscriptionInitiator;
+import sajas.proto.SubscriptionInitiator;
 import jade.util.Logger;
 import jade.util.leap.Iterator;
 

@@ -267,7 +267,7 @@ public class LEAPACLCodec implements ACLCodec {
 
 	public final static AID deserializeAID(DataInputStream dis) throws IOException {
 		byte presence = dis.readByte();
-		AID id = ((presence & 0x80) != 0 ? new AID(dis.readUTF(), AID.ISGUID) : new AID());
+		AID id = ((presence & 0x80) != 0 ? new sajas.core.AID(dis.readUTF(), AID.ISGUID) : new sajas.core.AID());
 
 		// Addresses
 		if ((presence & 0x40) != 0) {

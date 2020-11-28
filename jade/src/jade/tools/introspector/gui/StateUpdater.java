@@ -24,7 +24,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.tools.introspector.gui;
 
-import jade.core.AgentState;
+import sajas.core.AgentState;
 import jade.domain.introspection.ChangedAgentState;
 
 /**

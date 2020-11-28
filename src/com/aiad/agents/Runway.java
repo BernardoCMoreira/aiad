@@ -4,9 +4,9 @@ import com.aiad.Config;
 import com.aiad.messages.RunwayOperationCfp;
 import com.aiad.messages.RunwayOperationProposal;
 import jade.core.AID;
-import jade.core.Agent;
-import jade.core.behaviours.TickerBehaviour;
-import jade.domain.DFService;
+import sajas.core.Agent;
+import sajas.core.behaviours.TickerBehaviour;
+import sajas.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.FailureException;
 import jade.domain.FIPAAgentManagement.NotUnderstoodException;
@@ -14,7 +14,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.proto.ContractNetResponder;
+import sajas.proto.ContractNetResponder;
 
 import javax.print.event.PrintJobEvent;
 import javax.swing.*;
@@ -163,7 +163,7 @@ public class Runway extends Agent {
             operations.computeIfPresent(key, (k, operation) -> {
                 var msg = new ACLMessage(ACLMessage.INFORM);
                 msg.setContent("Cancelled");
-                msg.addReceiver(new AID("airplane" + operation.getAirplaneId(), AID.ISLOCALNAME));
+                msg.addReceiver(new sajas.core.AID("airplane" + operation.getAirplaneId(), AID.ISLOCALNAME));
                 send(msg);
                 return null;
             });

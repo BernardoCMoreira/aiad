@@ -35,7 +35,7 @@ import javax.swing.event.ListDataListener;
 import jade.core.AID;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.*;
@@ -90,7 +90,7 @@ public class AIDAddressList extends JPanel {
       listModel.addElement(theAddresss);
     }
 
-    theDataListener = new AIDAddressListListener();
+    theDataListener = new sajas.core.AIDAddressListListener();
     theDataListener.register(theAID, "Address");
     listModel.addListDataListener(theDataListener);
     contentList.setModel(listModel);
@@ -113,7 +113,7 @@ public class AIDAddressList extends JPanel {
    *  Description of the Method
    */
   public void doAdd() {
-    AIDAddressDialog theDialog = new AIDAddressDialog();
+    AIDAddressDialog theDialog = new sajas.core.AIDAddressDialog();
     theDialog.setTitle("<new address>");
     theDialog.setLocation((int)getLocationOnScreen().getX(), (int)getLocationOnScreen().getY());
     theDialog.setVisible(true);
@@ -135,7 +135,7 @@ public class AIDAddressList extends JPanel {
     }
     String currentAddress = (String)listModel.getElementAt(index);
     String editAddress = currentAddress;
-    AIDAddressDialog theDialog = new AIDAddressDialog();
+    AIDAddressDialog theDialog = new sajas.core.AIDAddressDialog();
     theDialog.setLocation((int)getLocationOnScreen().getX(), (int)getLocationOnScreen().getY());
     theDialog.setEditable(editable);
     theDialog.setTitle(editable ? "Edit address: " + currentAddress : "View address:" + currentAddress);

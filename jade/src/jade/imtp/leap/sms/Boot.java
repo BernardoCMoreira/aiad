@@ -26,7 +26,7 @@ package jade.imtp.leap.sms;
 
 //#J2ME_EXCLUDE_FILE
 
-import jade.core.Runtime;
+import sajas.core.Runtime;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.ProfileException;

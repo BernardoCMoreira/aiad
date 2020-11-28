@@ -24,7 +24,7 @@ Boston, MA  02111-1307, USA.
 package jade.core.messaging;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.FEService;
 import jade.core.IMTPException;
 import jade.core.NotFoundException;

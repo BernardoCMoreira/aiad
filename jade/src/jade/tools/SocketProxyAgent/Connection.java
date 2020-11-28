@@ -27,10 +27,10 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
 import jade.lang.acl.*;
-import jade.core.behaviours.SimpleBehaviour;
+import sajas.core.behaviours.SimpleBehaviour;
 import jade.util.Logger;
 
 /**
@@ -140,7 +140,7 @@ class Connection extends Thread {
 			String receiverName = receiverAID.getName();
 			if (receiverName.indexOf('@') < 0) {
 				msg.removeReceiver(receiverAID);
-				AID newAID = new AID(receiverName, AID.ISLOCALNAME);
+				AID newAID = new sajas.core.AID(receiverName, AID.ISLOCALNAME);
 				msg.addReceiver(newAID);
 				if ( logger.isLoggable( Logger.FINE ) ) {
 					logger.log( Logger.FINE, "Changed receiver " + receiverName +

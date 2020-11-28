@@ -5,7 +5,7 @@ package jade.wrapper.gateway;
 import jade.util.leap.Iterator;
 import jade.util.leap.HashMap;
 
-import jade.core.behaviours.CyclicBehaviour;
+import sajas.core.behaviours.CyclicBehaviour;
 import jade.util.Event;
 import jade.util.Logger;
 

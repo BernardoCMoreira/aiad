@@ -49,7 +49,7 @@ import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 
-import jade.proto.SimpleAchieveREInitiator;
+import sajas.proto.SimpleAchieveREInitiator;
 
 /** 
   This class extends the <code>FipaRequestIntiatorBehaviour</code> in order to request an agent, e.g. <em>DF or AMS</em> 
@@ -63,8 +63,8 @@ a search action the default search constraints are used. <br>
   The second constructor is specific for a search action and it allows
 to specify additional search constraints.
   
-  @see jade.domain.DFService
-  @see jade.domain.AMSService
+  @see sajas.domain.DFService
+  @see sajas.domain.AMSService
   
   @author Fabio Bellifemine (CSELT S.p.A.)
   @version $Date: 2003-11-24 14:47:00 +0100 (lun, 24 nov 2003) $ $Revision: 4597 $
@@ -77,7 +77,7 @@ public class RequestFIPAServiceBehaviour extends SimpleAchieveREInitiator{
    to obtain an <code>ACLMessage</code> from an <code>Handle</code>
    and no message has been yet received and the timeout limit is not yet
    elapsed.
-   @see jade.core.behaviours.ReceiverBehaviour.Handle#getMessage()
+   @see sajas.core.behaviours.ReceiverBehaviour.Handle#getMessage()
   */
   public static class NotYetReady extends Exception {
     NotYetReady() {

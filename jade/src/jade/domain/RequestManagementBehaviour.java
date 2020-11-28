@@ -28,7 +28,7 @@ package jade.domain;
 //#APIDOC_EXCLUDE_FILE
 
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.CaseInsensitiveString;
 
 import jade.content.onto.OntologyException;
@@ -38,7 +38,7 @@ import jade.content.onto.basic.Action;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-import jade.proto.SimpleAchieveREResponder;
+import sajas.proto.SimpleAchieveREResponder;
 
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.FailureException;

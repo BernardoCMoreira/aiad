@@ -34,7 +34,7 @@ import jade.domain.KBManagement.*;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.ACLCodec;
 import jade.lang.acl.StringACLCodec;
-import jade.proto.SubscriptionResponder;
+import sajas.proto.SubscriptionResponder;
 
 import jade.util.leap.Collection;
 import jade.util.leap.Iterator;
@@ -1106,7 +1106,7 @@ public class DFDBKB extends DBKB {
 	private AID getAID(String aidN) throws SQLException {
 		
 		ResultSet rs = null;
-		AID id = new AID(aidN, AID.ISGUID);
+		AID id = new sajas.core.AID(aidN, AID.ISGUID);
 
 		PreparedStatements pss = getPreparedStatements();
 		// AID addresses
@@ -1740,7 +1740,7 @@ public class DFDBKB extends DBKB {
 	/**
 	 * Return all known subscriptions at the DF
 	 * @return <code>Enumeration</code> with instances of the class 
-	 * <code> jade.proto.SubscriptionResponder&Subscription</code>
+	 * <code> sajas.proto.SubscriptionResponder&Subscription</code>
 	 */
 	public Enumeration getSubscriptions(){
 		Vector subscriptions = new Vector();

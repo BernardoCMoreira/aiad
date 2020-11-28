@@ -32,13 +32,13 @@ import jade.core.BaseService;
 import jade.core.Sink;
 import jade.core.Filter;
 import jade.core.Node;
-import jade.core.Agent;
-import jade.core.AgentContainer;
+import sajas.core.Agent;
+import sajas.core.AgentContainer;
 import jade.core.MainContainer;
 import jade.core.AID;
 import jade.core.ContainerID;
 import jade.core.BehaviourID;
-import jade.core.AgentState;
+import sajas.core.AgentState;
 import jade.core.Channel;
 import jade.core.Profile;
 import jade.core.ProfileException;
@@ -47,7 +47,7 @@ import jade.core.IMTPException;
 import jade.core.NotFoundException;
 import jade.core.ServiceHelper;
 import jade.core.messaging.GenericMessage;
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.security.JADEPrincipal;
 import jade.tools.ToolNotifier;
@@ -535,7 +535,7 @@ public class NotificationService extends BaseService {
 				tn = new ToolNotifier(snifferName);
 				try {
 					String platformID = myContainer.getPlatformID();
-					AID id = new AID(AID.createGUID(snifferName.getLocalName() + "-on-" + myID().getName(), myContainer.getPlatformID()), AID.ISGUID);
+					AID id = new sajas.core.AID(AID.createGUID(snifferName.getLocalName() + "-on-" + myID().getName(), myContainer.getPlatformID()), AID.ISGUID);
 					myContainer.initAgent(id, tn, null, null); // FIXME: Modify to use a proper owner Principal
 					myContainer.powerUpLocalAgent(id);
 					helper.registerMessageListener(tn);
@@ -580,7 +580,7 @@ public class NotificationService extends BaseService {
 			ToolNotifier tn = findNotifier(introspectorName);
 			if(tn == null) { // Need a new notifier
 				tn = new ToolNotifier(introspectorName);
-				AID id = new AID(AID.createGUID(introspectorName.getLocalName() + "-on-" + myID().getName(), myContainer.getPlatformID()), AID.ISGUID);
+				AID id = new sajas.core.AID(AID.createGUID(introspectorName.getLocalName() + "-on-" + myID().getName(), myContainer.getPlatformID()), AID.ISGUID);
 				try {
 					myContainer.initAgent(id, tn, null, null); // FIXME: Modify to use a proper owner Principal
 					myContainer.powerUpLocalAgent(id);
@@ -762,7 +762,7 @@ public class NotificationService extends BaseService {
 		String realSenderName = msg.getUserDefinedParameter(ACLMessage.REAL_SENDER);
 		AID sender = null;
 		if (realSenderName != null) {
-			sender = new AID(realSenderName, AID.ISGUID);
+			sender = new sajas.core.AID(realSenderName, AID.ISGUID);
 		}
 		// NOTE: A normal synchronized block could create deadlock problems
 		// as it prevents concurrent scannings of the listeners list.
@@ -783,7 +783,7 @@ public class NotificationService extends BaseService {
 		String realSenderName = msg.getUserDefinedParameter(ACLMessage.REAL_SENDER);
 		AID sender = null;
 		if (realSenderName != null) {
-			sender = new AID(realSenderName, AID.ISGUID);
+			sender = new sajas.core.AID(realSenderName, AID.ISGUID);
 		}
 		// NOTE: A normal synchronized block could create deadlock problems
 		// as it prevents concurrent scannings of the listeners list.

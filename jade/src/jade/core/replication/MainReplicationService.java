@@ -42,7 +42,7 @@ import jade.core.NodeDescriptor;
 import jade.core.NodeEventListener;
 import jade.core.NodeFailureMonitor;
 
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.MainContainerImpl;
 import jade.core.Profile;
 import jade.core.ProfileException;

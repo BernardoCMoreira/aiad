@@ -30,7 +30,7 @@ import jade.util.leap.Properties;
 import jade.util.Logger;
 import jade.security.JADESecurityException;
 //#MIDP_EXCLUDE_BEGIN
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.core.event.ContainerEvent;
 import jade.core.event.JADEEvent;
 import jade.domain.FIPANames;
@@ -645,9 +645,9 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 		myId = new ContainerID(pp.getProperty(MicroRuntime.CONTAINER_NAME_KEY), null);
 		AID.setPlatformID(pp.getProperty(MicroRuntime.PLATFORM_KEY));
 		platformAddresses = Specifier.parseList(pp.getProperty(MicroRuntime.PLATFORM_ADDRESSES_KEY), ';');
-		amsAID = new AID("ams", AID.ISLOCALNAME);
+		amsAID = new sajas.core.AID("ams", AID.ISLOCALNAME);
 		setPlatformAddresses(amsAID);
-		dfAID = new AID("df", AID.ISLOCALNAME);
+		dfAID = new sajas.core.AID("df", AID.ISLOCALNAME);
 		setPlatformAddresses(dfAID);
 	}
 	
@@ -670,7 +670,7 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 	
 	private void activateAgent(String name, Agent a) {
 		localAgents.put(name, a);
-		AID id = new AID(name, AID.ISLOCALNAME);
+		AID id = new sajas.core.AID(name, AID.ISLOCALNAME);
 		
 		//#MIDP_EXCLUDE_BEGIN
 		// NOTIFY BORN AGENT once the new agent has been created, inserted in the localTable and notified to the Main, but not yet started

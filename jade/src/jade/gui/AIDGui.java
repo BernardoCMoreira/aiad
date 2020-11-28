@@ -94,7 +94,7 @@ public class AIDGui extends JDialog{
 		this.checkSlots = checkMandatorySlots;
 
 		if(agentIdentifier == null)
-			this.agentAID =  new AID();
+			this.agentAID =  new sajas.core.AID();
 		else
 			this.agentAID = agentIdentifier;
 
@@ -207,7 +207,7 @@ public class AIDGui extends JDialog{
 								JOptionPane.showMessageDialog(AIDGui.this,"AID must have a non-empty name.","Error Message",JOptionPane.ERROR_MESSAGE);
 								return;
 							}
-						out = new AID();
+						out = new sajas.core.AID();
 
 						if(isLocalName.isSelected())
 							out.setLocalName(name);

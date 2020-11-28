@@ -83,7 +83,7 @@ class GlobalReplicationInfo implements Serializable {
 
 	synchronized AID[] getAllReplicas() {
 		Object[] oo = allReplicas.toArray();
-		AID[] aids = new AID[oo.length];
+		AID[] aids = new sajas.core.AID[oo.length];
 		for (int i = 0; i < oo.length; ++i) {
 			aids[i] = (AID) oo[i];
 		}

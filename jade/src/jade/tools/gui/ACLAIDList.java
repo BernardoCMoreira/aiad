@@ -37,7 +37,7 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.Iterator;
 
@@ -102,7 +102,7 @@ public class ACLAIDList extends JPanel {
     catch (Exception ex) {
       ex.printStackTrace();
     }
-    theDataListener = new AIDListListener();
+    theDataListener = new sajas.core.AIDListListener();
     theDataListener.register(itsObj, fieldName);
     listModel.addListDataListener(theDataListener);
     contentList.setModel(listModel);
@@ -131,7 +131,7 @@ public class ACLAIDList extends JPanel {
     catch (Exception ex) {
       ex.printStackTrace();
     }
-    theDataListener = new AIDListListener();
+    theDataListener = new sajas.core.AIDListListener();
     theDataListener.register(aid, fieldName);
     listModel.addListDataListener(theDataListener);
     contentList.setModel(listModel);
@@ -198,7 +198,7 @@ public class ACLAIDList extends JPanel {
    */
   void doAdd() {
     ACLAIDDialog theGui = new ACLAIDDialog(agent);
-    theGui.setTitle("<new AID>");
+    theGui.setTitle("<new sajas.core.AID>");
     theGui.setLocation((int)getLocationOnScreen().getX(), (int)getLocationOnScreen().getY());
     theGui.localCheckBox.setSelected(false);
     theGui.setVisible(true);
@@ -500,7 +500,7 @@ public class ACLAIDList extends JPanel {
   private JButton deleteButton = new JButton();
 
   private DefaultListModel listModel = new DefaultListModel();
-  private AIDListCellRenderer aidListCellRenderer = new AIDListCellRenderer();
+  private AIDListCellRenderer aidListCellRenderer = new sajas.core.AIDListCellRenderer();
   private boolean editable = true;
   private String fieldName = "";
   private String mode = MSG;

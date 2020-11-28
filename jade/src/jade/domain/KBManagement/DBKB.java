@@ -30,7 +30,7 @@ package jade.domain.KBManagement;
 import jade.core.AID;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.NotUnderstoodException;
-import jade.proto.SubscriptionResponder;
+import sajas.proto.SubscriptionResponder;
 import jade.util.Logger;
 import jade.util.leap.List;
 import jade.util.leap.ArrayList;

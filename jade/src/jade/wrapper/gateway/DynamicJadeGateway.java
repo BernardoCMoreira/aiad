@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
-import jade.core.Runtime;
+import sajas.core.Runtime;
 import jade.util.Event;
 import jade.util.Logger;
 import jade.util.leap.Properties;
-import jade.wrapper.AgentController;
-import jade.wrapper.ContainerController;
+import sajas.wrapper.AgentController;
+import sajas.wrapper.ContainerController;
 import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 
@@ -62,7 +62,7 @@ public class DynamicJadeGateway {
 	 * has been executed (i.e. the method <code>releaseCommand</code> 
 	 * is called by the executor agent)
 	 * @throws StaleProxyException if the method was not able to execute the Command
-	 * @see jade.wrapper.AgentController#putO2AObject(Object, boolean)
+	 * @see sajas.wrapper.AgentController#putO2AObject(Object, boolean)
 	 **/
 	public final void execute(Object command) throws StaleProxyException,ControllerException,InterruptedException {
 		execute(command, 0);
@@ -78,7 +78,7 @@ public class DynamicJadeGateway {
 	 * @throws InterruptedException if the timeout expires or the Thread
 	 * executing this method is interrupted.
 	 * @throws StaleProxyException if the method was not able to execute the Command
-	 * @see jade.wrapper.AgentController#putO2AObject(Object, boolean)
+	 * @see sajas.wrapper.AgentController#putO2AObject(Object, boolean)
 	 **/
 	public final void execute(Object command, long timeout) throws StaleProxyException,ControllerException,InterruptedException {
 		Event e = null;
@@ -243,7 +243,7 @@ public class DynamicJadeGateway {
 	}
 	
 	public AID createAID(String localName) {
-		return new AID(localName+'@'+myContainer.getPlatformName(), AID.ISGUID);
+		return new sajas.core.AID(localName+'@'+myContainer.getPlatformName(), AID.ISGUID);
 	}
 	
 	//#DOTNET_EXCLUDE_BEGIN

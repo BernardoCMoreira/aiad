@@ -24,7 +24,7 @@
 package jade.core;
 
 
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.util.Logger;
 import jade.util.leap.HashMap;
 import jade.util.leap.Iterator;

@@ -34,11 +34,11 @@ import jade.core.Filter;
 import jade.core.Node;
 
 import jade.core.Profile;
-import jade.core.Agent;
-import jade.core.AgentState;
+import sajas.core.Agent;
+import sajas.core.AgentState;
 import jade.core.AID;
 import jade.core.ContainerID;
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.MainContainer;
 
 import jade.core.ProfileException;
@@ -238,7 +238,7 @@ public class AgentManagementService extends BaseService {
 			MainContainer impl = myContainer.getMain();
 			if(impl != null) {
 				
-				AID agentID = new AID(AID.createGUID(name, myContainer.getPlatformID()), AID.ISGUID);
+				AID agentID = new sajas.core.AID(AID.createGUID(name, myContainer.getPlatformID()), AID.ISGUID);
 				AgentManagementSlice targetSlice = (AgentManagementSlice)getSlice(cid.getName());
 				if (targetSlice != null) {
 					try {
@@ -716,7 +716,7 @@ public class AgentManagementService extends BaseService {
 					  if(myLogger.isLoggable(Logger.INFO))
 					  myLogger.log(Logger.INFO,"Replacing old agent "+name.getName());
 					  dyingAgents.add(name);
-					  ((jade.core.AgentManager) impl).kill(name, principal, credentials);
+					  ((sajas.core.AgentManager) impl).kill(name, principal, credentials);
 					  waitUntilDead(name);
 					  impl.bornAgent(name, cid, principal, ownership, false);
 					  }

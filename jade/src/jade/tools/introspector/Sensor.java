@@ -25,7 +25,7 @@
 package jade.tools.introspector;
  
 import java.util.Vector;
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.util.Event;
 
 /**

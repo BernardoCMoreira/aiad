@@ -25,7 +25,7 @@ package jade.core.behaviours;
 
 import jade.util.leap.Serializable;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 
 /**
  Abstract base class for <b><em>JADE</em></b> behaviours.  Extending
@@ -209,7 +209,7 @@ public abstract class Behaviour implements Serializable {
 	 * it is strongly suggested to use this method rather than the <core>parent</code> member variable
 	 * directly. In case of threaded or wrapped behaviour in facts the latter may have unexpected values. 
 	 @return The enclosing CompositeBehaviour (if present).
-	 @see jade.core.behaviours.CompositeBehaviour
+	 @see sajas.core.behaviours.CompositeBehaviour
 	 */
 	protected CompositeBehaviour getParent() {
 		if (wrappedParent != null) {
@@ -277,7 +277,7 @@ public abstract class Behaviour implements Serializable {
 	 soon as possible to preserve agent responsiveness. To split a
 	 long and slow task into smaller section, recursive behaviour
 	 aggregation may be used.
-	 @see jade.core.behaviours.CompositeBehaviour
+	 @see sajas.core.behaviours.CompositeBehaviour
 	 */
 	public abstract void action();
 	
@@ -403,7 +403,7 @@ public abstract class Behaviour implements Serializable {
 	 @return The top-level behaviour this behaviour is a part of. If
 	 this one is a top level behaviour itself, then simply
 	 <code>this</code> is returned.
-	 @see jade.core.behaviours.Behaviour#restart()
+	 @see sajas.core.behaviours.Behaviour#restart()
 	 */
 	public Behaviour root() {
 		//#CUSTOM_EXCLUDE_BEGIN
@@ -453,7 +453,7 @@ public abstract class Behaviour implements Serializable {
 	 <code>restart()</code> method.<br> 
 	 If this behaviour is a child of a <code>CompositeBehaviour</code> a suitable event is fired to
 	 notify its parent behaviour up to the behaviour composition hierarchy root.
-	 @see jade.core.behaviours.Behaviour#restart() 
+	 @see sajas.core.behaviours.Behaviour#restart() 
 	 */
 	public void block() {
 		handleBlockEvent();
@@ -486,7 +486,7 @@ public abstract class Behaviour implements Serializable {
 	 milliseconds. <em><b>Notice:</b> a value of 0 for
 	 <code>millis</code> is equivalent to a call to
 	 <code>block()</code> without arguments.</em>
-	 @see jade.core.behaviours.Behaviour#block()
+	 @see sajas.core.behaviours.Behaviour#block()
 	 */
 	public void block(long millis) {
 		// Note that it is important to block the behaviour before
@@ -508,7 +508,7 @@ public abstract class Behaviour implements Serializable {
 	 inserts a blocked event back into the agent ready queue, it
 	 restarts it automatically. When this method is called, any timer
 	 associated with this behaviour object is cleared.
-	 @see jade.core.behaviours.Behaviour#block()
+	 @see sajas.core.behaviours.Behaviour#block()
 	 */
 	public void restart() {
 		if(myAgent != null) {
@@ -539,7 +539,7 @@ public abstract class Behaviour implements Serializable {
 	 <code>addBehaviour()</code> call takes care of the association
 	 transparently.
 	 @param a The agent this behaviour belongs to.
-	 @see jade.core.Agent#addBehaviour(Behaviour b)
+	 @see sajas.core.Agent#addBehaviour(Behaviour b)
 	 */
 	public void setAgent(Agent a) {
 		myAgent = a;

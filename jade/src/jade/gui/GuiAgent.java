@@ -45,7 +45,7 @@ another thread because of the difference in the thread space.
 What should be done, instead is one thread requesting the other to execute a 
 method, each thread in its one execution space.
 Since its common to have an agent with a GUI, this class is for this purpose.
-This class extends the <code>jade.core.Agent </code> class: at the start-up 
+This class extends the <code>sajas.core.Agent </code> class: at the start-up 
 it instantiate ad ad-hoc behaviour that manages a queue of 
 <code>jade.gui.GuiEvent</code>,event objects that can be received by other threads.  
 A thread (in particular a GUI)to notify an event to an Agent should create 
@@ -58,7 +58,7 @@ After the method <code>postGuiEvent</code> is called,the agent reacts
 by waking up all its active behaviours, and in particular the one that causes
 the Agent thread to execute the method <code>onGuiEvent</code>.
 
-@see jade.core.Agent
+@see sajas.core.Agent
 @see jade.gui.GuiEvent
 @author Giovanni Caire - CSELT S.p.A.
 @version $Date: 2005-04-15 17:45:02 +0200 (ven, 15 apr 2005) $ $Revision: 5669 $

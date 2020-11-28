@@ -26,7 +26,7 @@ package jade.core.behaviours;
 
 //#APIDOC_EXCLUDE_FILE
 
-import jade.core.Agent;
+import sajas.core.Agent;
 
 import jade.lang.acl.ACLMessage;
 
@@ -34,8 +34,8 @@ import jade.lang.acl.ACLMessage;
    Behaviour for sending an ACL message. This class encapsulates a
    <code>send()</code> as an atomic operation. This behaviour sends a
    given ACL message and terminates.
-   @see jade.core.behaviours.ReceiverBehaviour
-   @see jade.core.Agent#send(ACLMessage msg)
+   @see sajas.core.behaviours.ReceiverBehaviour
+   @see sajas.core.Agent#send(ACLMessage msg)
    @see jade.lang.acl.ACLMessage
    
    

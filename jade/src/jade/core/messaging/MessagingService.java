@@ -42,10 +42,10 @@ import jade.core.ServiceException;
 import jade.core.Sink;
 import jade.core.Filter;
 import jade.core.Node;
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.MainContainer;
 import jade.core.CaseInsensitiveString;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
 import jade.core.ContainerID;
 import jade.core.Profile;
@@ -553,7 +553,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 			
 			public void createAlias(String alias) throws IMTPException, ServiceException {
 				myLogger.log(Logger.INFO, "Creating Alias "+alias+"-->"+myAgent.getLocalName());
-				AID aliasAID = new AID(AID.createGUID(alias, myContainer.getPlatformID()), AID.ISGUID);
+				AID aliasAID = new sajas.core.AID(AID.createGUID(alias, myContainer.getPlatformID()), AID.ISGUID);
 				AID id = myAgent.getAID();
 				localAliases.put(aliasAID, id);
 				notifyNewAlias(aliasAID, id);
@@ -561,7 +561,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 			
 			public void deleteAlias(String alias) throws IMTPException, ServiceException {
 				myLogger.log(Logger.INFO, "Deleting Alias "+alias+"-->"+myAgent.getLocalName());
-				AID aliasAID = new AID(AID.createGUID(alias, myContainer.getPlatformID()), AID.ISGUID);
+				AID aliasAID = new sajas.core.AID(AID.createGUID(alias, myContainer.getPlatformID()), AID.ISGUID);
 				AID id = (AID) localAliases.remove(aliasAID);
 				if (id != null) {
 					if (id.equals(myAgent.getAID())) {

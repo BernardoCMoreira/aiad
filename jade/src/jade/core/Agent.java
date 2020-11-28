@@ -33,7 +33,7 @@ import jade.util.leap.Iterator;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.lang.acl.*;
 import jade.security.JADESecurityException;
 
@@ -313,7 +313,7 @@ public class Agent implements Runnable, Serializable
 	 @param b The behaviour to restart later.
 	 @param millis The amount of time to wait before restarting
 	 <code>b</code>.
-	 @see jade.core.behaviours.Behaviour#block(long millis)
+	 @see sajas.core.behaviours.Behaviour#block(long millis)
 	 */
 	public void restartLater(Behaviour b, long millis) {
 		if (millis <= 0) 
@@ -357,7 +357,7 @@ public class Agent implements Runnable, Serializable
 	 application level code. To explicitly schedule behaviours, use
 	 <code>block()</code> and <code>restart()</code> methods.
 	 @param b The behaviour object which was restarted.
-	 @see jade.core.behaviours.Behaviour#restart()
+	 @see sajas.core.behaviours.Behaviour#restart()
 	 */
 	public void notifyRestarted(Behaviour b) {
 		// Did this restart() cause the root behaviour to become runnable ?
@@ -771,7 +771,7 @@ public class Agent implements Runnable, Serializable
 	 */
 	public final AID getAID(String name) {
 		String guid = AID.createGUID(name, getHap());
-		AID result = new AID(guid, AID.ISGUID);
+		AID result = new sajas.core.AID(guid, AID.ISGUID);
 		Iterator it = myAID.getAllAddresses();
 		while (it.hasNext()) {
 			result.addAddresses((String) it.next());
@@ -909,7 +909,7 @@ public class Agent implements Runnable, Serializable
 	 messages exceeds this value, older messages are discarded
 	 according to a <b><em>FIFO</em></b> replacement policy.
 	 @throws IllegalArgumentException If <code>newSize</code> is negative.
-	 @see jade.core.Agent#getQueueSize()
+	 @see sajas.core.Agent#getQueueSize()
 	 */
 	public void setQueueSize(int newSize) throws IllegalArgumentException {
 		msgQueue.setMaxSize(newSize);
@@ -932,8 +932,8 @@ public class Agent implements Runnable, Serializable
 	 available memory).
 	 @return The actual size of the message queue (i.e. the max number
 	 of messages that can be stored into the queue)
-	 @see jade.core.Agent#setQueueSize(int newSize)
-	 @see jade.core.Agent#getCurQueueSize()
+	 @see sajas.core.Agent#setQueueSize(int newSize)
+	 @see sajas.core.Agent#getCurQueueSize()
 	 */
 	public int getQueueSize() {
 		return msgQueue.getMaxSize();
@@ -1113,7 +1113,7 @@ public class Agent implements Runnable, Serializable
 	 <br>
 	 <b>NOT available in MIDP</b>
 	 <br>
-	 @see jade.core.Agent#doActivate()
+	 @see sajas.core.Agent#doActivate()
 	 */
 	public void doSuspend() {
 		//#MIDP_EXCLUDE_BEGIN
@@ -1135,7 +1135,7 @@ public class Agent implements Runnable, Serializable
 	 <br>
 	 <b>NOT available in MIDP</b>
 	 <br>
-	 @see jade.core.Agent#doSuspend()
+	 @see sajas.core.Agent#doSuspend()
 	 */
 	public void doActivate() {
 		//#MIDP_EXCLUDE_BEGIN
@@ -1151,7 +1151,7 @@ public class Agent implements Runnable, Serializable
 	 block, stopping all its activities until  
 	 a message arrives or 	the
 	 <code>doWake()</code> method is called. 
-	 @see jade.core.Agent#doWake()
+	 @see sajas.core.Agent#doWake()
 	 */
 	public void doWait() {
 		doWait(0);
@@ -1162,7 +1162,7 @@ public class Agent implements Runnable, Serializable
 	 within Agent Platform Life Cycle. This method adds a timeout to
 	 the other <code>doWait()</code> version.
 	 @param millis The timeout value, in milliseconds.
-	 @see jade.core.Agent#doWait()
+	 @see sajas.core.Agent#doWait()
 	 */
 	public void doWait(long millis) {
 		if (Thread.currentThread().equals(myThread)) {
@@ -1193,7 +1193,7 @@ public class Agent implements Runnable, Serializable
 	 within Agent Platform Life Cycle. This method is called from
 	 Agent Platform and resumes agent execution. Calling
 	 <code>doWake()</code> when an agent is not waiting has no effect.
-	 @see jade.core.Agent#doWait()
+	 @see sajas.core.Agent#doWait()
 	 */
 	public void doWake() {
 		synchronized(stateLock) {
@@ -1247,7 +1247,7 @@ public class Agent implements Runnable, Serializable
 	 <em>not</em> closed on exit.
 	 @exception IOException Thrown if some I/O error occurs during
 	 writing.
-	 @see jade.core.Agent#read(InputStream s)
+	 @see sajas.core.Agent#read(InputStream s)
 	 */
 	public void write(OutputStream s) throws IOException {
 		ObjectOutput out = new ObjectOutputStream(s);
@@ -1267,7 +1267,7 @@ public class Agent implements Runnable, Serializable
 	 <em>not</em> closed on exit.
 	 @exception IOException Thrown if some I/O error occurs during
 	 stream reading.
-	 @see jade.core.Agent#write(OutputStream s)
+	 @see sajas.core.Agent#write(OutputStream s)
 	 *
 	 public static void read(InputStream s) throws IOException {
 	 try {
@@ -1296,7 +1296,7 @@ public class Agent implements Runnable, Serializable
 	 original one.
 	 @exception IOException Thrown if some I/O error occurs during
 	 stream reading.
-	 @see jade.core.Agent#write(OutputStream s)
+	 @see sajas.core.Agent#write(OutputStream s)
 	 *
 	 public static void read(InputStream s, String agentName) throws IOException {
 	 try {
@@ -1334,7 +1334,7 @@ public class Agent implements Runnable, Serializable
 	 <br>
 	 <b>NOT available in MIDP</b>
 	 <br>
-	 @see jade.wrapper.AgentController#putO2AObject(Object o, boolean blocking)
+	 @see sajas.wrapper.AgentController#putO2AObject(Object o, boolean blocking)
 	 */
 	public void putO2AObject(Object o, boolean blocking) throws InterruptedException {
 		// Drop object on the floor if object-to-agent communication is
@@ -1379,7 +1379,7 @@ public class Agent implements Runnable, Serializable
 	 work, the agent must have declared its will to accept objects
 	 from other software components running within its JVM. This can
 	 be achieved by calling the
-	 <code>jade.core.Agent.setEnabledO2ACommunication()</code> method.
+	 <code>sajas.core.Agent.setEnabledO2ACommunication()</code> method.
 	 If the retrieved object was originally inserted by an external
 	 component using a blocking call, that call will return during the
 	 execution of this method.
@@ -1388,8 +1388,8 @@ public class Agent implements Runnable, Serializable
 	 <br>
 	 @return the first object in the queue, or <code>null</code> if
 	 the queue is empty.
-	 @see jade.wrapper.AgentController#putO2AObject(Object o, boolean blocking)
-	 @see jade.core.Agent#setEnabledO2ACommunication(boolean enabled, int queueSize)
+	 @see sajas.wrapper.AgentController#putO2AObject(Object o, boolean blocking)
+	 @see sajas.core.Agent#setEnabledO2ACommunication(boolean enabled, int queueSize)
 	 */
 	public Object getO2AObject() {
 
@@ -1435,7 +1435,7 @@ public class Agent implements Runnable, Serializable
 	 will be queued. If the passed value is 0, no maximum limit is set
 	 up for the queue.
 
-	 @see jade.wrapper.AgentController#putO2AObject(Object o, boolean blocking)
+	 @see sajas.wrapper.AgentController#putO2AObject(Object o, boolean blocking)
 	 @see getO2AObject()
 
 	 */
@@ -1478,7 +1478,7 @@ public class Agent implements Runnable, Serializable
 	 <br>
 	 * @param b The behaviour that will act as O2A manager.
 	 * 
-	 * @see jade.wrapper.AgentController#putO2AObject(Object o, boolean blocking)
+	 * @see sajas.wrapper.AgentController#putO2AObject(Object o, boolean blocking)
 	 * @see getO2AObject()
 	 */
 	public void setO2AManager(Behaviour b) {
@@ -1513,8 +1513,8 @@ public class Agent implements Runnable, Serializable
 	 This method is the main body of every agent. It 
 	 provides startup and cleanup hooks for application 
 	 programmers to put their specific code into.
-	 @see jade.core.Agent#setup()
-	 @see jade.core.Agent#takeDown()
+	 @see sajas.core.Agent#setup()
+	 @see sajas.core.Agent#takeDown()
 	 */
 	public final void run() {
 		try {
@@ -1725,8 +1725,8 @@ public class Agent implements Runnable, Serializable
 	 <b>DF</b> registration, but is essential to add at least a
 	 <code>Behaviour</code> object to the agent, in order for it to be
 	 able to do anything.
-	 @see jade.core.Agent#addBehaviour(Behaviour b)
-	 @see jade.core.behaviours.Behaviour
+	 @see sajas.core.Agent#addBehaviour(Behaviour b)
+	 @see sajas.core.behaviours.Behaviour
 	 */
 	protected void setup() {}
 
@@ -1885,8 +1885,8 @@ public class Agent implements Runnable, Serializable
 	 initial behaviour, but can also be used to spawn new behaviours
 	 dynamically.
 	 @param b The new behaviour to add to the agent.
-	 @see jade.core.Agent#setup()
-	 @see jade.core.behaviours.Behaviour
+	 @see sajas.core.Agent#setup()
+	 @see sajas.core.behaviours.Behaviour
 	 */
 	public void addBehaviour(Behaviour b) {
 		b.setAgent(this);
@@ -1899,7 +1899,7 @@ public class Agent implements Runnable, Serializable
 	 but can also be called from a behaviour to terminate itself or
 	 some other behaviour.
 	 @param b The behaviour to remove.
-	 @see jade.core.behaviours.Behaviour
+	 @see sajas.core.behaviours.Behaviour
 	 */
 	public void removeBehaviour(Behaviour b) {
 		myScheduler.remove(b);
@@ -1972,7 +1972,7 @@ public class Agent implements Runnable, Serializable
 	 a message is available in the queue. 
 	 @return A new ACL message, blocking the agent until one is
 	 available.
-	 @see jade.core.Agent#receive()
+	 @see sajas.core.Agent#receive()
 	 @see jade.lang.acl.ACLMessage
 	 */
 	public final ACLMessage blockingReceive() {
@@ -1998,7 +1998,7 @@ public class Agent implements Runnable, Serializable
 	 against.
 	 @return A new ACL message matching the given template, blocking
 	 until such a message is available.
-	 @see jade.core.Agent#receive(MessageTemplate)
+	 @see sajas.core.Agent#receive(MessageTemplate)
 	 @see jade.lang.acl.ACLMessage
 	 @see jade.lang.acl.MessageTemplate
 	 */
@@ -2017,7 +2017,7 @@ public class Agent implements Runnable, Serializable
 	 @return A new ACL message matching the given template, or
 	 <code>null</code> if no suitable message was received within
 	 <code>millis</code> milliseconds.
-	 @see jade.core.Agent#blockingReceive()
+	 @see sajas.core.Agent#blockingReceive()
 	 */
 	public final ACLMessage blockingReceive(MessageTemplate pattern, long millis) {
 		ACLMessage msg = null;
@@ -2053,7 +2053,7 @@ public class Agent implements Runnable, Serializable
 	 realizes it read a message of interest for some other
 	 behaviour. The message is put in front of the message queue, so
 	 it will be the first returned by a <code>receive()</code> call.
-	 @see jade.core.Agent#receive()
+	 @see sajas.core.Agent#receive()
 	 */
 	public final void putBack(ACLMessage msg) {
 		synchronized(msgQueue) {
@@ -2160,7 +2160,7 @@ public class Agent implements Runnable, Serializable
 	 by an agent, and is just the same as sending a message to oneself
 	 (though slightly faster).
 	 @param msg The ACL message to put in the queue.
-	 @see jade.core.Agent#send(ACLMessage msg)
+	 @see sajas.core.Agent#send(ACLMessage msg)
 	 */
 	public final void postMessage(final ACLMessage msg) {
 		msg.setPostTimeStamp(System.currentTimeMillis());

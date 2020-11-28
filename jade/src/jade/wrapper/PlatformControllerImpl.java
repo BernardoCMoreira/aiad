@@ -23,7 +23,7 @@
 
 package jade.wrapper;
 
-import jade.core.AgentManager;
+import sajas.core.AgentManager;
 import jade.core.ContainerID;
 import jade.security.JADESecurityException;
 
@@ -170,7 +170,7 @@ class PlatformControllerImpl implements PlatformController {
 	/**
 	 Inner class AgentManagerListenerAdapter
 	 This utility class provides a dummy implementation of
-	 all the methods of the jade.core.AgentManager.Listener interface
+	 all the methods of the sajas.core.AgentManager.Listener interface
 	 */
 	class AgentManagerListenerAdapter implements AgentManager.Listener {
 		
@@ -205,8 +205,8 @@ class PlatformControllerImpl implements PlatformController {
 	
 	/**
 	 Inner class ListenerWrapper
-	 This utility class wraps a jade.wrapper.PlatformController.Listener
-	 into a jade.core.AgentManager.Listener
+	 This utility class wraps a sajas.wrapper.PlatformController.Listener
+	 into a sajas.core.AgentManager.Listener
 	 */
 	class ListenerWrapper extends AgentManagerListenerAdapter {
 		private PlatformController.Listener myListener;

@@ -26,9 +26,9 @@ package jade.domain;
 import jade.util.leap.*;
 
 import jade.domain.FIPAAgentManagement.*;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
-import jade.core.behaviours.WakerBehaviour;
+import sajas.core.behaviours.WakerBehaviour;
 
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.ISO8601;
@@ -53,8 +53,8 @@ import java.util.Date;
  * (e.g. because a FAILURE message has been received from the DF). 
  * <p>
  * In some cases, instead, it is more convenient to execute these tasks in a 
- * non-blocking way. In these cases a <code>jade.proto.AchieveREInitiator</code>
- * or <code>jade.proto.SubscriptionInitiator</code> should be used in 
+ * non-blocking way. In these cases a <code>sajas.proto.AchieveREInitiator</code>
+ * or <code>sajas.proto.SubscriptionInitiator</code> should be used in 
  * conjunction with the <code>createRequestMessage(), createSubscriptionMessage(), 
  * decodeDone(), decodeResult() and decodeNotification()</code> methods 
  * that facilitate the preparation and decoding of messages to be sent/received
@@ -452,7 +452,7 @@ public class DFService extends FIPAService {
 	 FIPA-Management-ontology.
 	 <p>
 	 This method can be fruitfully used in combination with 
-	 the <code>jade.proto.AchieveREInitiator</code> protocol and with
+	 the <code>sajas.proto.AchieveREInitiator</code> protocol and with
 	 the <code>decodeDone()</code> and <code>decodeResult()</code> methods
 	 to interact with a DF in a non-blocking way.
 	 @param a The agent that is requesting the DF
@@ -470,7 +470,7 @@ public class DFService extends FIPAService {
 	 @param constraints The constraints to limit the number of results to be
 	 notified. This is meaningful only if the requested action is SEARCH.
 	 @return the request message.
-	 @see jade.proto.AchieveREInitiator
+	 @see sajas.proto.AchieveREInitiator
 	 @see #decodeDone(String)
 	 @see #decodeResult(String)
 	 */
@@ -487,7 +487,7 @@ public class DFService extends FIPAService {
 	 with that DF. 
 	 <p>
 	 This method can be fruitfully used in combination with 
-	 the <code>jade.proto.SubscriptionInitiator</code> protocol and with
+	 the <code>sajas.proto.SubscriptionInitiator</code> protocol and with
 	 the <code>createCancelMessage()</code> and <code>decodeNotification()</code>
 	 methods to interact with a DF in a non-blocking way.
 	 @param a The agent that is subscribing to the DF
@@ -497,7 +497,7 @@ public class DFService extends FIPAService {
 	 @param constraints The constraints to limit the number of results to be
 	 notified.
 	 @return the subscription message.
-	 @see jade.proto.SubscriptionInitiator
+	 @see sajas.proto.SubscriptionInitiator
 	 @see #createCancelMessage(Agent, AID, ACLMessage)
 	 @see #decodeNotification(String)
 	 */
@@ -529,7 +529,7 @@ public class DFService extends FIPAService {
 	 @param dfName The AID of the <b>DF</b> agent.
 	 @param subscribe The subscription message previously sent to the DF 
 	 @return the cancel message.
-	 @see jade.proto.SubscriptionInitiator
+	 @see sajas.proto.SubscriptionInitiator
 	 @see #createSubscriptionMessage(Agent, AID, DFAgentDescription, SearchConstraints)
 	 @see #decodeNotification(String)
 	 */
@@ -777,7 +777,7 @@ public class DFService extends FIPAService {
 	 agent-identifier ......) <possibly something else>
 	 */
 	public static AID parseAID(SimpleSLTokenizer parser) throws Exception {
-		AID id = new AID("", AID.ISGUID); // Dummy temporary name
+		AID id = new sajas.core.AID("", AID.ISGUID); // Dummy temporary name
 		// Skip "agent-identifier"
 		parser.getElement();
 		while (parser.nextToken().startsWith(":")) {

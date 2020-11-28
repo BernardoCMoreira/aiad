@@ -25,7 +25,7 @@ package jade.core.behaviours;
 
 //#MIDP_EXCLUDE_FILE
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.content.ContentManager;

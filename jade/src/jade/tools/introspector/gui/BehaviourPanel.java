@@ -27,7 +27,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.tree.*;
 
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 
 /**
    This panel contains the behaviour tree for a given agent. It adds a

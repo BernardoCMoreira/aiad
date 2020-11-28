@@ -39,7 +39,7 @@ import jade.core.Profile;
 import jade.core.ProfileException;
 import jade.core.IMTPException;
 
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 
 import jade.util.Logger;
 

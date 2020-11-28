@@ -54,7 +54,7 @@ class MoveAgentAction extends AgentAction {
       String container = MoveDialog.getContainer();
       if(container.trim().length() > 0)
       {
-      	AID agentAid = new AID();
+      	AID agentAid = new sajas.core.AID();
       	agentAid.setName(agentName);
       	myRMA.moveAgent(agentAid,container);
       }

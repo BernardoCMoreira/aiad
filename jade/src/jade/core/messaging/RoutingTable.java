@@ -34,7 +34,7 @@ import jade.util.leap.HashMap;
 import jade.core.AID;
 import jade.core.CaseInsensitiveString;
 import jade.core.IMTPException;
-import jade.core.Runtime;
+import sajas.core.Runtime;
 
 import jade.domain.FIPAAgentManagement.Envelope;
 import jade.domain.FIPAAgentManagement.Property;

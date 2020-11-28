@@ -34,7 +34,7 @@ import jade.core.ContainerID;
 import jade.core.IMTPException;
 import jade.core.Location;
 import jade.core.VerticalCommand;
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.Filter;
 
 import jade.core.AID;

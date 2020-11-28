@@ -7,7 +7,7 @@ import jade.core.AID;
  */
 public class TopicUtility {
 	public static final AID createTopic(String topicName) {
-		return new AID(topicName+'@'+TopicManagementHelper.TOPIC_SUFFIX, AID.ISGUID);
+		return new sajas.core.AID(topicName+'@'+TopicManagementHelper.TOPIC_SUFFIX, AID.ISGUID);
 	}
 	
 	public static final boolean isTopic(AID id) {

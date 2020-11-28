@@ -328,11 +328,11 @@ public class AID implements Comparable, Serializable {
 	public AID[] getResolversArray() {
 		//#MIDP_EXCLUDE_BEGIN
 		Object[] objs = resolvers.toArray();
-		AID[] result = new AID[objs.length];
+		AID[] result = new sajas.core.AID[objs.length];
 		System.arraycopy(objs, 0, result, 0, objs.length); 
 		//#MIDP_EXCLUDE_END
 		/*#MIDP_INCLUDE_BEGIN
-		 AID[] result = new AID[resolvers.size()];
+		 AID[] result = new sajas.core.AID[resolvers.size()];
 		 resolvers.copyInto(result);
 		 #MIDP_INCLUDE_END*/
 		return result;
@@ -431,7 +431,7 @@ public class AID implements Comparable, Serializable {
 	 * Clone the AID object.
 	 */
 	public synchronized Object clone() {
-		AID      result = new AID(this.name, ISGUID);
+		AID      result = new sajas.core.AID(this.name, ISGUID);
 		result.persistentID = null;
 		
 		//#MIDP_EXCLUDE_BEGIN

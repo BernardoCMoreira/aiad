@@ -66,10 +66,10 @@ class TreeAgentPopupMenu extends JPopupMenu {
 	AgentTree.Node node = (AgentTree.Node) (paths[i].getLastPathComponent());
 	String agentName = node.getName();
 	if(source.getName().equals("on")) {
-	  debugger.addAgent(new AID(agentName, AID.ISGUID));
+	  debugger.addAgent(new sajas.core.AID(agentName, AID.ISGUID));
 	}
 	else if(source.getName().equals("off")) {
-	  debugger.removeAgent(new AID(agentName, AID.ISGUID));
+	  debugger.removeAgent(new sajas.core.AID(agentName, AID.ISGUID));
 	}
       }
     }

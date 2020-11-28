@@ -28,7 +28,7 @@ package jade.core.behaviours;
 
 import jade.util.leap.*;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 
 /**
    Base class for all composite behaviour whose children run serially,

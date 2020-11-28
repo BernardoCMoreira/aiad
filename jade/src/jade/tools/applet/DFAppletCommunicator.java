@@ -377,7 +377,7 @@ public DFAgentDescription getDFAgentDsc(AID name) throws FIPAException {
   {
     if(thisDF == null)
   	{
-	    AID df = new AID(getName(), AID.ISGUID);
+	    AID df = new sajas.core.AID(getName(), AID.ISGUID);
 	    
 	    System.out.println(df.getName());
 	    try

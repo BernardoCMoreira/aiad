@@ -59,7 +59,7 @@ class DFGUIFederateAction extends AbstractAction
 	
 		DFAgentDescription editedDfd ;
 		DFAgentDescription dfd = gui.myAgent.getDescriptionOfThisDF();
-		AIDGui insertDlg = new AIDGui(gui);
+		AIDGui insertDlg = new sajas.core.AIDGui(gui);
 		insertDlg.setTitle("Insert the AID of the DF with which federate");
 		AID parent = insertDlg.ShowAIDGui(null,true,true); 
 		

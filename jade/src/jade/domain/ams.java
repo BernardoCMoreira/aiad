@@ -259,7 +259,7 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 	// CREATE AGENT
 	void createAgentAction(final CreateAgent ca, final AID requester, final JADEPrincipal requesterPrincipal, final Credentials requesterCredentials) throws FIPAException {
 		final String agentName = ca.getAgentName();
-		final AID agentID = new AID(agentName, AID.ISLOCALNAME);
+		final AID agentID = new sajas.core.AID(agentName, AID.ISLOCALNAME);
 		final String className = ca.getClassName();
 		final ContainerID container = ca.getContainer();
 		if (logger.isLoggable(Logger.FINE))

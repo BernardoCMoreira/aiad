@@ -1,10 +1,10 @@
 package com.aiad.agents;
 
 import com.aiad.Config;
-import jade.core.Agent;
-import jade.core.behaviours.TickerBehaviour;
-import jade.wrapper.AgentController;
-import jade.wrapper.ContainerController;
+import sajas.core.Agent;
+import sajas.core.behaviours.TickerBehaviour;
+import sajas.wrapper.AgentController;
+import sajas.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
 import java.io.File;

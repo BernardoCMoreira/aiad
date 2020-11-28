@@ -232,7 +232,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	 */
 	public String bornAgent(String name) throws JADESecurityException, IMTPException {
 		name = JADEManagementOntology.adjustAgentName(name, new String[]{getID().getName(), myProfile.getParameter(Profile.AGENT_TAG, "")});
-		AID id = new AID(AID.createGUID(name, getPlatformID()), AID.ISGUID);
+		AID id = new sajas.core.AID(AID.createGUID(name, getPlatformID()), AID.ISGUID);
 		GenericCommand cmd = new GenericCommand(jade.core.management.AgentManagementSlice.INFORM_CREATED, jade.core.management.AgentManagementSlice.NAME, null);
 		cmd.addParam(id);
 		
@@ -257,7 +257,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	 Remove its image and notify the Main
 	 */
 	public void deadAgent(String name) throws IMTPException {
-		AID id = new AID(AID.createGUID(name, getPlatformID()), AID.ISGUID);
+		AID id = new sajas.core.AID(AID.createGUID(name, getPlatformID()), AID.ISGUID);
 		myLogger.log(Logger.INFO, getID() + " - Handling termination of agent "+id.getLocalName());
 		handleEnd(id);
 	}
@@ -265,14 +265,14 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	/**
 	 */
 	public void suspendedAgent(String name) throws NotFoundException, IMTPException {
-		AID id = new AID(AID.createGUID(name, getPlatformID()), AID.ISGUID);
+		AID id = new sajas.core.AID(AID.createGUID(name, getPlatformID()), AID.ISGUID);
 		handleChangedAgentState(id, Agent.AP_ACTIVE, Agent.AP_SUSPENDED);
 	}
 	
 	/**
 	 */
 	public void resumedAgent(String name) throws NotFoundException, IMTPException {
-		AID id = new AID(AID.createGUID(name, getPlatformID()), AID.ISGUID);
+		AID id = new sajas.core.AID(AID.createGUID(name, getPlatformID()), AID.ISGUID);
 		handleChangedAgentState(id, Agent.AP_SUSPENDED, Agent.AP_ACTIVE);
 	}
 	
@@ -283,7 +283,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	 */
 	public void messageOut(ACLMessage msg, String sender) throws NotFoundException, IMTPException {
 		// Check whether the sender exists
-		AID id = new AID(AID.createGUID(sender, getPlatformID()), AID.ISGUID);
+		AID id = new sajas.core.AID(AID.createGUID(sender, getPlatformID()), AID.ISGUID);
 		
 		synchronized (frontEndSynchLock) {
 			AgentImage image = getAgentImage(id);
@@ -312,7 +312,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	}
 	
 	public Object serviceInvokation(String actor, String serviceName, String methodName, Object[] methodParams) throws NotFoundException, ServiceException, IMTPException {
-		AID id = new AID(AID.createGUID(actor, getPlatformID()), AID.ISGUID);
+		AID id = new sajas.core.AID(AID.createGUID(actor, getPlatformID()), AID.ISGUID);
 		AgentImage image = getAgentImage(id);
 		ServiceHelper helper = image.getHelper(serviceName);
 		if (helper == null) {
@@ -527,7 +527,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	public AID[] agentNames() {
 		AID[] realAgents = super.agentNames();
 		AID[] images = getAgentImages();
-		AID[] all = new AID[realAgents.length + images.length];
+		AID[] all = new sajas.core.AID[realAgents.length + images.length];
 		for (int i = 0; i < realAgents.length; ++i) {
 			all[i] = realAgents[i];
 		}
@@ -654,7 +654,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 		AgentImage img = (AgentImage)agentImages.remove(id);
 		// If there are messages that were waiting to be delivered to the 
 		// real agent on the FrontEnd, notify failure to sender
-		removePendingMessages(MessageTemplate.MatchReceiver(new AID[]{id}), true);
+		removePendingMessages(MessageTemplate.MatchReceiver(new sajas.core.AID[]{id}), true);
 		return img;
 	}
 	
@@ -664,7 +664,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	
 	public AID[] getAgentImages() {
 		Object[] objs = agentImages.keySet().toArray();
-		AID[] result = new AID[objs.length];
+		AID[] result = new sajas.core.AID[objs.length];
 		for(int i = 0; i < result.length; i++) {
 			result[i] = (AID)objs[i];
 		}
@@ -684,7 +684,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 				try {
 					Object[] removed = (Object[]) it.next();
 					ACLMessage msg = (ACLMessage) removed[0];
-					AID receiver = new AID(AID.createGUID((String) removed[1], getPlatformID()), AID.ISGUID);						
+					AID receiver = new sajas.core.AID(AID.createGUID((String) removed[1], getPlatformID()), AID.ISGUID);						
 					ServiceFinder myFinder = getServiceFinder();
 					MessagingService msgSvc = (MessagingService) myFinder.findService(MessagingSlice.NAME);
 					msgSvc.notifyFailureToSender(new GenericMessage(msg), receiver, new InternalError("Agent dead"));  

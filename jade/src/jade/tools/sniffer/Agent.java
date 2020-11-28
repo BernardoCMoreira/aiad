@@ -73,7 +73,7 @@ public class Agent implements Serializable{
 	}
 
 	public Agent(String localName){
-		this(new AID(localName, AID.ISLOCALNAME));
+		this(new sajas.core.AID(localName, AID.ISLOCALNAME));
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class Agent implements Serializable{
 
 	public Agent(){
 		agentName="Other";
-		myAID = new AID(agentName, AID.ISLOCALNAME);
+		myAID = new sajas.core.AID(agentName, AID.ISLOCALNAME);
 		onCanv = false;
 	}
 

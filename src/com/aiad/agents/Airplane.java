@@ -4,17 +4,18 @@ import com.aiad.Config;
 import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.AirplaneRequest;
 import jade.core.AID;
-import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
-import jade.core.behaviours.TickerBehaviour;
-import jade.domain.DFService;
+import jade.lang.acl.MessageTemplate;
+import sajas.core.Agent;
+import sajas.core.behaviours.Behaviour;
+import sajas.core.behaviours.TickerBehaviour;
+import sajas.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import jade.proto.AchieveREInitiator;
+import sajas.proto.AchieveREInitiator;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -67,7 +68,7 @@ public class Airplane extends Agent {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        request.addReceiver(new AID("tower", AID.ISLOCALNAME));
+        request.addReceiver(new sajas.core.AID("tower", AID.ISLOCALNAME));
         request.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
 
         return request;
@@ -151,16 +152,15 @@ public class Airplane extends Agent {
                     private boolean cancelled = false;
                     @Override
                     public void action() {
-                        var message = receive();
-                        if (message == null) return;
+                        var template = new MessageTemplate(
+                                (MessageTemplate.MatchExpression) msg -> msg.getContent().equals("Cancelled")
+                        );
 
-                        if (message.getContent().equals("Cancelled")) {
-                            var airplane = (Airplane) getAgent();
-                            airplane.addBehaviour(new AirplaneRequestInitiator(airplane, airplane.createRequestMessage()));
-                            cancelled = true;
-                        } else {
-                            putBack(message);
-                        }
+                        var message = receive(template);
+                        if (message == null) return;
+                        var airplane = (Airplane) getAgent();
+                        airplane.addBehaviour(new AirplaneRequestInitiator(airplane, airplane.createRequestMessage()));
+                        cancelled = true;
                     }
 
                     @Override

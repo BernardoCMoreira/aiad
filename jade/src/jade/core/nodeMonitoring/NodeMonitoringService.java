@@ -27,7 +27,7 @@ package jade.core.nodeMonitoring;
 //#APIDOC_EXCLUDE_FILE
 
 import jade.core.BaseService;
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.Profile;
 import jade.core.ProfileException;
 import jade.core.NodeFailureMonitor;

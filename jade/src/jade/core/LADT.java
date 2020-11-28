@@ -203,7 +203,7 @@ class LADT {
     public AID[] keys() {
         synchronized(agents) {
             Object[] objs = agents.keySet().toArray();
-            AID[] result = new AID[objs.length];
+            AID[] result = new sajas.core.AID[objs.length];
             
             // Patch on 11/12/02 by NL to bypass J2ME bug with System.arraycopy
             for (int i=0;i<result.length;i++) {

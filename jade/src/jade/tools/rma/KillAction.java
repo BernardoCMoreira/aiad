@@ -39,7 +39,7 @@ import jade.gui.AgentTree;
   public void doAction(AgentTree.AgentNode node ) {
    if (node!=null) {
      String toKill = node.getName();
-     AID id = new AID();
+     AID id = new sajas.core.AID();
      id.setName(toKill);
      myRMA.killAgent(id);
    }

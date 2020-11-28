@@ -34,8 +34,8 @@ import java.util.List;
 import java.util.Map;
 
 import jade.core.AID;
-import jade.core.Agent;
-import jade.core.AgentContainer;
+import sajas.core.Agent;
+import sajas.core.AgentContainer;
 import jade.core.BaseService;
 import jade.core.ContainerID;
 import jade.core.Filter;
@@ -52,14 +52,14 @@ import jade.core.Service;
 import jade.core.ServiceException;
 import jade.core.ServiceHelper;
 import jade.core.VerticalCommand;
-import jade.core.behaviours.OneShotBehaviour;
+import sajas.core.behaviours.OneShotBehaviour;
 import jade.core.management.AgentManagementSlice;
 import jade.core.messaging.GenericMessage;
 import jade.core.messaging.MessagingService;
 import jade.core.messaging.MessagingSlice;
 import jade.core.mobility.AgentMobilityHelper;
 import jade.core.mobility.AgentMobilityService;
-import jade.domain.AMSService;
+import sajas.domain.AMSService;
 import jade.domain.FIPAAgentManagement.AMSAgentDescription;
 import jade.lang.acl.ACLMessage;
 import jade.util.Logger;
@@ -199,7 +199,7 @@ public class AgentReplicationService extends BaseService {
 
 		public AID makeVirtual(String virtualName, int replicationMode) throws ServiceException {
 			if (virtualAid == null) {
-				virtualAid = new AID(AID.createGUID(virtualName, myContainer.getPlatformID()), AID.ISGUID);
+				virtualAid = new sajas.core.AID(AID.createGUID(virtualName, myContainer.getPlatformID()), AID.ISGUID);
 
 				// Reserve the virtualName by registering the virtual AID to the AMS
 				AMSAgentDescription amsd = new AMSAgentDescription();
@@ -234,7 +234,7 @@ public class AgentReplicationService extends BaseService {
 					if (slice != null) {
 						// Notify the destination slice that a replica for our virtual agent is 
 						// going to be created there (see comment in AgentReplicationSlice)
-						AID replicaAid = new AID(AID.createGUID(replicaName, myContainer.getPlatformID()), AID.ISGUID);
+						AID replicaAid = new sajas.core.AID(AID.createGUID(replicaName, myContainer.getPlatformID()), AID.ISGUID);
 						try {
 							slice.replicaCreationRequested(virtualAid, replicaAid);
 						}
@@ -425,7 +425,7 @@ public class AgentReplicationService extends BaseService {
 						// This message was originally sent to a virtual agent. The selected 
 						// implementation replica is no longer there or is unreachable however --> 
 						// Remove the dirty replica, then select a new one and retry
-						AID virtualAid = new AID(AID.createGUID(virtualName, myContainer.getPlatformID()), AID.ISGUID);
+						AID virtualAid = new sajas.core.AID(AID.createGUID(virtualName, myContainer.getPlatformID()), AID.ISGUID);
 						AID receiver = (AID) cmd.getParam(1);
 						removeReplica(virtualAid, receiver);
 						
@@ -580,7 +580,7 @@ public class AgentReplicationService extends BaseService {
 				// NOTE that the same replication information can be notified to the new Main Slice
 				// by more than one container, but this case is properly taken into account so
 				// that duplications are avoided.
-				AID[] aa = replicaToVirtualMap.keySet().toArray(new AID[0]);
+				AID[] aa = replicaToVirtualMap.keySet().toArray(new sajas.core.AID[0]);
 				List<AID> vv = new ArrayList<AID>();
 				for (AID aid : aa) {
 					if (myContainer.isLocalAgent(aid)) {

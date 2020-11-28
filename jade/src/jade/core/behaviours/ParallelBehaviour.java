@@ -28,7 +28,7 @@ package jade.core.behaviours;
 import java.util.Hashtable;
 import jade.util.leap.*;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 
 /**
  Composite behaviour with concurrent children scheduling.
@@ -126,7 +126,7 @@ public class ParallelBehaviour extends CompositeBehaviour {
 	
 	/**
 	 Prepare the first child for execution
-	 @see jade.core.behaviours.CompositeBehaviour#scheduleFirst
+	 @see sajas.core.behaviours.CompositeBehaviour#scheduleFirst
 	 */
 	protected void scheduleFirst() {
 		// Schedule the first child
@@ -149,7 +149,7 @@ public class ParallelBehaviour extends CompositeBehaviour {
 	 This method
 	 schedules children behaviours one at a time, in a round robin
 	 fashion.
-	 @see jade.core.behaviours.CompositeBehaviour#scheduleNext(boolean, int)
+	 @see sajas.core.behaviours.CompositeBehaviour#scheduleNext(boolean, int)
 	 */
 	protected void scheduleNext(boolean currentDone, int currentResult) {
 		// Regardless of whether the current child is terminated, schedule
@@ -171,7 +171,7 @@ public class ParallelBehaviour extends CompositeBehaviour {
 	
 	/**
 	 Check whether this <code>ParallelBehaviour</code> must terminate.
-	 @see jade.core.behaviours.CompositeBehaviour#checkTermination
+	 @see sajas.core.behaviours.CompositeBehaviour#checkTermination
 	 */
 	protected boolean checkTermination(boolean currentDone, int currentResult) {
 		if(currentDone) {
@@ -202,7 +202,7 @@ public class ParallelBehaviour extends CompositeBehaviour {
 	
 	/** 
 	 Get the current child
-	 @see jade.core.behaviours.CompositeBehaviour#getCurrent
+	 @see sajas.core.behaviours.CompositeBehaviour#getCurrent
 	 */
 	protected Behaviour getCurrent() {
 		return subBehaviours.getCurrent();
@@ -211,7 +211,7 @@ public class ParallelBehaviour extends CompositeBehaviour {
 	/**
 	 Return a Collection view of the children of 
 	 this <code>ParallelBehaviour</code> 
-	 @see jade.core.behaviours.CompositeBehaviour#getChildren
+	 @see sajas.core.behaviours.CompositeBehaviour#getChildren
 	 */
 	public Collection getChildren() {
 		return subBehaviours;

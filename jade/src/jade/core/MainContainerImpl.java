@@ -35,7 +35,7 @@ import jade.util.leap.LinkedList;
 import jade.util.leap.Map;
 import jade.util.leap.HashMap;
 
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 
 import jade.core.event.PlatformEvent;
 import jade.core.event.MTPEvent;
@@ -1382,7 +1382,7 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	public AID[] agentTools() {
 		synchronized(agentTools) {
 			Object[] objs = agentTools.toArray();
-			AID[] result = new AID[objs.length];
+			AID[] result = new sajas.core.AID[objs.length];
 			for(int i = 0; i < result.length; i++) {
 				result[i] = (AID)objs[i];
 			}

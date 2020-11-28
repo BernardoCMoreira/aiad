@@ -25,7 +25,7 @@ package jade.core.replication;
 
 //#J2ME_EXCLUDE_FILE
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.ServiceNotActiveException;
 import jade.util.Logger;
 

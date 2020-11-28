@@ -53,7 +53,7 @@ import jade.core.messaging.TopicUtility;
  constructor to define the application specific MessageTemaplate.
  
  
- @see jade.core.Agent#receive(MessageTemplate mt)
+ @see sajas.core.Agent#receive(MessageTemplate mt)
  
  @author Giovanni Rimassa - Universita' di Parma
  @author Tiziana Trucco - Telecom Italia Lab S.p.A.

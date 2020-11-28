@@ -42,7 +42,7 @@ import jade.core.ServiceHelper;
  * are mediated to compute an average measure. Counters of events are treated differently: contributions
  * from different providers associated to the same counter are summed to compute a total value.
  * 
- * @see jade.core.Agent#getHelper(String)
+ * @see sajas.core.Agent#getHelper(String)
  *
  */
 public interface SAMHelper extends ServiceHelper {

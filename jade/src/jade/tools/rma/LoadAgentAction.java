@@ -51,7 +51,7 @@ class LoadAgentAction extends ContainerAction {
 
 	//	String agentName = JOptionPane.showInputDialog(mainWnd, "Insert the agent local name:");
 	String container  = node.getName();
-	AIDGui gui = new AIDGui(mainWnd);
+	AIDGui gui = new sajas.core.AIDGui(mainWnd);
 	gui.setTitle("Enter the AID for the agent to load");
 	AID agentAid = gui.ShowAIDGui(null, true, false);
 	if(agentAid != null) {

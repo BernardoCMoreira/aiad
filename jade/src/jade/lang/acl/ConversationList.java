@@ -1,6 +1,6 @@
 package jade.lang.acl;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.util.leap.HashSet;
 import jade.util.leap.Serializable;
 import jade.util.leap.Set;

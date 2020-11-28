@@ -41,7 +41,7 @@ import jade.domain.FIPAAgentManagement.*;
 import jade.domain.KBManagement.*;
 import jade.lang.acl.ACLMessage;
 
-import jade.proto.SubscriptionResponder;
+import sajas.proto.SubscriptionResponder;
 
 import jade.content.*;
 import jade.content.lang.sl.*;

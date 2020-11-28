@@ -42,7 +42,7 @@ import javax.swing.text.*;
 import javax.swing.tree.*;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.StringACLCodec;
 import jade.tools.sl.SLFormatter;
@@ -193,7 +193,7 @@ public class ACLTracePanel extends JPanel {
       aclModel.insertNodeInto(new DefaultMutableTreeNode(":sender " + sender.toString()), messageNode, i++);
     }
 
-    AID aid = new AID();
+    AID aid = new sajas.core.AID();
     Iterator it = theACL.getAllReceiver();
     while (it.hasNext()) {
       aid = (AID)it.next();

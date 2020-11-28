@@ -30,7 +30,7 @@ import jade.util.leap.*;
 import jade.util.leap.Serializable;
 import jade.util.Logger;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 
 /**
  Composite behaviour with Finite State Machine based children scheduling. 
@@ -56,8 +56,8 @@ import jade.core.Agent;
  </ul>
  A number of other methods are available in this class for generic
  tasks, such as getting the current state or the name of a state, ...
- @see jade.core.behaviours.SequentialBehaviour
- @see jade.core.behaviours.ParallelBehaviour
+ @see sajas.core.behaviours.SequentialBehaviour
+ @see sajas.core.behaviours.ParallelBehaviour
  
  @author Giovanni Caire - CSELT
  @version $Date: 2008-04-15 11:09:57 +0200 (mar, 15 apr 2008) $ $Revision: 6029 $
@@ -171,7 +171,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 @param event The termination event that fires this transition
 	 as returned by the <code>onEnd()</code> method of the 
 	 <code>Behaviour</code> representing state s1.
-	 @see jade.core.behaviours.Behaviour#onEnd()
+	 @see sajas.core.behaviours.Behaviour#onEnd()
 	 */
 	public void registerTransition(String s1, String s2, int event) {
 		registerTransition(s1, s2, event, null);
@@ -191,7 +191,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 <code>Behaviour</code> representing state s1.
 	 @param toBeReset An array of strings including the names of 
 	 the states to be reset.
-	 @see jade.core.behaviours.Behaviour#onEnd()
+	 @see sajas.core.behaviours.Behaviour#onEnd()
 	 */
 	public void registerTransition(String s1, String s2, int event, String[] toBeReset) {
 		Transition t = new Transition(this, s1, s2, event, toBeReset);
@@ -312,7 +312,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 Prepare the first child for execution. The first child is the 
 	 <code>Behaviour</code> registered as the first state of this
 	 <code>FSMBehaviour</code>
-	 @see jade.core.behaviours.CompositeBehaviour#scheduleFirst
+	 @see sajas.core.behaviours.CompositeBehaviour#scheduleFirst
 	 */
 	protected void scheduleFirst() {
 		if (transitionForced) {
@@ -340,7 +340,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 @param currentResult the termination value (as returned by
 	 <code>onEnd()</code>) of the just executed child in the case this
 	 child has completed (otherwise this parameter is meaningless)
-	 @see jade.core.behaviours.CompositeBehaviour#scheduleNext(boolean, int)
+	 @see sajas.core.behaviours.CompositeBehaviour#scheduleNext(boolean, int)
 	 */
 	protected void scheduleNext(boolean currentDone, int currentResult) {
 		if (currentDone) {
@@ -384,7 +384,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 Check whether this <code>FSMBehaviour</code> must terminate.
 	 @return true when the last child has terminated and it 
 	 represents a final state. false otherwise
-	 @see jade.core.behaviours.CompositeBehaviour#checkTermination
+	 @see sajas.core.behaviours.CompositeBehaviour#checkTermination
 	 */
 	protected boolean checkTermination(boolean currentDone, int currentResult) {
 		boolean ret = false;
@@ -402,7 +402,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	
 	/** 
 	 Get the current child
-	 @see jade.core.behaviours.CompositeBehaviour#getCurrent
+	 @see sajas.core.behaviours.CompositeBehaviour#getCurrent
 	 */
 	protected Behaviour getCurrent() {
 		return current;
@@ -411,7 +411,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	/**
 	 Return a Collection view of the children of 
 	 this <code>SequentialBehaviour</code> 
-	 @see jade.core.behaviours.CompositeBehaviour#getChildren
+	 @see sajas.core.behaviours.CompositeBehaviour#getChildren
 	 */
 	public Collection getChildren() {
 		return states.values();
@@ -440,7 +440,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	
 	/** 
 	 Get the previously executed child
-	 @see jade.core.behaviours.CompositeBehaviour#getCurrent
+	 @see sajas.core.behaviours.CompositeBehaviour#getCurrent
 	 */
 	protected Behaviour getPrevious() {
 		return getState(previousName);

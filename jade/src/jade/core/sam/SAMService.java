@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import jade.core.Agent;
-import jade.core.AgentContainer;
+import sajas.core.Agent;
+import sajas.core.AgentContainer;
 import jade.core.BaseService;
 import jade.core.Filter;
 import jade.core.HorizontalCommand;

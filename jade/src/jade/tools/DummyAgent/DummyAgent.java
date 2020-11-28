@@ -29,7 +29,7 @@ import javax.swing.*;
 
 //Import required Jade classes
 import jade.core.*;
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 
 /**
 @author Giovanni Caire - CSELT S.p.A

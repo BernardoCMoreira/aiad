@@ -27,7 +27,7 @@ package jade.domain.introspection;
 //#APIDOC_EXCLUDE_FILE
 
 import jade.core.AID;
-import jade.core.AgentState;
+import sajas.core.AgentState;
 
 /**
    An introspection event, recording the change of the atate of an

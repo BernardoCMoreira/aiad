@@ -41,7 +41,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.NotUnderstoodException;
 
 import jade.lang.acl.ACLMessage;
-import jade.proto.SubscriptionResponder;
+import sajas.proto.SubscriptionResponder;
 import jade.core.AID;
 
 /**

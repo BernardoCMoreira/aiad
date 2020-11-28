@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import jade.content.onto.basic.Action;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
 import jade.core.ContainerID;
 import jade.gui.AgentTree;
@@ -18,7 +18,7 @@ import jade.tools.logging.LogManager;
 import jade.tools.logging.JavaLoggingLogManagerImpl;
 import jade.domain.FIPAException;
 import jade.domain.FIPANames;
-import jade.domain.FIPAService;
+import sajas.domain.FIPAService;
 import jade.domain.JADEAgentManagement.CreateAgent;
 import jade.domain.JADEAgentManagement.KillAgent;
 import jade.domain.JADEAgentManagement.JADEManagementOntology;

@@ -25,10 +25,10 @@ package jade.proto;
 
 //#CUSTOM_EXCLUDE_FILE
 
-import jade.core.behaviours.SimpleBehaviour;
-import jade.core.behaviours.DataStore;
+import sajas.core.behaviours.SimpleBehaviour;
+import sajas.core.behaviours.DataStore;
 import jade.core.CaseInsensitiveString;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.ACLMessage;

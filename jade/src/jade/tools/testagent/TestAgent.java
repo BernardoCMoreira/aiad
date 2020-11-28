@@ -32,7 +32,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.domain.FIPANames;
 import jade.domain.FIPAAgentManagement.*;
 import jade.domain.FIPAAgentManagement.FIPAManagementOntology;
@@ -193,7 +193,7 @@ public class TestAgent extends Agent {
     ACLMessage msg = new ACLMessage(ACLMessage.QUERY_REF);
     msg.setSender(getAID());
 
-    AID aclPing = new AID("acl_ping", true);
+    AID aclPing = new sajas.core.AID("acl_ping", true);
     aclPing.setName("acl_ping@beta.lausanne.agentcities.net");
     aclPing.addAddresses("http://srv02.lausanne.agentcities.net:8080/acc");
     msg.addReceiver(aclPing);

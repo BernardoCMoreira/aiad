@@ -199,7 +199,7 @@ public class DFAgentDscDlg extends JDialog implements ActionListener
     	public void actionPerformed(ActionEvent e)
     	{
     		String command = e.getActionCommand();
-    		AIDGui guiSender = new AIDGui(dlgParent);
+    		AIDGui guiSender = new sajas.core.AIDGui(dlgParent);
     	
     		if(command.equals("View"))
     			guiSender.ShowAIDGui(dfdAgent.getName(), false,false);

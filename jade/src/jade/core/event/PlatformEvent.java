@@ -282,8 +282,8 @@ public class PlatformEvent extends JADEEvent implements jade.wrapper.PlatformEve
 	 */
 	public void setSource(Object s) {
 		source = s;
-		if (source instanceof jade.wrapper.PlatformController) {
-			myPlatformName = ((jade.wrapper.PlatformController) source).getName();
+		if (source instanceof sajas.wrapper.PlatformController) {
+			myPlatformName = ((sajas.wrapper.PlatformController) source).getName();
 		}
 	}
 	

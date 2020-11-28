@@ -31,7 +31,7 @@ import java.util.*;
 import javax.swing.*;
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.tools.sl.SLFormatter;
 

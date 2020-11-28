@@ -201,12 +201,12 @@ public class Properties extends Hashtable {
   /*#MIDP_INCLUDE_BEGIN
   public String getProperty(String key) {
     String prop = (String) super.get(key);
-    if (prop == null && fromJad && jade.core.Agent.midlet != null) {
-      prop = jade.core.Agent.midlet.getAppProperty(JAD_PREFIX + key);
+    if (prop == null && fromJad && sajas.core.Agent.midlet != null) {
+      prop = sajas.core.Agent.midlet.getAppProperty(JAD_PREFIX + key);
 	    // in MIDP2.0, names of user-def properties cannot start with MIDlet
 			// for backward compatibility with JADE 3.3 we try both names
       if (prop == null)
-        prop = jade.core.Agent.midlet.getAppProperty(JAD_PREFIX_old + key);
+        prop = sajas.core.Agent.midlet.getAppProperty(JAD_PREFIX_old + key);
     } 
     return prop;
   } 

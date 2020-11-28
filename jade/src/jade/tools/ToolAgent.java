@@ -25,7 +25,7 @@ package jade.tools;
 
 //#APIDOC_EXCLUDE_FILE
  
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.ServiceException;
 import jade.core.event.ContainerAdapter;
 import jade.core.event.ContainerEvent;

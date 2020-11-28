@@ -29,7 +29,7 @@ import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 import jade.core.BehaviourID;
 
 /**

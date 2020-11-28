@@ -28,13 +28,13 @@ package jade.wrapper;
    This class is maintained for backward compatibility only. 
    It is not deprecated since, for backward compatibility 
    reasons, it is used internally by the framework.
-   Use <code>jade.wrapper.ContainerController</code> instead.
+   Use <code>sajas.wrapper.ContainerController</code> instead.
 
    @author Giovanni Caire - TILAB
  */
 public class AgentContainer extends ContainerController implements PlatformController {
 
-	public AgentContainer(ContainerProxy cp, jade.core.AgentContainer impl, String platformName) {
+	public AgentContainer(ContainerProxy cp, sajas.core.AgentContainer impl, String platformName) {
 		super(cp, impl, platformName);
 	}
 

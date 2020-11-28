@@ -26,7 +26,7 @@ package jade.domain;
 //#MIDP_EXCLUDE_FILE
 
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.behaviours.*;
 
 import jade.domain.FIPAAgentManagement.*;
@@ -37,7 +37,7 @@ import jade.domain.DFGUIManagement.*;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-import jade.proto.SimpleAchieveREInitiator;
+import sajas.proto.SimpleAchieveREInitiator;
 
 import jade.content.*;
 import jade.content.onto.*;

@@ -44,7 +44,7 @@ import jade.core.behaviours.*;
 import jade.domain.FIPANames;
 import jade.domain.JADEAgentManagement.*;
 import jade.domain.introspection.*;
-import jade.domain.FIPAService;
+import sajas.domain.FIPAService;
 import jade.domain.FIPAAgentManagement.Envelope;
 
 import jade.lang.acl.ACLMessage;
@@ -58,8 +58,8 @@ import jade.content.AgentAction;
 import jade.content.onto.basic.Action;
 import jade.content.onto.basic.Done;
 
-import jade.proto.SimpleAchieveREResponder;
-import jade.proto.SimpleAchieveREInitiator;
+import sajas.proto.SimpleAchieveREResponder;
+import sajas.proto.SimpleAchieveREInitiator;
 
 import jade.tools.ToolAgent;
 
@@ -703,7 +703,7 @@ public class Sniffer extends ToolAgent {
 			boolean empty = true;
 			while(it.hasNext()) {
 				Agent a = (Agent)it.next();
-				AID agentID = new AID();
+				AID agentID = new sajas.core.AID();
 				agentID.setName(a.agentName + '@' + getHap());
 				if(!agentsUnderSniff.contains(a)) {
 					agentsUnderSniff.add(a);
@@ -734,7 +734,7 @@ public class Sniffer extends ToolAgent {
 			boolean empty = true;
 			while(it.hasNext()) {
 				Agent a = (Agent)it.next();
-				AID agentID = new AID();
+				AID agentID = new sajas.core.AID();
 				agentID.setName(a.agentName + '@' + getHap());
 				if(agentsUnderSniff.contains(a)) {
 					agentsUnderSniff.remove(a);

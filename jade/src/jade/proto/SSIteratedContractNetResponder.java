@@ -1,7 +1,7 @@
 package jade.proto;
 
-import jade.core.Agent;
-import jade.core.behaviours.DataStore;
+import sajas.core.Agent;
+import sajas.core.behaviours.DataStore;
 import jade.lang.acl.ACLMessage;
 
 public class SSIteratedContractNetResponder extends SSContractNetResponder {

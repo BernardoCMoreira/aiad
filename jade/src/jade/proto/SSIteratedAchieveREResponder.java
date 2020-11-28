@@ -28,7 +28,7 @@ package jade.proto;
 import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
-import jade.proto.states.*;
+import sajas.proto.states.*;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.RefuseException;
 import jade.domain.FIPAAgentManagement.FailureException;

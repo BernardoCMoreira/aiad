@@ -56,7 +56,7 @@ class CloneAgentAction extends AgentAction {
       
       if((container.trim().length() > 0) && (agentName.trim().length() >0))
       {
-      	AID agentAid = new AID();
+      	AID agentAid = new sajas.core.AID();
       	agentAid.setName(agentName);
       	myRMA.cloneAgent(agentAid,newAgentName,container);
       }

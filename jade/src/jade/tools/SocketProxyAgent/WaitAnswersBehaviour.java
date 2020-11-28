@@ -26,9 +26,9 @@ package jade.tools.SocketProxyAgent;
 import java.io.*;
 import java.util.*;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
-import jade.core.behaviours.SimpleBehaviour;
+import sajas.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.*;
 import jade.util.Logger;
 

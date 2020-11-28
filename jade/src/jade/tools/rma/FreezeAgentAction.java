@@ -43,7 +43,7 @@ class FreezeAgentAction extends AgentAction {
  
     public void doAction(AgentTree.AgentNode node ) {
 	String agentName  = node.getName();
-	AID agentAid = new AID();
+	AID agentAid = new sajas.core.AID();
 	agentAid.setName(agentName);
 	myRMA.freezeAgent(agentAid, "JADE-DB");
     }

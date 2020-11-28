@@ -226,7 +226,7 @@ class MessageManager {
 			}
 			
 			// When the JADE Runtime terminates stop all deliverers.
-			jade.core.Runtime.instance().invokeOnTermination(new Runnable() {
+			sajas.core.Runtime.instance().invokeOnTermination(new Runnable() {
 
 				public void run() {
 					shutdown();
@@ -243,7 +243,7 @@ class MessageManager {
 		active = false;
 		// Submit 1 dummy message for each deliverer. 
 		for (int i = 0; i < deliverers.length; ++i) {
-			outBox.addLast(new AID(DUMMY_RECEIVER_NAME+i, AID.ISGUID), new GenericMessage(), null);
+			outBox.addLast(new sajas.core.AID(DUMMY_RECEIVER_NAME+i, AID.ISGUID), new GenericMessage(), null);
 		}
 		// Reset the MessageManager singleton instance 
 		theInstance = null;
@@ -519,8 +519,8 @@ class MessageManager {
 	public static void main(String[] args) {
 		GenericMessage gm = new GenericMessage();
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-		msg.setSender(new AID("pippo@P1", AID.ISGUID));
-		msg.addReceiver(new AID("pluto@P1", AID.ISGUID));
+		msg.setSender(new sajas.core.AID("pippo@P1", AID.ISGUID));
+		msg.addReceiver(new sajas.core.AID("pluto@P1", AID.ISGUID));
 		gm.setACLMessage(msg);
 		System.out.println(stringify(gm));
 		

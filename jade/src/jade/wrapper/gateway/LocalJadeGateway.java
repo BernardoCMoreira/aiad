@@ -3,7 +3,7 @@ package jade.wrapper.gateway;
 //#J2ME_EXCLUDE_FILE
 //#ANDROID_EXCLUDE_FILE
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.ProfileImpl;
 
 public class LocalJadeGateway extends DynamicJadeGateway {

@@ -102,7 +102,7 @@ public class AboutBoxAction extends AbstractAction{
 					gridbag.setConstraints(label,c);
 	        theCont.add(label);
 	        
-					label = new JLabel(jade.core.Runtime.getVersionInfo());
+					label = new JLabel(sajas.core.Runtime.getVersionInfo());
 	        label.setForeground(dark_blue);
 					c.ipady = 1;
 					c.gridwidth = 1;

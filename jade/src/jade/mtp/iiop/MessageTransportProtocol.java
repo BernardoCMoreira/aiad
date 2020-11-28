@@ -155,7 +155,7 @@ public class MessageTransportProtocol implements MTP {
 
 
     private AID unmarshalAID(FIPA.AgentID id) {
-      AID result = new AID();
+      AID result = new sajas.core.AID();
       result.setName(id.name);
       for(int i = 0; i < id.addresses.length; i++)
 	result.addAddresses(id.addresses[i]);

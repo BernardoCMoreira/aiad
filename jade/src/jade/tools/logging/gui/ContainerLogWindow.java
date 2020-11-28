@@ -26,7 +26,7 @@ package jade.tools.logging.gui;
 import jade.content.onto.basic.Action;
 import jade.content.onto.basic.Result;
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.ContainerID;
 import jade.util.leap.List;
 import jade.util.leap.ArrayList;
@@ -35,7 +35,7 @@ import jade.tools.logging.LogManager;
 import jade.tools.logging.ontology.*;
 import jade.domain.FIPAException;
 import jade.domain.FIPANames;
-import jade.domain.FIPAService;
+import sajas.domain.FIPAService;
 import jade.gui.AclGui;
 import jade.lang.acl.ACLMessage;
 

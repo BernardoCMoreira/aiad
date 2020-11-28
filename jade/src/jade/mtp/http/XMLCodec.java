@@ -403,15 +403,15 @@ public class XMLCodec extends DefaultHandler
     accumulator = new StringBuffer();
     
     if (TO_TAG.equalsIgnoreCase(localName))  {
-      aid = new AID();
+      aid = new sajas.core.AID();
       env.addTo(aid);
     }
     else if (FROM_TAG.equalsIgnoreCase(localName))  {
-      aid = new AID();
+      aid = new sajas.core.AID();
       env.setFrom(aid);
     }
     else if (INTENDED_TAG.equalsIgnoreCase(localName))  {
-      aid = new AID();
+      aid = new sajas.core.AID();
       env.addIntendedReceiver(aid);
     } 
     else if (RECEIVED_TAG.equalsIgnoreCase(localName))  {
@@ -638,7 +638,7 @@ public class XMLCodec extends DefaultHandler
 			else if (s.equalsIgnoreCase(this.TO_TAG))
 			{
 				//aidStr = convertHostname(aidStr);
-				AID newAID = new AID(aidStr, AID.ISGUID);
+				AID newAID = new sajas.core.AID(aidStr, AID.ISGUID);
 				newAID.addAddresses( addressStr );
 				env.addTo( newAID );
 				//reset values
@@ -647,7 +647,7 @@ public class XMLCodec extends DefaultHandler
 			}
 			else if (s.equalsIgnoreCase(this.FROM_TAG))
 			{
-				AID newAID = new AID(aidStr, AID.ISGUID);
+				AID newAID = new sajas.core.AID(aidStr, AID.ISGUID);
 				newAID.addAddresses( addressStr );
 				env.setFrom( newAID );
 				//reset values
@@ -678,7 +678,7 @@ public class XMLCodec extends DefaultHandler
 			else if (s.equalsIgnoreCase(this.INTENDED_TAG))
 			{
 				//aidStr = convertHostname(aidStr);
-				AID newAID = new AID(aidStr, AID.ISGUID);
+				AID newAID = new sajas.core.AID(aidStr, AID.ISGUID);
 				newAID.addAddresses( addressStr );
 				env.addIntendedReceiver( newAID );
 				//reset values

@@ -121,9 +121,9 @@ public class AclGui extends JPanel
 	//the logger
 	private Logger logger = Logger.getMyLogger(this.getClass().getName());  
 	
-	AID SenderAID = new AID();
+	AID SenderAID = new sajas.core.AID();
 	AID newAIDSender = null;
-	AID fromAID = new AID();
+	AID fromAID = new sajas.core.AID();
 	AID newAIDFrom = null;
 	
 	VisualAIDList receiverListPanel;
@@ -265,7 +265,7 @@ public class AclGui extends JPanel
 				public void actionPerformed(ActionEvent e)
 				{
 					String command = e.getActionCommand();
-					AIDGui guiSender = new AIDGui(getChildrenOwner());
+					AIDGui guiSender = new sajas.core.AIDGui(getChildrenOwner());
 
 					if(command.equals("Set"))
 					{
@@ -688,7 +688,7 @@ public class AclGui extends JPanel
 			fromButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					String command = e.getActionCommand();
-					AIDGui guiFrom = new AIDGui(ownerGui);
+					AIDGui guiFrom = new sajas.core.AIDGui(ownerGui);
 					if(command.equals("Set"))
 					{
 						AID fromToView = fromAID;
@@ -1076,7 +1076,7 @@ public class AclGui extends JPanel
 			param = fromAID.getName();
 		} catch (NullPointerException e1) {
 			param = "";
-			this.fromAID = new AID();
+			this.fromAID = new sajas.core.AID();
 		}
 		from.setText(param);
 
@@ -1182,7 +1182,7 @@ public class AclGui extends JPanel
 			param = SenderAID.getName();
 		} catch (NullPointerException e) {
 			param = "";
-			this.SenderAID = new AID();
+			this.SenderAID = new sajas.core.AID();
 		}
 
 		sender.setText(param);

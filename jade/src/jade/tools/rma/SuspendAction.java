@@ -45,7 +45,7 @@ class SuspendAction extends AgentAction {
     //node.setState("Suspended");
     //node.changeIcon(true);
     String toSuspend = node.getName();
-    AID agentID = new AID();
+    AID agentID = new sajas.core.AID();
     agentID.setName(toSuspend);
 
     myRMA.suspendAgent(agentID);

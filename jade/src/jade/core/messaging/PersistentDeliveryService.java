@@ -39,7 +39,7 @@ import jade.core.ServiceException;
 import jade.core.Filter;
 import jade.core.Node;
 
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.AID;
 import jade.core.Profile;
 import jade.core.ProfileException;

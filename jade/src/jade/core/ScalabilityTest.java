@@ -392,7 +392,7 @@ public class ScalabilityTest {
 		protected void setup() {
 			Object[] args = getArguments();
 			if (args != null && args.length == 1) {
-				myReceiver = new AID((String) args[0], AID.ISLOCALNAME);
+				myReceiver = new sajas.core.AID((String) args[0], AID.ISLOCALNAME);
 			}
 			else {
 				System.out.println("Missing receiver name !!!!!");
@@ -502,7 +502,7 @@ public class ScalabilityTest {
 		protected void setup() {
 			Object[] args = getArguments();
 			if (args != null && args.length == 1) {
-				myReceiver = new AID((String) args[0], AID.ISLOCALNAME);
+				myReceiver = new sajas.core.AID((String) args[0], AID.ISLOCALNAME);
 			}
 			else {
 				System.out.println("Missing receiver name !!!!!");

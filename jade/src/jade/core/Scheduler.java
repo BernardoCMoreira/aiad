@@ -32,7 +32,7 @@ import jade.util.leap.Iterator;
 import jade.util.leap.EnumIterator;
 import jade.util.leap.Serializable;
 
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 
 /**
  @author Giovanni Rimassa - Universita' di Parma

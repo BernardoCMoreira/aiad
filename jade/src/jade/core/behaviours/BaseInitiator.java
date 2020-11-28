@@ -31,8 +31,8 @@ import jade.content.onto.Ontology;
 import jade.core.AID;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.ConversationList;
-import jade.proto.AchieveREInitiator;
+import sajas.lang.acl.ConversationList;
+import sajas.proto.AchieveREInitiator;
 import jade.util.Logger;
 import jade.util.leap.Iterator;
 

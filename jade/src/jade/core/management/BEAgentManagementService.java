@@ -37,11 +37,11 @@ import jade.core.Filter;
 import jade.core.Node;
 
 import jade.core.Profile;
-import jade.core.Agent;
-import jade.core.AgentState;
+import sajas.core.Agent;
+import sajas.core.AgentState;
 import jade.core.AID;
 import jade.core.ContainerID;
-import jade.core.AgentContainer;
+import sajas.core.AgentContainer;
 import jade.core.BackEndContainer;
 import jade.core.MainContainer;
 

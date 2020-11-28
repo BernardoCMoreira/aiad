@@ -28,7 +28,7 @@ import jade.util.leap.*;
 import jade.content.lang.sl.SL0Vocabulary;
 import jade.content.lang.sl.SimpleSLTokenizer;
 import jade.core.AID;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -187,7 +187,7 @@ public class FIPAService {
 	 agent-identifier ......) <possibly something else>
 	 */
 	public static AID parseAID(SimpleSLTokenizer parser) throws Exception {
-		AID id = new AID("", AID.ISGUID); // Dummy temporary name
+		AID id = new sajas.core.AID("", AID.ISGUID); // Dummy temporary name
 		// Skip "agent-identifier"
 		parser.getElement();
 		while (parser.nextToken().startsWith(":")) {

@@ -33,7 +33,7 @@ import java.util.*;
 
 //Import required Jade classes
 import jade.core.*;
-import jade.core.behaviours.CyclicBehaviour;
+import sajas.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.*;
 import jade.domain.FIPAAgentManagement.Envelope;
 

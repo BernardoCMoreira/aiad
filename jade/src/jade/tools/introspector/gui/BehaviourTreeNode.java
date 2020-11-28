@@ -27,7 +27,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.tree.*;
 import jade.core.BehaviourID;
-import jade.core.behaviours.Behaviour;
+import sajas.core.behaviours.Behaviour;
 
 /**
  * This class represents a tree node for a behaviour in the Introspector

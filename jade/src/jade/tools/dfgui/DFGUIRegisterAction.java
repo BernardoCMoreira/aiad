@@ -31,7 +31,7 @@ import javax.swing.*;
 
 // Import required JADE classes
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
 import jade.domain.DFGUIAdapter;
 import jade.gui.DFAgentDscDlg;

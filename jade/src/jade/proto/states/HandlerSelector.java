@@ -25,14 +25,14 @@ package jade.proto.states;
 
 //#CUSTOM_EXCLUDE_FILE
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.behaviours.*;
 import jade.util.leap.Map;
 import jade.util.leap.HashMap;
 
 /**
  * This class implements a selector of handler 
- * (i.e. <code>jade.core.behaviours.Behaviour</code>)
+ * (i.e. <code>sajas.core.behaviours.Behaviour</code>)
  * A number of handlers can be registered with 
  * this <code>HandlerSelector</code>, each handler bound to a different key.
  * The abstract method <code>getSelectionKey<code> is then called that

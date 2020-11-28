@@ -25,7 +25,7 @@ package jade.proto;
 
 //#J2ME_EXCLUDE_FILE
 
-import jade.proto.states.*;
+import sajas.proto.states.*;
 
 /**
  * Interface description

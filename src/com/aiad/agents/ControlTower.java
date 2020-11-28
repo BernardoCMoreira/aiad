@@ -2,16 +2,17 @@ package com.aiad.agents;
 
 import com.aiad.Config;
 import com.aiad.messages.*;
-import jade.core.*;
-import jade.core.behaviours.CyclicBehaviour;
+import jade.core.AID;
+import sajas.core.Agent;
+import sajas.core.behaviours.CyclicBehaviour;
 import jade.domain.FIPAAgentManagement.*;
 import jade.lang.acl.ACLMessage;
-import jade.domain.DFService;
+import sajas.domain.DFService;
 import jade.domain.FIPAException;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
-import jade.proto.ContractNetInitiator;
-import jade.proto.SubscriptionInitiator;
+import sajas.proto.ContractNetInitiator;
+import sajas.proto.SubscriptionInitiator;
 
 import java.io.File;
 import java.io.FileWriter;

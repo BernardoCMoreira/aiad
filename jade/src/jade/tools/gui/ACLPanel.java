@@ -35,7 +35,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 import jade.core.AID;
 
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.domain.FIPAAgentManagement.Envelope;
 import jade.domain.FIPAAgentManagement.ReceivedObject;
 import jade.lang.acl.*;
@@ -324,7 +324,7 @@ public class ACLPanel extends JPanel {
 
   void doShowFrom() {
     ACLAIDDialog aidGui = new ACLAIDDialog(agent);
-    AID currentAID = (itsMsg.getEnvelope().getFrom() != null ? itsMsg.getEnvelope().getFrom() : new AID());
+    AID currentAID = (itsMsg.getEnvelope().getFrom() != null ? itsMsg.getEnvelope().getFrom() : new sajas.core.AID());
     AID editAID = (AID)currentAID.clone();
     aidGui.setLocation((int)getLocationOnScreen().getX(), (int)getLocationOnScreen().getY());
     aidGui.setItsAID(editAID);

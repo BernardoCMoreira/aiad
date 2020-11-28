@@ -26,7 +26,7 @@ package jade.domain;
 //#MIDP_EXCLUDE_FILE
 
 import jade.core.CaseInsensitiveString;
-import jade.core.Agent;
+import sajas.core.Agent;
 import jade.core.AID;
 import jade.core.Location;
 import jade.core.ServiceException;
@@ -96,7 +96,7 @@ class AMSJadeAgentManagementBehaviour extends RequestManagementBehaviour{
 		if (action instanceof CreateAgent) {
 			theAMS.createAgentAction((CreateAgent) action, request.getSender(), requesterPrincipal, requesterCredentials);
 			String agentName = JADEManagementOntology.adjustAgentName(((CreateAgent) action).getAgentName(), new String[] {((CreateAgent) action).getContainer().getName()});
-			asynchNotificationKey = new AID(agentName, AID.ISLOCALNAME);
+			asynchNotificationKey = new sajas.core.AID(agentName, AID.ISLOCALNAME);
 		}
 		// KILL AGENT (asynchronous notification to requester)
 		else if (action instanceof KillAgent) {
@@ -107,7 +107,7 @@ class AMSJadeAgentManagementBehaviour extends RequestManagementBehaviour{
 		// Note that CloneAction extends MoveAction --> must be considered first!!!
 		else if (action instanceof CloneAction) {
 			theAMS.cloneAgentAction((CloneAction) action, request.getSender());
-			asynchNotificationKey = new AID(((CloneAction) action).getNewName(), AID.ISLOCALNAME); 
+			asynchNotificationKey = new sajas.core.AID(((CloneAction) action).getNewName(), AID.ISLOCALNAME); 
 		}
 		// MOVE AGENT (asynchronous notification to requester)
 		else if (action instanceof MoveAction) {

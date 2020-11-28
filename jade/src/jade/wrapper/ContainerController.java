@@ -25,8 +25,8 @@ package jade.wrapper;
 
 import jade.core.AID;
 import jade.core.NotFoundException;
-import jade.core.AgentManager;
-import jade.core.AgentContainer;
+import sajas.core.AgentManager;
+import sajas.core.AgentContainer;
 import jade.core.MainContainer;
 
 import jade.mtp.MTPException;
@@ -42,7 +42,7 @@ import jade.mtp.MTPException;
    <br>
    <b>NOT available in MIDP</b>
    <br>
-   @see jade.core.Runtime#createAgentContainer(Profile)
+   @see sajas.core.Runtime#createAgentContainer(Profile)
 
    @author Giovanni Rimassa - Universita' di Parma
    @author Giovanni Caire - TILAB
@@ -62,7 +62,7 @@ public class ContainerController {
      from application code. The proper way to create an agent
      container from an application is to call the
      <code>Runtime.createContainer()</code> method.
-     @see jade.core.Runtime#createAgentContainer(Profile)
+     @see sajas.core.Runtime#createAgentContainer(Profile)
      @param impl A concrete implementation of a JADE agent container.
      @param platformName the name of the platform
 	 */
@@ -97,10 +97,10 @@ public class ContainerController {
 		if (!isGuid) {
 			name = AID.createGUID(name, myImpl.getPlatformID());
 		}
-		AID agentID = new AID(name, AID.ISGUID);
+		AID agentID = new sajas.core.AID(name, AID.ISGUID);
 
 		// Check that the agent exists
-		jade.core.Agent instance = myImpl.acquireLocalAgent(agentID);
+		sajas.core.Agent instance = myImpl.acquireLocalAgent(agentID);
 		if (instance == null) {
 			throw new ControllerException("Agent " + agentID.getName() + " not found.");
 		} 
@@ -129,7 +129,7 @@ public class ContainerController {
 			throw new StaleProxyException();
 		}
 
-		AID agentID = new AID(AID.createGUID(nickname, myImpl.getPlatformID()), AID.ISGUID);
+		AID agentID = new sajas.core.AID(AID.createGUID(nickname, myImpl.getPlatformID()), AID.ISGUID);
 
 		try {
 			myProxy.createAgent(agentID, className, args);
@@ -151,12 +151,12 @@ public class ContainerController {
 	 * @param anAgent The agent to be added to this agent container.
 	 * @return An AgentController, allowing to call state-transition forcing methods on the real agent instance.
 	 */
-	public AgentController acceptNewAgent(String nickname, jade.core.Agent anAgent) throws StaleProxyException {
+	public AgentController acceptNewAgent(String nickname, sajas.core.Agent anAgent) throws StaleProxyException {
 		if (myImpl == null || myProxy == null) {
 			throw new StaleProxyException();
 		}
 
-		AID agentID = new AID(AID.createGUID(nickname, myImpl.getPlatformID()), AID.ISGUID);
+		AID agentID = new sajas.core.AID(AID.createGUID(nickname, myImpl.getPlatformID()), AID.ISGUID);
 		// FIXME: This call skips the security checks on the local container
 		try {
 			jade.core.NodeDescriptor nd = myImpl.getNodeDescriptor();

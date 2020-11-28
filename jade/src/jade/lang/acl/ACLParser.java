@@ -247,7 +247,7 @@ public class ACLParser implements ACLParserConstants {
 
   final public AID AgentIdentifier() throws ParseException {
  Token t; String s; AID aid;
- AID cur = new AID();
+ AID cur = new sajas.core.AID();
     jj_consume_token(LBRACE2);
     jj_consume_token(AID);
     label_4:

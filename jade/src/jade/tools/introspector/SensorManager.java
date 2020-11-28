@@ -24,8 +24,8 @@
 
 package jade.tools.introspector;
  
-import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
+import sajas.core.Agent;
+import sajas.core.behaviours.CyclicBehaviour;
 import jade.util.Event;
 
 /**
