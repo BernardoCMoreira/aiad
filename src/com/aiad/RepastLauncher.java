@@ -1,6 +1,5 @@
 package com.aiad;
 
-import com.aiad.Config;
 import com.aiad.agents.AirplaneGenerator;
 import com.aiad.agents.ControlTower;
 import com.aiad.agents.Runway;
@@ -8,12 +7,13 @@ import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.StaleProxyException;
 
-import sajas.core.Agent;
 import sajas.core.Runtime;
 import sajas.sim.repast3.Repast3Launcher;
 import sajas.wrapper.ContainerController;
 import sajas.wrapper.AgentController;
 
+import uchicago.src.sim.analysis.Histogram;
+import uchicago.src.sim.analysis.Plot;
 import uchicago.src.sim.engine.SimInit;
 
 import javax.swing.*;
@@ -23,6 +23,10 @@ public class RepastLauncher extends Repast3Launcher {
 
     private ContainerController mainContainer;
     JFrame frame = new JFrame("Airport");
+
+
+    // private Histogram histogram;
+    private Plot scatterPlot;
 
 
     @Override
@@ -102,20 +106,39 @@ public class RepastLauncher extends Repast3Launcher {
         // ...
     }
 
+    // this is called when the play button is pressed in the gui
     @Override
     public void begin() {
         super.begin();
 
+        buildModel();
+
         // display surfaces, spaces, displays, plots, ...
         // ...
+        buildDisplay();
+
     }
 
+    public void buildModel() {
+
+    }
+
+    public void buildDisplay() {
+        scatterPlot = new Plot("graph", this);
+        scatterPlot.setAxisTitles("Current Operations (units)", "Wait Time (ticks");
+
+        scatterPlot.plotPoint(1,2,1);
+
+        scatterPlot.display();
+
+        scatterPlot.plotPoint(3,3,1);
+    }
     /**
      * Launching Repast3
      * @param args
      */
     public static void main(String[] args) {
-        boolean BATCH_MODE = true;
+        boolean BATCH_MODE = false;
         SimInit init = new SimInit();
         init.setNumRuns(1);   // works only in batch mode
         init.loadModel(new RepastLauncher(), null, BATCH_MODE);
