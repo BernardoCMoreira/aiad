@@ -239,7 +239,6 @@ public class Runway extends Agent {
             var runway = (Runway) this.getAgent();
             runway.updateOperations();
 
-
             TreeMap<Integer, Operation> treeMap = runway.getOperations();
             DefaultTableModel model = (DefaultTableModel) runway.table.getModel();
             boolean firstOperation = false;

@@ -26,7 +26,7 @@ public class RepastLauncher extends Repast3Launcher {
 
 
     // private Histogram histogram;
-    private Plot scatterPlot;
+    public static Plot scatterPlot;
 
 
     @Override
@@ -126,12 +126,8 @@ public class RepastLauncher extends Repast3Launcher {
     public void buildDisplay() {
         scatterPlot = new Plot("graph", this);
         scatterPlot.setAxisTitles("Current Operations (units)", "Wait Time (ticks");
-
-        scatterPlot.plotPoint(1,2,1);
-
         scatterPlot.display();
-
-        scatterPlot.plotPoint(3,3,1);
+        scatterPlot.setConnected(false);
     }
     /**
      * Launching Repast3

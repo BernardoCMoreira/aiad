@@ -47,6 +47,8 @@ public class ArrivingAirplane extends Airplane {
                     System.out.println("Airplane : " + getId() + " \tFuel Remaining : " + fuelRemaining );
                     if(getTotalTime() == 0){
                         System.out.println("Airplane: " + getId() + " LANDED !");
+                        ControlTower.operationsInProcess--;
+                        System.out.println("------------------" + ControlTower.operationsInProcess + "--removed--");
                         doDelete();
                     }
                 }

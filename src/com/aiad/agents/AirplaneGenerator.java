@@ -23,7 +23,6 @@ public class AirplaneGenerator extends Agent {
         this.creationRate = creationRate;
         this.airplaneCounter = 0;
         this.controller = controller;
-
         File file = new File(Config.AIRPLANE_CREATION_LOG);
         try {
             this.creationLog = new FileWriter(file);

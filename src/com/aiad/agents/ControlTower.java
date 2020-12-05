@@ -1,6 +1,7 @@
 package com.aiad.agents;
 
 import com.aiad.Config;
+import com.aiad.RepastLauncher;
 import com.aiad.messages.*;
 import jade.core.AID;
 import sajas.core.Agent;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class ControlTower extends Agent {
-
+    public static int operationsInProcess = 0;
     private int arrivalCounter = 0, departureCounter = 0, redirectCounter = 0;
     private int sumWaitTimeArriv = 0, sumWaitTimeDepart = 0;
     protected ArrayList<AID> runways;
@@ -34,6 +35,7 @@ public class ControlTower extends Agent {
         try {
             allocationLog = new FileWriter(file);
             allocationLog.write("airplane_id, type, accepted, runway_id, wait_time, total_arrivals, total_departures, total_redirect, avg_waitTimeArrive, avg_waitTimeDepart\n");
+
             allocationLog.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,6 +112,10 @@ public class ControlTower extends Agent {
         else {
             log += "departing, ";
         }
+
+        ControlTower.operationsInProcess ++;
+        System.out.println("------------------" + ControlTower.operationsInProcess + "--added--");
+
         log += (refuse ? "declined, NA, NA" : "accepted, " + runway + ", " + waitTime) + ", " + getTotalArrivals() + ", " + getTotalDepartures()+ ", " + getTotalRedirect()
                 + ", " + (getTotalArrivals()==0? "NA":(sumWaitTimeArriv/getTotalArrivals())) + ", " + (getTotalDepartures()==0? "NA":(sumWaitTimeDepart/getTotalDepartures())) + "\n";
 
@@ -312,7 +318,8 @@ public class ControlTower extends Agent {
                     controlTower.updateSumWaitTimeDepart(minOperationTime - ((AirplaneRequest)content).getTimeToArrive());
                 }
             }
-
+            RepastLauncher.scatterPlot.plotPoint(ControlTower.operationsInProcess,(minOperationTime - ((AirplaneRequest)content).getTimeToArrive()), 1 );
+            RepastLauncher.scatterPlot.updateGraph();
             logAllocation(content, refuse, bestRunwayId, (minOperationTime - ((AirplaneRequest)content).getTimeToArrive()));
         }
 
