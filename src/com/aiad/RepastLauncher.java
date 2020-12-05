@@ -1,6 +1,5 @@
 package com.aiad;
 
-import com.aiad.Config;
 import com.aiad.agents.AirplaneGenerator;
 import com.aiad.agents.ControlTower;
 import com.aiad.agents.Runway;
@@ -8,7 +7,6 @@ import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.StaleProxyException;
 
-import sajas.core.Agent;
 import sajas.core.Runtime;
 import sajas.sim.repast3.Repast3Launcher;
 import sajas.wrapper.ContainerController;
