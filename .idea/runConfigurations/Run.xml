@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="com.aiad.JADELauncher" />
+    <option name="MAIN_CLASS_NAME" value="com.aiad.RepastLauncher" />
     <module name="airport-control" />
     <selectedOptions>
       <option name="before.launch.openToolWindow" />
