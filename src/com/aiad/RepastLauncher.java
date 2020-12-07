@@ -44,6 +44,7 @@ public class RepastLauncher extends Repast3Launcher {
 
     // private Histogram histogram;
     public static Plot scatterPlot;
+    public static Plot totalsPlot;
 
     public static List<DefaultDrawableNode> nodes;
 
@@ -164,10 +165,22 @@ public class RepastLauncher extends Repast3Launcher {
 
     public void buildDisplay() {
         scatterPlot = new Plot("graph", this);
+        scatterPlot.setXRange(0,50);
+        scatterPlot.setYRange(0,50);
         scatterPlot.setAxisTitles("Current Operations (units)", "Wait Time (ticks");
-        scatterPlot.display();
         scatterPlot.setConnected(false);
+        scatterPlot.display();
 
+        totalsPlot = new Plot ("totals_graph", this);
+        totalsPlot.setXRange(0,100);
+        totalsPlot.setYRange(0,100);
+        totalsPlot.setAxisTitles("Ticks", "Units");
+        totalsPlot.setConnected(true);
+        totalsPlot.addLegend(1, "total arrivals", Color.RED);
+        totalsPlot.addLegend(2, "total departures", Color.GREEN);
+        totalsPlot.addLegend(3, "total redirects", Color.BLUE);
+        totalsPlot.display();
+        getSchedule().scheduleActionAtInterval(0.5, totalsPlot, "updateGraph", Schedule.LAST);
 
         if (graphSurface != null) {
             graphSurface.dispose();

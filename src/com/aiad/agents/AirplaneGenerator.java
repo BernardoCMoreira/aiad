@@ -23,7 +23,7 @@ public class AirplaneGenerator extends Agent {
     public int creationRate;
     public int airplaneCounter;
     public ContainerController controller;
-
+    public static int tickerCounter = 0;
     protected FileWriter creationLog;
 
     private List<DefaultDrawableNode> nodes;
@@ -33,6 +33,7 @@ public class AirplaneGenerator extends Agent {
         this.airplaneCounter = 0;
         this.controller = controller;
         this.nodes = nodes;
+
         File file = new File(Config.AIRPLANE_CREATION_LOG);
         try {
             this.creationLog = new FileWriter(file);
@@ -86,6 +87,7 @@ public class AirplaneGenerator extends Agent {
 
         @Override
         protected void onTick() {
+            tickerCounter++;
             AgentController agentController;
             Agent airplane;
 
