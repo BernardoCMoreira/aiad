@@ -76,9 +76,15 @@ public class ControlTower extends Agent {
         runwayService.setType("runway");
         runwayTemplate.addServices(runwayService);
         addBehaviour(new RunwaySubscriber(this, runwayTemplate));
-
         addBehaviour(new AirplaneRequestResponder(this));
+        addBehaviour(new TickerBehaviour(this,1) {
+            @Override
+            protected void onTick() {
+                if(arrivalCounter + departureCounter == 0 ) return;
 
+                RepastLauncher.scatterPlot.plotPoint(ControlTower.operationsInProcess, (double)((sumWaitTimeArriv + sumWaitTimeDepart) / (arrivalCounter + departureCounter)), 1 );
+            }
+        });
 
     }
 
@@ -116,9 +122,6 @@ public class ControlTower extends Agent {
         else {
             log += "departing, ";
         }
-
-        ControlTower.operationsInProcess ++;
-        System.out.println("------------------" + ControlTower.operationsInProcess + "--added--");
 
         log += (refuse ? "declined, NA, NA" : "accepted, " + runway + ", " + waitTime) + ", " + getTotalArrivals() + ", " + getTotalDepartures()+ ", " + getTotalRedirect()
                 + ", " + (getTotalArrivals()==0? "NA":(sumWaitTimeArriv/getTotalArrivals())) + ", " + (getTotalDepartures()==0? "NA":(sumWaitTimeDepart/getTotalDepartures())) + "\n";
@@ -322,12 +325,7 @@ public class ControlTower extends Agent {
                     controlTower.updateSumWaitTimeDepart(minOperationTime - ((AirplaneRequest)content).getTimeToArrive());
                 }
             }
-            RepastLauncher.scatterPlot.plotPoint(ControlTower.operationsInProcess,(minOperationTime - ((AirplaneRequest)content).getTimeToArrive()), 1 );
-            RepastLauncher.scatterPlot.updateGraph();
 
-            RepastLauncher.totalsPlot.plotPoint(AirplaneGenerator.tickerCounter, getTotalArrivals(), 1);
-            RepastLauncher.totalsPlot.plotPoint(AirplaneGenerator.tickerCounter, getTotalDepartures(), 2);
-            RepastLauncher.totalsPlot.plotPoint(AirplaneGenerator.tickerCounter, getTotalRedirect(), 3);
             logAllocation(content, refuse, bestRunwayId, (minOperationTime - ((AirplaneRequest)content).getTimeToArrive()));
         }
 

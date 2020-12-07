@@ -29,6 +29,7 @@ import uchicago.src.sim.gui.Network2DDisplay;
 import uchicago.src.sim.gui.OvalNetworkItem;
 import uchicago.src.sim.network.DefaultDrawableNode;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 
@@ -40,14 +41,11 @@ public class RepastLauncher extends Repast3Launcher {
 
     private ContainerController mainContainer;
     JFrame frame = new JFrame("Airport");
-
-
     // private Histogram histogram;
     public static Plot scatterPlot;
-    public static Plot totalsPlot;
-
+    public static OpenSequenceGraph open;
     public static List<DefaultDrawableNode> nodes;
-
+    public ControlTower controlTower;
 
     @Override
     public String[] getInitParam() {
@@ -85,9 +83,11 @@ public class RepastLauncher extends Repast3Launcher {
         }
 
         // create the ControlTower agent
-        AgentController ac4;
+
         try {
-            ac4 = mainContainer.acceptNewAgent("tower", new ControlTower());
+            AgentController ac4;
+            controlTower = new ControlTower();
+            ac4 = mainContainer.acceptNewAgent("tower", controlTower);
             ac4.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
@@ -162,25 +162,34 @@ public class RepastLauncher extends Repast3Launcher {
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
 
-
     public void buildDisplay() {
         scatterPlot = new Plot("graph", this);
         scatterPlot.setXRange(0,50);
         scatterPlot.setYRange(0,50);
-        scatterPlot.setAxisTitles("Current Operations (units)", "Wait Time (ticks");
+        scatterPlot.setAxisTitles("Current Operations (units)", "Wait Time (ticks)");
         scatterPlot.setConnected(false);
         scatterPlot.display();
+        getSchedule().scheduleActionAtInterval(1, scatterPlot, "updateGraph", Schedule.LAST);
 
-        totalsPlot = new Plot ("totals_graph", this);
-        totalsPlot.setXRange(0,100);
-        totalsPlot.setYRange(0,100);
-        totalsPlot.setAxisTitles("Ticks", "Units");
-        totalsPlot.setConnected(true);
-        totalsPlot.addLegend(1, "total arrivals", Color.RED);
-        totalsPlot.addLegend(2, "total departures", Color.GREEN);
-        totalsPlot.addLegend(3, "total redirects", Color.BLUE);
-        totalsPlot.display();
-        getSchedule().scheduleActionAtInterval(0.5, totalsPlot, "updateGraph", Schedule.LAST);
+        open = new OpenSequenceGraph("Service", this);
+        open.setAxisTitles("time", "Totals");
+        open.addSequence("Total_arrivals", new Sequence (){
+            public double getSValue(){
+                return controlTower.getTotalArrivals();
+            }
+        });
+        open.addSequence("Total_departures", new Sequence (){
+            public double getSValue(){
+                return controlTower.getTotalDepartures();
+            }
+        });
+        open.addSequence("Total_redirects", new Sequence (){
+            public double getSValue(){
+                return controlTower.getTotalRedirect();
+            }
+        });
+        open.display();
+        getSchedule().scheduleActionAtInterval(10, open, "step", Schedule.LAST);
 
         if (graphSurface != null) {
             graphSurface.dispose();
