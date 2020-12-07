@@ -1,15 +1,22 @@
 package com.aiad.agents;
 
 import com.aiad.Config;
+import com.bbn.openmap.tools.symbology.milStd2525.CodeFunctionID;
 import sajas.core.Agent;
 import sajas.core.behaviours.TickerBehaviour;
 import sajas.wrapper.AgentController;
 import sajas.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
+import uchicago.src.sim.gui.Drawable2DNode;
+import uchicago.src.sim.gui.OvalNetworkItem;
+import uchicago.src.sim.gui.RectNetworkItem;
+import uchicago.src.sim.network.DefaultDrawableNode;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 public class AirplaneGenerator extends Agent {
@@ -19,10 +26,13 @@ public class AirplaneGenerator extends Agent {
 
     protected FileWriter creationLog;
 
-    public AirplaneGenerator(int creationRate, ContainerController controller) {
+    private List<DefaultDrawableNode> nodes;
+
+    public AirplaneGenerator(int creationRate, ContainerController controller, List<DefaultDrawableNode> nodes) {
         this.creationRate = creationRate;
         this.airplaneCounter = 0;
         this.controller = controller;
+        this.nodes = nodes;
         File file = new File(Config.AIRPLANE_CREATION_LOG);
         try {
             this.creationLog = new FileWriter(file);
@@ -87,9 +97,13 @@ public class AirplaneGenerator extends Agent {
                 int fuelRemaining = timeToArrive + new Random().nextInt(Config.MAX_FUEL_REMAINING);
                 airplane = new ArrivingAirplane(airplaneId, timeToArrive, fuelRemaining);
                 System.out.println("GENERATOR :: ARRIVING : airplane" + airplaneId + " ETA : " + timeToArrive + " FUEL : " + fuelRemaining);
+
+                nodes.add(generateNode(airplaneId + "", Color.yellow, 250, 250));
             } else {    // departing
                 airplane = new DepartingAirplane(airplaneId, timeToArrive);
                 System.out.println("GENERATOR :: DEPARTING : airplane" + airplaneId + " ETA : " + timeToArrive);
+
+                nodes.add(generateNode(airplaneId + "", Color.yellow, 10, new Random().nextInt(500)));
             }
 
             try {
@@ -102,5 +116,16 @@ public class AirplaneGenerator extends Agent {
             logAirplaneCreation((Airplane) airplane);
         }
 
+        private DefaultDrawableNode generateNode(String label, Color color, int x, int y) {
+            RectNetworkItem oval = new RectNetworkItem(x,y);
+            oval.allowResizing(false);
+            oval.setHeight(5);
+            oval.setWidth(10);
+
+            DefaultDrawableNode node = new DefaultDrawableNode(label, oval);
+            node.setColor(color);
+
+            return node;
+        }
     }
 }

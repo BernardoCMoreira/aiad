@@ -12,12 +12,29 @@ import sajas.sim.repast3.Repast3Launcher;
 import sajas.wrapper.ContainerController;
 import sajas.wrapper.AgentController;
 
-import uchicago.src.sim.analysis.Histogram;
 import uchicago.src.sim.analysis.Plot;
+import uchicago.src.sim.engine.Schedule;
 import uchicago.src.sim.engine.SimInit;
+import uchicago.src.sim.gui.DisplaySurface;
+import uchicago.src.sim.gui.Network2DDisplay;
+import uchicago.src.sim.network.DefaultDrawableNode;
+
+import sajas.sim.repast3.Repast3Launcher;
+import uchicago.src.sim.analysis.OpenSequenceGraph;
+import uchicago.src.sim.analysis.Sequence;
+import uchicago.src.sim.engine.Schedule;
+import uchicago.src.sim.engine.SimInit;
+import uchicago.src.sim.gui.DisplaySurface;
+import uchicago.src.sim.gui.Network2DDisplay;
+import uchicago.src.sim.gui.OvalNetworkItem;
+import uchicago.src.sim.network.DefaultDrawableNode;
 
 import javax.swing.*;
 import java.awt.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class RepastLauncher extends Repast3Launcher {
 
@@ -27,6 +44,8 @@ public class RepastLauncher extends Repast3Launcher {
 
     // private Histogram histogram;
     public static Plot scatterPlot;
+
+    public static List<DefaultDrawableNode> nodes;
 
 
     @Override
@@ -50,13 +69,15 @@ public class RepastLauncher extends Repast3Launcher {
     }
 
     private void launchAgents() {
+        nodes = new ArrayList<>();
+
         frame.setSize(1300,800);
         frame.setLayout(new GridLayout(3, 1));
 
         // create an AirplaneGenerator agent
         AgentController ac1;
         try {
-            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(Config.CREATION_RATE, mainContainer));
+            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(Config.CREATION_RATE, mainContainer, nodes));
             ac1.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
@@ -70,6 +91,7 @@ public class RepastLauncher extends Repast3Launcher {
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
+        nodes.add(generateNode("control tower", Color.blue, WIDTH/2, HEIGHT/2));
 
         AgentController ac5;
         try {
@@ -98,6 +120,18 @@ public class RepastLauncher extends Repast3Launcher {
 
     }
 
+    private DefaultDrawableNode generateNode(String label, Color color, int x, int y) {
+        OvalNetworkItem oval = new OvalNetworkItem(x,y);
+        oval.allowResizing(false);
+        oval.setHeight(5);
+        oval.setWidth(5);
+
+        DefaultDrawableNode node = new DefaultDrawableNode(label, oval);
+        node.setColor(color);
+
+        return node;
+    }
+
     @Override
     public void setup() {
         super.setup();
@@ -123,11 +157,32 @@ public class RepastLauncher extends Repast3Launcher {
 
     }
 
+    private DisplaySurface graphSurface;
+    private final int WIDTH = 500;
+    private final int HEIGHT = 500;
+
+
     public void buildDisplay() {
         scatterPlot = new Plot("graph", this);
         scatterPlot.setAxisTitles("Current Operations (units)", "Wait Time (ticks");
         scatterPlot.display();
         scatterPlot.setConnected(false);
+
+
+        if (graphSurface != null) {
+            graphSurface.dispose();
+        }
+
+        graphSurface = new DisplaySurface(this, "test display surface");
+        registerDisplaySurface("test", graphSurface);
+        Network2DDisplay graphDisplay = new Network2DDisplay(nodes, WIDTH, HEIGHT);
+        graphSurface.addDisplayableProbeable(graphDisplay, "airport graph");
+        graphSurface.addZoomable(graphDisplay);
+        addSimEventListener(graphSurface);
+        graphSurface.display();
+
+        getSchedule().scheduleActionAtInterval(0.5, graphSurface, "updateDisplay", Schedule.LAST);
+
     }
     /**
      * Launching Repast3
