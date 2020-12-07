@@ -181,7 +181,10 @@ public class RepastLauncher extends Repast3Launcher {
         addSimEventListener(graphSurface);
         graphSurface.display();
 
+
+        nodes.add(generateNode("ola", Color.red, 10 ,10));
         getSchedule().scheduleActionAtInterval(0.5, graphSurface, "updateDisplay", Schedule.LAST);
+        nodes.add(generateNode("ola", Color.red, 10 ,20));
 
     }
     /**
