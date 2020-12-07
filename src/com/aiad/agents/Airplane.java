@@ -23,7 +23,6 @@ public class Airplane extends Agent {
 
     protected final int id;
     protected int waitTime, timeToArrive, totalTime;
-
     public Airplane(int id, int timeToArrive) {
         this.id = id;
         this.timeToArrive = timeToArrive;

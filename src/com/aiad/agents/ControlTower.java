@@ -8,6 +8,7 @@ import sajas.core.Agent;
 import sajas.core.behaviours.CyclicBehaviour;
 import jade.domain.FIPAAgentManagement.*;
 import jade.lang.acl.ACLMessage;
+import sajas.core.behaviours.TickerBehaviour;
 import sajas.domain.DFService;
 import jade.domain.FIPAException;
 import jade.lang.acl.MessageTemplate;
@@ -56,6 +57,7 @@ public class ControlTower extends Agent {
 
     @Override
     protected void setup() {
+
         DFAgentDescription description = new DFAgentDescription();
         description.setName(getAID());
         ServiceDescription service = new ServiceDescription();
@@ -76,6 +78,8 @@ public class ControlTower extends Agent {
         addBehaviour(new RunwaySubscriber(this, runwayTemplate));
 
         addBehaviour(new AirplaneRequestResponder(this));
+
+
     }
 
     public int getTotalArrivals() {
@@ -320,6 +324,10 @@ public class ControlTower extends Agent {
             }
             RepastLauncher.scatterPlot.plotPoint(ControlTower.operationsInProcess,(minOperationTime - ((AirplaneRequest)content).getTimeToArrive()), 1 );
             RepastLauncher.scatterPlot.updateGraph();
+
+            RepastLauncher.totalsPlot.plotPoint(AirplaneGenerator.tickerCounter, getTotalArrivals(), 1);
+            RepastLauncher.totalsPlot.plotPoint(AirplaneGenerator.tickerCounter, getTotalDepartures(), 2);
+            RepastLauncher.totalsPlot.plotPoint(AirplaneGenerator.tickerCounter, getTotalRedirect(), 3);
             logAllocation(content, refuse, bestRunwayId, (minOperationTime - ((AirplaneRequest)content).getTimeToArrive()));
         }
 
