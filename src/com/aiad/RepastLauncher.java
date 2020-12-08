@@ -15,8 +15,7 @@ import sajas.wrapper.AgentController;
 import uchicago.src.sim.analysis.Plot;
 import uchicago.src.sim.engine.Schedule;
 import uchicago.src.sim.engine.SimInit;
-import uchicago.src.sim.gui.DisplaySurface;
-import uchicago.src.sim.gui.Network2DDisplay;
+import uchicago.src.sim.gui.*;
 import uchicago.src.sim.network.DefaultDrawableNode;
 
 import sajas.sim.repast3.Repast3Launcher;
@@ -26,7 +25,6 @@ import uchicago.src.sim.engine.Schedule;
 import uchicago.src.sim.engine.SimInit;
 import uchicago.src.sim.gui.DisplaySurface;
 import uchicago.src.sim.gui.Network2DDisplay;
-import uchicago.src.sim.gui.OvalNetworkItem;
 import uchicago.src.sim.network.DefaultDrawableNode;
 
 import javax.naming.ldap.Control;
@@ -44,8 +42,10 @@ public class RepastLauncher extends Repast3Launcher {
     // private Histogram histogram;
     public static Plot scatterPlot;
     public static OpenSequenceGraph open;
-    public static List<DefaultDrawableNode> nodes;
     public ControlTower controlTower;
+
+    public static List<DefaultDrawableNode> nodes;
+
 
     @Override
     public String[] getInitParam() {
@@ -76,7 +76,7 @@ public class RepastLauncher extends Repast3Launcher {
         // create an AirplaneGenerator agent
         AgentController ac1;
         try {
-            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(Config.CREATION_RATE, mainContainer, nodes));
+            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(Config.CREATION_RATE, mainContainer, this));
             ac1.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
@@ -161,6 +161,8 @@ public class RepastLauncher extends Repast3Launcher {
     private DisplaySurface graphSurface;
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
+    private Network2DDisplay network;
+
 
     public void buildDisplay() {
         scatterPlot = new Plot("graph", this);
@@ -197,15 +199,34 @@ public class RepastLauncher extends Repast3Launcher {
 
         graphSurface = new DisplaySurface(this, "test display surface");
         registerDisplaySurface("test", graphSurface);
-        Network2DDisplay graphDisplay = new Network2DDisplay(nodes, WIDTH, HEIGHT);
-        graphSurface.addDisplayableProbeable(graphDisplay, "airport graph");
-        graphSurface.addZoomable(graphDisplay);
+        network = new Network2DDisplay(nodes, WIDTH, HEIGHT);
+        graphSurface.addDisplayableProbeable(network, "airport graph");
+        graphSurface.addZoomable(network);
         addSimEventListener(graphSurface);
         graphSurface.display();
 
-        getSchedule().scheduleActionAtInterval(0.5, graphSurface, "updateDisplay", Schedule.LAST);
+
+        getSchedule().scheduleActionAtInterval(1, graphSurface, "updateDisplay", Schedule.LAST);
 
     }
+
+    public void updateNetworkDisplay() {
+        System.out.println(nodes);
+
+        if(network != null) {
+            System.out.println("--------------------------" + network);
+            System.out.println(graphSurface);
+            //graphSurface.removeProbeableDisplayable(network);
+
+            network = new Network2DDisplay(nodes, WIDTH, HEIGHT);
+            graphSurface.addDisplayableProbeable(network, "airport graph" + network.hashCode());
+            graphSurface.addZoomable(network);
+            addSimEventListener(graphSurface);
+        }
+
+
+    }
+
     /**
      * Launching Repast3
      * @param args

@@ -1,6 +1,7 @@
 package com.aiad.agents;
 
 import com.aiad.Config;
+import com.aiad.RepastLauncher;
 import com.bbn.openmap.tools.symbology.milStd2525.CodeFunctionID;
 import sajas.core.Agent;
 import sajas.core.behaviours.TickerBehaviour;
@@ -26,13 +27,13 @@ public class AirplaneGenerator extends Agent {
     public static int tickerCounter = 0;
     protected FileWriter creationLog;
 
-    private List<DefaultDrawableNode> nodes;
+    private RepastLauncher launcher;
 
-    public AirplaneGenerator(int creationRate, ContainerController controller, List<DefaultDrawableNode> nodes) {
+    public AirplaneGenerator(int creationRate, ContainerController controller, RepastLauncher launcher) {
         this.creationRate = creationRate;
         this.airplaneCounter = 0;
         this.controller = controller;
-        this.nodes = nodes;
+        this.launcher = launcher;
 
         File file = new File(Config.AIRPLANE_CREATION_LOG);
         try {
@@ -100,13 +101,14 @@ public class AirplaneGenerator extends Agent {
                 airplane = new ArrivingAirplane(airplaneId, timeToArrive, fuelRemaining);
                 System.out.println("GENERATOR :: ARRIVING : airplane" + airplaneId + " ETA : " + timeToArrive + " FUEL : " + fuelRemaining);
 
-                nodes.add(generateNode(airplaneId + "", Color.yellow, 250, 250));
+                launcher.nodes.add(generateNode(airplaneId + "", Color.yellow, 480, new Random().nextInt(500)));
             } else {    // departing
                 airplane = new DepartingAirplane(airplaneId, timeToArrive);
                 System.out.println("GENERATOR :: DEPARTING : airplane" + airplaneId + " ETA : " + timeToArrive);
 
-                nodes.add(generateNode(airplaneId + "", Color.yellow, 10, new Random().nextInt(500)));
+                launcher.nodes.add(generateNode(airplaneId + "", Color.green, 10, new Random().nextInt(500)));
             }
+            launcher.updateNetworkDisplay();
 
             try {
                 agentController = controller.acceptNewAgent("airplane" + airplaneId, airplane);
