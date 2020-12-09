@@ -49,7 +49,39 @@ public class RepastLauncher extends Repast3Launcher {
 
     @Override
     public String[] getInitParam() {
-        return new String[0];
+        return new String[]{
+                "CREATION_RATE",
+                "NUM_RUNWAYS",
+                "OBSTRUCTION_PROB"
+        };
+    }
+
+    public int CREATION_RATE = Config.CREATION_RATE;
+    public int NUM_RUNWAYS = Config.NUM_RUNWAYS;
+    public double OBSTRUCTION_PROB = Config.DEBRIS_APPEARANCE_PROBABILITY;
+
+    public int getCREATION_RATE() {
+        return CREATION_RATE;
+    }
+
+    public void setCREATION_RATE(int CREATION_RATE) {
+        this.CREATION_RATE = CREATION_RATE;
+    }
+
+    public void setNUM_RUNWAYS(int NUM_RUNWAYS) {
+        this.NUM_RUNWAYS = NUM_RUNWAYS;
+    }
+
+    public int getNUM_RUNWAYS() {
+        return NUM_RUNWAYS;
+    }
+
+    public void setOBSTRUCTION_PROB(double OBSTRUCTION_PROB) {
+        this.OBSTRUCTION_PROB = OBSTRUCTION_PROB;
+    }
+
+    public double getOBSTRUCTION_PROB() {
+        return OBSTRUCTION_PROB;
     }
 
     @Override
@@ -76,14 +108,13 @@ public class RepastLauncher extends Repast3Launcher {
         // create an AirplaneGenerator agent
         AgentController ac1;
         try {
-            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(Config.CREATION_RATE, mainContainer, this));
+            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(CREATION_RATE, mainContainer, this));
             ac1.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
 
         // create the ControlTower agent
-
         try {
             AgentController ac4;
             controlTower = new ControlTower();
@@ -94,31 +125,16 @@ public class RepastLauncher extends Repast3Launcher {
         }
         nodes.add(generateNode("control tower", Color.blue, WIDTH/2, HEIGHT/2));
 
-        AgentController ac5;
-        try {
-            ac5 = mainContainer.acceptNewAgent("runway1", new Runway(1, frame));
-            ac5.start();
-        } catch (StaleProxyException e) {
-            e.printStackTrace();
+        // create Runway agents
+        for (int i = 1; i <= NUM_RUNWAYS; i++) {
+            AgentController ac5;
+            try {
+                ac5 = mainContainer.acceptNewAgent("runway" + i, new Runway(i, frame));
+                ac5.start();
+            } catch (StaleProxyException e) {
+                e.printStackTrace();
+            }
         }
-
-        AgentController ac6;
-        try {
-            ac6 = mainContainer.acceptNewAgent("runway2", new Runway(2, frame));
-            ac6.start();
-        } catch (StaleProxyException e) {
-            e.printStackTrace();
-        }
-
-        AgentController ac7;
-        try {
-            ac7 = mainContainer.acceptNewAgent("runway3", new Runway(3, frame));
-            ac7.start();
-        } catch (StaleProxyException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     private DefaultDrawableNode generateNode(String label, Color color, int x, int y) {

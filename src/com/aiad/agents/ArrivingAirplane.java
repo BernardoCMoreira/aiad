@@ -48,7 +48,8 @@ public class ArrivingAirplane extends Airplane {
                     if(getTotalTime() == 0){
                         System.out.println("Airplane: " + getId() + " LANDED !");
 
-                        doDelete();
+                        takeDown();
+                        //doDelete();
                     }
                 }
             }

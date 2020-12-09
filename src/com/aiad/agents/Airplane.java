@@ -1,6 +1,7 @@
 package com.aiad.agents;
 
 import com.aiad.Config;
+import com.aiad.RepastLauncher;
 import com.aiad.messages.AirplaneInform;
 import com.aiad.messages.AirplaneRequest;
 import jade.core.AID;
@@ -16,6 +17,7 @@ import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import sajas.proto.AchieveREInitiator;
+import uchicago.src.sim.network.DefaultDrawableNode;
 
 import javax.naming.ldap.Control;
 import java.io.IOException;
@@ -30,6 +32,16 @@ public class Airplane extends Agent {
         this.timeToArrive = timeToArrive;
         this.waitTime = 0;
         this.totalTime = 0;
+    }
+
+    private DefaultDrawableNode node;
+    private RepastLauncher launcher;
+
+    public void setNode(RepastLauncher launcher, DefaultDrawableNode node) {
+        this.launcher = launcher;
+        this.node = node;
+
+        launcher.nodes.add(node);
     }
 
     public int getId() {
@@ -107,7 +119,10 @@ public class Airplane extends Agent {
 
 
     protected void takeDown() {
+        System.out.println("********************************************************");
+
         try {
+            launcher.nodes.remove(node);
             DFService.deregister(this);
         }
         catch(Exception e) {

@@ -11,6 +11,7 @@ import jade.wrapper.StaleProxyException;
 import uchicago.src.sim.gui.Drawable2DNode;
 import uchicago.src.sim.gui.OvalNetworkItem;
 import uchicago.src.sim.gui.RectNetworkItem;
+import uchicago.src.sim.network.DefaultDrawableEdge;
 import uchicago.src.sim.network.DefaultDrawableNode;
 
 import java.awt.*;
@@ -101,14 +102,17 @@ public class AirplaneGenerator extends Agent {
                 airplane = new ArrivingAirplane(airplaneId, timeToArrive, fuelRemaining);
                 System.out.println("GENERATOR :: ARRIVING : airplane" + airplaneId + " ETA : " + timeToArrive + " FUEL : " + fuelRemaining);
 
-                launcher.nodes.add(generateNode(airplaneId + "", Color.yellow, 480, new Random().nextInt(500)));
+                DefaultDrawableNode node = generateNode(airplaneId + "", Color.yellow, 10, new Random().nextInt(500));
+                ((Airplane)airplane).setNode(launcher, node);
             } else {    // departing
                 airplane = new DepartingAirplane(airplaneId, timeToArrive);
                 System.out.println("GENERATOR :: DEPARTING : airplane" + airplaneId + " ETA : " + timeToArrive);
 
-                launcher.nodes.add(generateNode(airplaneId + "", Color.green, 10, new Random().nextInt(500)));
+                DefaultDrawableNode node = generateNode(airplaneId + "", Color.green, 480, new Random().nextInt(500));
+                ((Airplane)airplane).setNode(launcher, node);
             }
             launcher.updateNetworkDisplay();
+
 
             try {
                 agentController = controller.acceptNewAgent("airplane" + airplaneId, airplane);
@@ -128,6 +132,9 @@ public class AirplaneGenerator extends Agent {
 
             DefaultDrawableNode node = new DefaultDrawableNode(label, oval);
             node.setColor(color);
+
+            DefaultDrawableEdge edge = new DefaultDrawableEdge(node, launcher.nodes.get(0));
+            node.addOutEdge(edge);
 
             return node;
         }
