@@ -16,6 +16,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import sajas.proto.ContractNetResponder;
 
+import javax.naming.ldap.Control;
 import javax.print.event.PrintJobEvent;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -96,6 +97,7 @@ public class Runway extends Agent {
             operations.get(0).tick();
             if (operations.get(0).getDuration() == 0) {
                 operations.remove(0);
+                ControlTower.operationsInProcess--;
                 willBeObstructed = willBecomeObstructed();
             }
         }
@@ -165,6 +167,7 @@ public class Runway extends Agent {
                 msg.setContent("Cancelled");
                 msg.addReceiver(new sajas.core.AID("airplane" + operation.getAirplaneId(), AID.ISLOCALNAME));
                 send(msg);
+                ControlTower.operationsInProcess--;
                 return null;
             });
         }
@@ -316,6 +319,7 @@ public class Runway extends Agent {
                 var operation = new Operation(airplaneId, Config.OPERATION_LENGTH);
 
                 runway.operations.put(actualOperationTime, operation);
+                ControlTower.operationsInProcess ++;
 
                 // send scheduled operation
                 ACLMessage result = accept.createReply();

@@ -29,8 +29,7 @@ public class DepartingAirplane extends Airplane {
             protected void onTick() {
                     if(getTotalTime() == 0){
                         System.out.println("Airplane: " + getId() + " DEPARTED !");
-                        ControlTower.operationsInProcess --;
-                        System.out.println("------------------" + ControlTower.operationsInProcess + "--removed--");
+
                         doDelete();
                     }
                 }

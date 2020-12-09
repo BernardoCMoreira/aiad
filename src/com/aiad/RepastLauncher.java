@@ -15,8 +15,7 @@ import sajas.wrapper.AgentController;
 import uchicago.src.sim.analysis.Plot;
 import uchicago.src.sim.engine.Schedule;
 import uchicago.src.sim.engine.SimInit;
-import uchicago.src.sim.gui.DisplaySurface;
-import uchicago.src.sim.gui.Network2DDisplay;
+import uchicago.src.sim.gui.*;
 import uchicago.src.sim.network.DefaultDrawableNode;
 
 import sajas.sim.repast3.Repast3Launcher;
@@ -26,9 +25,9 @@ import uchicago.src.sim.engine.Schedule;
 import uchicago.src.sim.engine.SimInit;
 import uchicago.src.sim.gui.DisplaySurface;
 import uchicago.src.sim.gui.Network2DDisplay;
-import uchicago.src.sim.gui.OvalNetworkItem;
 import uchicago.src.sim.network.DefaultDrawableNode;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 
@@ -40,11 +39,10 @@ public class RepastLauncher extends Repast3Launcher {
 
     private ContainerController mainContainer;
     JFrame frame = new JFrame("Airport");
-
-
     // private Histogram histogram;
     public static Plot scatterPlot;
-    public static Plot totalsPlot;
+    public static OpenSequenceGraph open;
+    public ControlTower controlTower;
 
     public static List<DefaultDrawableNode> nodes;
 
@@ -78,16 +76,18 @@ public class RepastLauncher extends Repast3Launcher {
         // create an AirplaneGenerator agent
         AgentController ac1;
         try {
-            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(Config.CREATION_RATE, mainContainer, nodes));
+            ac1 = mainContainer.acceptNewAgent("generator", new AirplaneGenerator(Config.CREATION_RATE, mainContainer, this));
             ac1.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
 
         // create the ControlTower agent
-        AgentController ac4;
+
         try {
-            ac4 = mainContainer.acceptNewAgent("tower", new ControlTower());
+            AgentController ac4;
+            controlTower = new ControlTower();
+            ac4 = mainContainer.acceptNewAgent("tower", controlTower);
             ac4.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
@@ -158,48 +158,73 @@ public class RepastLauncher extends Repast3Launcher {
 
     }
 
-    private DisplaySurface graphSurface;
+    private MyDisplaySurface graphSurface;
     private final int WIDTH = 500;
     private final int HEIGHT = 500;
+    private Network2DDisplay network;
 
 
     public void buildDisplay() {
         scatterPlot = new Plot("graph", this);
         scatterPlot.setXRange(0,50);
         scatterPlot.setYRange(0,50);
-        scatterPlot.setAxisTitles("Current Operations (units)", "Wait Time (ticks");
+        scatterPlot.setAxisTitles("Current Operations (units)", "Wait Time (ticks)");
         scatterPlot.setConnected(false);
         scatterPlot.display();
+        getSchedule().scheduleActionAtInterval(1, scatterPlot, "updateGraph", Schedule.LAST);
 
-        totalsPlot = new Plot ("totals_graph", this);
-        totalsPlot.setXRange(0,100);
-        totalsPlot.setYRange(0,100);
-        totalsPlot.setAxisTitles("Ticks", "Units");
-        totalsPlot.setConnected(true);
-        totalsPlot.addLegend(1, "total arrivals", Color.RED);
-        totalsPlot.addLegend(2, "total departures", Color.GREEN);
-        totalsPlot.addLegend(3, "total redirects", Color.BLUE);
-        totalsPlot.display();
-        getSchedule().scheduleActionAtInterval(0.5, totalsPlot, "updateGraph", Schedule.LAST);
+        open = new OpenSequenceGraph("Service", this);
+        open.setAxisTitles("time", "Totals");
+        open.addSequence("Total_arrivals", new Sequence (){
+            public double getSValue(){
+                return controlTower.getTotalArrivals();
+            }
+        });
+        open.addSequence("Total_departures", new Sequence (){
+            public double getSValue(){
+                return controlTower.getTotalDepartures();
+            }
+        });
+        open.addSequence("Total_redirects", new Sequence (){
+            public double getSValue(){
+                return controlTower.getTotalRedirect();
+            }
+        });
+        open.display();
+        getSchedule().scheduleActionAtInterval(10, open, "step", Schedule.LAST);
 
         if (graphSurface != null) {
             graphSurface.dispose();
         }
 
-        graphSurface = new DisplaySurface(this, "test display surface");
+        graphSurface = new MyDisplaySurface(this, "test display surface");
         registerDisplaySurface("test", graphSurface);
-        Network2DDisplay graphDisplay = new Network2DDisplay(nodes, WIDTH, HEIGHT);
-        graphSurface.addDisplayableProbeable(graphDisplay, "airport graph");
-        graphSurface.addZoomable(graphDisplay);
+        network = new Network2DDisplay(nodes, WIDTH, HEIGHT);
+        graphSurface.addDisplayableProbeable(network, "airport graph");
+        graphSurface.addZoomable(network);
         addSimEventListener(graphSurface);
         graphSurface.display();
 
 
-        nodes.add(generateNode("ola", Color.red, 10 ,10));
-        getSchedule().scheduleActionAtInterval(0.5, graphSurface, "updateDisplay", Schedule.LAST);
-        nodes.add(generateNode("ola", Color.red, 10 ,20));
+        getSchedule().scheduleActionAtInterval(1, graphSurface, "updateDisplay", Schedule.LAST);
+    }
+
+    public void updateNetworkDisplay() {
+        System.out.println(nodes);
+
+        if(network != null) {
+            System.out.println("--------------------------" + network);
+            System.out.println(graphSurface);
+            graphSurface.removeProbeableDisplayable(network);
+        }
+
+        network = new Network2DDisplay(nodes, WIDTH, HEIGHT);
+        graphSurface.addDisplayableProbeable(network, "airport graph" + network.hashCode());
+        graphSurface.addZoomable(network);
+        addSimEventListener(graphSurface);
 
     }
+
     /**
      * Launching Repast3
      * @param args
