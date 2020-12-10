@@ -126,7 +126,6 @@ public class Runway extends Agent {
         addBehaviour(new ProposalBuilder(this, new MessageTemplate(
                 (MessageTemplate.MatchExpression) msg -> msg.getPerformative() == ACLMessage.CFP)
         ));
-
         description.addServices(service);
 
         try {

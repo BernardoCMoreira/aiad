@@ -43,16 +43,14 @@ public class ArrivingAirplane extends Airplane {
             @Override
             protected void onTick() {
 
-                updateNode();
+               // updateNode();
 
                 if(fuelRemaining > 0 ){
                     fuelRemaining -- ;
                     System.out.println("Airplane : " + getId() + " \tFuel Remaining : " + fuelRemaining );
                     if(getTotalTime() == 0){
                         System.out.println("Airplane: " + getId() + " LANDED !");
-
                         removeNode();
-
                         //takeDown();
                         doDelete();
                     }
