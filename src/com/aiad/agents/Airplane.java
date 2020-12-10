@@ -40,8 +40,7 @@ public class Airplane extends Agent {
     public void setNode(RepastLauncher launcher, DefaultDrawableNode node) {
         this.launcher = launcher;
         this.node = node;
-
-        launcher.nodes.add(node);
+        RepastLauncher.nodes.add(node);
     }
 
     public int getId() {

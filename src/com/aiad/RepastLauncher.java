@@ -234,7 +234,6 @@ public class RepastLauncher extends Repast3Launcher {
         ControlTower.operationsInProcess = operationsCount;
 
         if(network != null) {
-
             graphSurface.removeProbeableDisplayable(network);
         }
 
