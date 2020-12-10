@@ -94,7 +94,7 @@ public class AirplaneGenerator extends Agent {
             Agent airplane;
 
             int airplaneId = ++generator.airplaneCounter;
-            int timeToArrive = new Random().nextInt(Config.MAX_TIME_TO_ARRIVE);
+            int timeToArrive = new Random().nextInt((Config.MAX_TIME_TO_ARRIVE - Config.MIN_TIME_TO_ARRIVE) + 1) + Config.MIN_TIME_TO_ARRIVE;
 
             // randomly decides if the generated plane is arriving or departing
             if (new Random().nextBoolean()) {   // arriving

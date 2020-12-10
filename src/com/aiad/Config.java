@@ -13,6 +13,7 @@ public class Config {
 
 
     public static final int CREATION_RATE = 2*1000;
+    public static final int MIN_TIME_TO_ARRIVE = 10;
     public static final int MAX_TIME_TO_ARRIVE = 45;
     public static final int MAX_FUEL_REMAINING = 15;
     public static final double DEBRIS_APPEARANCE_PROBABILITY = 0.05;

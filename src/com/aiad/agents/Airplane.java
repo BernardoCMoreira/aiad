@@ -116,12 +116,13 @@ public class Airplane extends Agent {
         });
     }
 
+    protected void removeNode() {
+        launcher.nodes.remove(node);
+        System.out.println("************************** REMOVED AIRPLANE: " + id + " *****************************************");
+    }
 
     protected void takeDown() {
-        System.out.println("********************************************************");
-
         try {
-            launcher.nodes.remove(node);
             DFService.deregister(this);
         }
         catch(Exception e) {
@@ -176,6 +177,7 @@ public class Airplane extends Agent {
                         var airplane = (Airplane) getAgent();
                         airplane.addBehaviour(new AirplaneRequestInitiator(airplane, airplane.createRequestMessage()));
                         cancelled = true;
+                        removeNode();
                     }
 
                     @Override

@@ -30,6 +30,8 @@ public class DepartingAirplane extends Airplane {
                     if(getTotalTime() == 0){
                         System.out.println("Airplane: " + getId() + " DEPARTED !");
 
+                        removeNode();
+
                         doDelete();
                     }
                 }
