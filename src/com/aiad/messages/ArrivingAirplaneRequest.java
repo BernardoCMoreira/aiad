@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ArrivingAirplaneRequest extends AirplaneRequest {
 
-    private int fuelRemaining;
+    private Integer fuelRemaining;
 
     public ArrivingAirplaneRequest() {
         super();
@@ -14,7 +14,7 @@ public class ArrivingAirplaneRequest extends AirplaneRequest {
         return fuelRemaining;
     }
 
-    public void setFuelRemaining(int fuelRemaining) {
+    public void setFuelRemaining(Integer fuelRemaining) {
         this.fuelRemaining = fuelRemaining;
     }
 }

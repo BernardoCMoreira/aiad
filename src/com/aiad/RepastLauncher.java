@@ -223,7 +223,7 @@ public class RepastLauncher extends Repast3Launcher {
         graphSurface.display();
 
 
-        getSchedule().scheduleActionAtInterval(1, graphSurface, "updateDisplay", Schedule.LAST);
+        getSchedule().scheduleActionAtInterval(100, graphSurface, "updateDisplay", Schedule.LAST);
     }
 
     public void updateNetworkDisplay() {

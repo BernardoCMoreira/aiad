@@ -34,8 +34,8 @@ public class Airplane extends Agent {
         this.totalTime = 0;
     }
 
-    private DefaultDrawableNode node;
-    private RepastLauncher launcher;
+    protected DefaultDrawableNode node;
+    protected RepastLauncher launcher;
 
     public void setNode(RepastLauncher launcher, DefaultDrawableNode node) {
         this.launcher = launcher;
@@ -177,7 +177,7 @@ public class Airplane extends Agent {
                         var airplane = (Airplane) getAgent();
                         airplane.addBehaviour(new AirplaneRequestInitiator(airplane, airplane.createRequestMessage()));
                         cancelled = true;
-                        removeNode();
+                        //removeNode();
                     }
 
                     @Override
@@ -196,4 +196,5 @@ public class Airplane extends Agent {
             log("Received a failure.");
         }
     }
+
 }

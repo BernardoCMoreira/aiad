@@ -293,7 +293,7 @@ public class ControlTower extends Agent {
             }
 
             // refuse if there are no proposals or the request came from an arriving plane and the best proposal is greater than the plane's autonomy
-            boolean refuse = responses.isEmpty() || (content instanceof ArrivingAirplaneRequest && minOperationTime > ((ArrivingAirplaneRequest) content).getFuelRemaining());
+            boolean refuse = responses.isEmpty() || (content instanceof ArrivingAirplaneRequest && minOperationTime + Config.OPERATION_LENGTH > ((ArrivingAirplaneRequest) content).getFuelRemaining());
 
             if (refuse) {
                 // send refuse to airplane

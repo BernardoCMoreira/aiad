@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class ArrivingAirplane extends Airplane {
 
-    protected int fuelRemaining;
+    protected Integer fuelRemaining;
 
     public ArrivingAirplane(int id, int timeToArrive, int fuelRemaining) {
         super(id, timeToArrive);
@@ -42,6 +42,9 @@ public class ArrivingAirplane extends Airplane {
         addBehaviour(new TickerBehaviour(this, Config.PERIOD){
             @Override
             protected void onTick() {
+
+                updateNode();
+
                 if(fuelRemaining > 0 ){
                     fuelRemaining -- ;
                     System.out.println("Airplane : " + getId() + " \tFuel Remaining : " + fuelRemaining );
@@ -57,6 +60,15 @@ public class ArrivingAirplane extends Airplane {
             }
         });
 
+
+    }
+
+    private void updateNode() {
+        double x = node.getX();
+        double y = node.getY();
+
+        node.setX(x + ((250 - x) / (timeToArrive + waitTime)));
+        node.setY(y + ((250 - y) / (timeToArrive + waitTime)));
 
     }
 
