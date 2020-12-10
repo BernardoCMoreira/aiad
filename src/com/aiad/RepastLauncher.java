@@ -43,7 +43,7 @@ public class RepastLauncher extends Repast3Launcher {
     public static Plot scatterPlot;
     public static OpenSequenceGraph open;
     public ControlTower controlTower;
-
+    public static int[] runwaysList;
     public static List<DefaultDrawableNode> nodes;
 
 
@@ -97,6 +97,7 @@ public class RepastLauncher extends Repast3Launcher {
         mainContainer = rt.createMainContainer(p1);
 
         launchAgents();
+        runwaysList = new int[NUM_RUNWAYS];
     }
 
     private void launchAgents() {
@@ -226,11 +227,14 @@ public class RepastLauncher extends Repast3Launcher {
     }
 
     public void updateNetworkDisplay() {
-        System.out.println(nodes);
+        int operationsCount = 0;
+        for(int i=0; i<RepastLauncher.runwaysList.length; i++){
+            operationsCount += RepastLauncher.runwaysList[i];
+        }
+        ControlTower.operationsInProcess = operationsCount;
 
         if(network != null) {
-            System.out.println("--------------------------" + network);
-            System.out.println(graphSurface);
+
             graphSurface.removeProbeableDisplayable(network);
         }
 

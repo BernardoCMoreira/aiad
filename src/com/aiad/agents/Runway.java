@@ -1,6 +1,7 @@
 package com.aiad.agents;
 
 import com.aiad.Config;
+import com.aiad.RepastLauncher;
 import com.aiad.messages.RunwayOperationCfp;
 import com.aiad.messages.RunwayOperationProposal;
 import jade.core.AID;
@@ -97,7 +98,6 @@ public class Runway extends Agent {
             operations.get(0).tick();
             if (operations.get(0).getDuration() == 0) {
                 operations.remove(0);
-                ControlTower.operationsInProcess--;
                 willBeObstructed = willBecomeObstructed();
             }
         }
@@ -167,7 +167,6 @@ public class Runway extends Agent {
                 msg.setContent("Cancelled");
                 msg.addReceiver(new sajas.core.AID("airplane" + operation.getAirplaneId(), AID.ISLOCALNAME));
                 send(msg);
-                ControlTower.operationsInProcess--;
                 return null;
             });
         }
@@ -243,6 +242,7 @@ public class Runway extends Agent {
             runway.updateOperations();
 
             TreeMap<Integer, Operation> treeMap = runway.getOperations();
+            RepastLauncher.runwaysList[runway.id-1] = treeMap.size();
             DefaultTableModel model = (DefaultTableModel) runway.table.getModel();
             boolean firstOperation = false;
 
@@ -319,7 +319,6 @@ public class Runway extends Agent {
                 var operation = new Operation(airplaneId, Config.OPERATION_LENGTH);
 
                 runway.operations.put(actualOperationTime, operation);
-                ControlTower.operationsInProcess ++;
 
                 // send scheduled operation
                 ACLMessage result = accept.createReply();
