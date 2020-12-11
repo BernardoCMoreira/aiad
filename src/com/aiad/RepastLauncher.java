@@ -42,8 +42,10 @@ public class RepastLauncher extends Repast3Launcher {
     // private Histogram histogram;
     public static Plot scatterPlot;
     public static OpenSequenceGraph open;
+    public static OpenSequenceGraph openRunway;
     public ControlTower controlTower;
     public static int[] runwaysList;
+    public static ArrayList<Runway> runwaysArrayList = new ArrayList<>();
     public static List<DefaultDrawableNode> nodes;
 
 
@@ -131,6 +133,7 @@ public class RepastLauncher extends Repast3Launcher {
             AgentController ac5;
             try {
                 ac5 = mainContainer.acceptNewAgent("runway" + i, new Runway(i, frame));
+                runwaysArrayList.add(new Runway(i,frame));
                 ac5.start();
             } catch (StaleProxyException e) {
                 e.printStackTrace();
@@ -224,8 +227,25 @@ public class RepastLauncher extends Repast3Launcher {
 
 
         getSchedule().scheduleActionAtInterval(100, graphSurface, "updateDisplay", Schedule.LAST);
+
+        runwaysSequenceGraph();
+
     }
 
+    public void runwaysSequenceGraph(){
+        openRunway = new OpenSequenceGraph("Service", this);
+        openRunway.setAxisTitles("runway_id", "Total operations");
+        for (Runway runway : runwaysArrayList) {
+            openRunway.addSequence("Runway ID" + runway.getId(), new Sequence() {
+                public double getSValue() {
+                    return runwaysList[runway.getId()-1];
+                }
+            });
+        }
+
+        openRunway.display();
+        getSchedule().scheduleActionAtInterval(10, openRunway, "step", Schedule.LAST);
+    }
     public void updateNetworkDisplay() {
         int operationsCount = 0;
         for(int i=0; i<RepastLauncher.runwaysList.length; i++){
