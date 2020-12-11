@@ -171,7 +171,9 @@ public class RepastLauncher extends Repast3Launcher {
 
         // display surfaces, spaces, displays, plots, ...
         // ...
+
         buildDisplay();
+
 
     }
 
@@ -196,6 +198,7 @@ public class RepastLauncher extends Repast3Launcher {
 
         open = new OpenSequenceGraph("Service", this);
         open.setAxisTitles("time", "Totals");
+
         open.addSequence("Total_arrivals", new Sequence (){
             public double getSValue(){
                 return controlTower.getTotalArrivals();
@@ -227,12 +230,15 @@ public class RepastLauncher extends Repast3Launcher {
         graphSurface.display();
 
         getSchedule().scheduleActionAtInterval(100, graphSurface, "updateDisplay", Schedule.LAST);
-        runwaysSequenceGraph();
+
+        if(runwaysArrayList.size() !=0){
+            runwaysSequenceGraph();
+        }
 
     }
 
     public void runwaysSequenceGraph(){
-        openRunway = new OpenSequenceGraph("Service", this);
+        openRunway = new OpenSequenceGraph("Runways Operations", this);
         openRunway.setAxisTitles("time", "Current Operations");
         for (Runway runway : runwaysArrayList) {
             openRunway.addSequence("Runway ID" + runway.getId(), new Sequence() {
@@ -244,6 +250,7 @@ public class RepastLauncher extends Repast3Launcher {
         openRunway.display();
         getSchedule().scheduleActionAtInterval(10, openRunway, "step", Schedule.LAST);
     }
+
     public void updateNetworkDisplay() {
         int operationsCount = 0;
         for(int i=0; i<RepastLauncher.runwaysList.length; i++){
@@ -267,7 +274,7 @@ public class RepastLauncher extends Repast3Launcher {
      * @param args
      */
     public static void main(String[] args) {
-        boolean BATCH_MODE = false;
+        boolean BATCH_MODE = true;
         SimInit init = new SimInit();
         init.setNumRuns(1);   // works only in batch mode
         init.loadModel(new RepastLauncher(), null, BATCH_MODE);
