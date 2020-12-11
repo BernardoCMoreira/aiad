@@ -102,13 +102,13 @@ public class AirplaneGenerator extends Agent {
                 airplane = new ArrivingAirplane(airplaneId, timeToArrive, fuelRemaining);
                 System.out.println("GENERATOR :: ARRIVING : airplane" + airplaneId + " ETA : " + timeToArrive + " FUEL : " + fuelRemaining);
 
-                DefaultDrawableNode node = generateNode(airplaneId + "", Color.yellow, 10, new Random().nextInt(500));
+                DefaultDrawableNode node = generateNode( "", Color.yellow, new Random().nextInt(200-10) + 10, new Random().nextInt(500));
                 ((Airplane)airplane).setNode(launcher, node);
             } else {    // departing
                 airplane = new DepartingAirplane(airplaneId, timeToArrive);
                 System.out.println("GENERATOR :: DEPARTING : airplane" + airplaneId + " ETA : " + timeToArrive);
 
-                DefaultDrawableNode node = generateNode(airplaneId + "", Color.green, 480,  new Random().nextInt(500));
+                DefaultDrawableNode node = generateNode("", Color.green, new Random().nextInt(480-350) + 350,  new Random().nextInt(500));
                 ((Airplane)airplane).setNode(launcher, node);
             }
             launcher.updateNetworkDisplay();

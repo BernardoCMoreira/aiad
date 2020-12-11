@@ -126,14 +126,15 @@ public class RepastLauncher extends Repast3Launcher {
         } catch (StaleProxyException e) {
             e.printStackTrace();
         }
-        nodes.add(generateNode("control tower", Color.blue, WIDTH/2, HEIGHT/2));
+        nodes.add(generateNode("", Color.blue, WIDTH/2, HEIGHT/2));
 
         // create Runway agents
         for (int i = 1; i <= NUM_RUNWAYS; i++) {
             AgentController ac5;
             try {
-                ac5 = mainContainer.acceptNewAgent("runway" + i, new Runway(i, frame));
-                runwaysArrayList.add(new Runway(i,frame));
+                Runway r = new Runway(i, frame);
+                ac5 = mainContainer.acceptNewAgent("runway" + i, r);
+                runwaysArrayList.add(r);
                 ac5.start();
             } catch (StaleProxyException e) {
                 e.printStackTrace();
@@ -144,8 +145,8 @@ public class RepastLauncher extends Repast3Launcher {
     private DefaultDrawableNode generateNode(String label, Color color, int x, int y) {
         OvalNetworkItem oval = new OvalNetworkItem(x,y);
         oval.allowResizing(false);
-        oval.setHeight(5);
-        oval.setWidth(5);
+        oval.setHeight(15);
+        oval.setWidth(15);
 
         DefaultDrawableNode node = new DefaultDrawableNode(label, oval);
         node.setColor(color);
@@ -225,16 +226,14 @@ public class RepastLauncher extends Repast3Launcher {
         addSimEventListener(graphSurface);
         graphSurface.display();
 
-
         getSchedule().scheduleActionAtInterval(100, graphSurface, "updateDisplay", Schedule.LAST);
-
         runwaysSequenceGraph();
 
     }
 
     public void runwaysSequenceGraph(){
         openRunway = new OpenSequenceGraph("Service", this);
-        openRunway.setAxisTitles("time", "Total operations");
+        openRunway.setAxisTitles("time", "Current Operations");
         for (Runway runway : runwaysArrayList) {
             openRunway.addSequence("Runway ID" + runway.getId(), new Sequence() {
                 public double getSValue() {
