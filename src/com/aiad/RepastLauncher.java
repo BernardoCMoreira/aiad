@@ -234,7 +234,7 @@ public class RepastLauncher extends Repast3Launcher {
 
     public void runwaysSequenceGraph(){
         openRunway = new OpenSequenceGraph("Service", this);
-        openRunway.setAxisTitles("runway_id", "Total operations");
+        openRunway.setAxisTitles("time", "Total operations");
         for (Runway runway : runwaysArrayList) {
             openRunway.addSequence("Runway ID" + runway.getId(), new Sequence() {
                 public double getSValue() {
@@ -242,7 +242,6 @@ public class RepastLauncher extends Repast3Launcher {
                 }
             });
         }
-
         openRunway.display();
         getSchedule().scheduleActionAtInterval(10, openRunway, "step", Schedule.LAST);
     }
