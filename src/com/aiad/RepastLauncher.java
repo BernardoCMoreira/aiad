@@ -274,10 +274,9 @@ public class RepastLauncher extends Repast3Launcher {
      * @param args
      */
     public static void main(String[] args) {
-        boolean BATCH_MODE = true;
         SimInit init = new SimInit();
         init.setNumRuns(1);   // works only in batch mode
-        init.loadModel(new RepastLauncher(), null, BATCH_MODE);
+        init.loadModel(new RepastLauncher(), null, Config.BATCH_MODE);
     }
 
 }

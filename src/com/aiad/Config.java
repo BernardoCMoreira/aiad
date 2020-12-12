@@ -9,8 +9,9 @@ public class Config {
     public static final String AIRPLANE_CREATION_LOG = "creation_log.csv";
     public static final String AIRPLANE_ALLOCATION_LOG = "allocation_log.csv";
 
-    public static final int NUM_RUNWAYS = 3;
+    public static final boolean BATCH_MODE = false;
 
+    public static final int NUM_RUNWAYS = 3;
 
     public static final int CREATION_RATE = 2*1000;
     public static final int MIN_TIME_TO_ARRIVE = 10;
